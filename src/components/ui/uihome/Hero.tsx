@@ -78,7 +78,7 @@ const Hero = () => {
                   >
                     <button
                     //   onClick={handleOrderPopup}
-                      className="bg-gradient-to-r from-primary/70 to-primary/60 hover:scale-105 duration-200 text-[#2D3436] text-md font-semibold py-2 px-4 rounded-full"
+                      className="bg-gradient-to-r from-primary to-secondary  hover:scale-105 duration-200 text-[#2D3436] text-md font-semibold py-2 px-4 rounded-full"
                     >
                       Order Now
                     </button>
