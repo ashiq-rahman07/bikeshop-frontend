@@ -8,6 +8,13 @@ import About from "./components/about/About"
 import DashboardLayout from "./components/layout/DashboardLayout"
 import Dashboard from "./components/dashboard/Dashboard"
 import React from "react";
+import Cart from "./components/cartpage/Cart";
+import CheckoutPage from "./components/cheakoutPage/CheakOutPage";
+import SignUp from "./components/register/SignUp";
+import SignIn from "./components/register/SignIn";
+import OrderManagement from "./components/dashboard/orderManagement/OrderManagement";
+import ProductManagement from "./components/dashboard/productManagemant/OrderManagement";
+import UserProfile from "./components/dashboard/user profile/UserProfile";
 // import React, { useEffect, useState } from "react"
 
 
@@ -47,16 +54,18 @@ function App() {
         <Route index element={<Home />} />
         <Route path="products" element={<ProductsPage />} />
         <Route path="about" element={<About/>} />
-        {/* <Route path="signin" element={<SignIn />} /> */}
-        {/* <Route path="signup" element={<SignUp />} /> */}
-        {/* <Route path="cart" element={<Cart />} /> */}
+        <Route path="signin" element={<SignIn />} />
+        <Route path="signup" element={<SignUp />} />
+        <Route path="cart" element={<Cart />} />
+        <Route path="checkout" element={<CheckoutPage />} />
       </Route>
 
       {/* Authenticated Routes with DashboardLayout */}
       <Route path="/dashboard" element={<DashboardLayout/>}>
-        <Route index element={<Dashboard />} />
-        {/* <Route path="orders" element={<Orders />} /> */}
-        {/* <Route path="settings" element={<Settings />} /> */}
+        <Route index element={<Dashboard/>} />
+        <Route path="orders" element={<OrderManagement/>} />
+        <Route path="products" element={<ProductManagement/>} />
+        <Route path="profile" element={<UserProfile />} />
       </Route>
     </Routes>
   </Router>
