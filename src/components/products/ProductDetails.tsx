@@ -6,13 +6,15 @@ import { useState } from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../../redux/features/user/authSlice";
 import { useGetProductByIdQuery } from "../../redux/features/products/productsApi";
+import { addToCart } from "../../redux/features/cart/cartSlice";
+import { useDispatch } from "react-redux";
 
-type TOrder ={
-  user: string; // User ID
-  product: string; // Product ID
-  quantity: number;
-  totalPrice: number;
-}
+// type TOrder ={
+//   user: string; // User ID
+//   product: string; // Product ID
+//   quantity: number;
+//   totalPrice: number;
+// }
 
 const ProductDetails= () => {
   const navigate =useNavigate()
@@ -25,36 +27,48 @@ if(!user){
         const { data, error, isLoading:singleProductLoading } = useGetProductByIdQuery(productId as string);
         // const [createOrder, { isLoading: isCreatingOrder }] = useCreateOrderMutation();
         const product = data?.data
-        
+        const dispatch = useDispatch();
+
+        const handleAddToCart = () => {
+          dispatch(addToCart({
+            product: product?._id as string,
+            name: product?.name as string,
+            price: product?.price as number,
+            quantity: 1 ,
+            imageUrl: product?.bikeImg as string,
+          }));
+
+          navigate('/')
+        };
       
       
  
- const handleAddToCartAndCreateOrder = async () => {
-  if (!product) return;
+//  const handleAddToCartAndCreateOrder = async () => {
+//   if (!product) return;
 
-  // Add the product to the cart
-  // dispatch(addToCart(product));
+//   // Add the product to the cart
+//   // dispatch(addToCart(product));
 
-  // Create an order with the product
-  // const order = {
-  //   items: [{ product, quantity: 1 }],
-  //   total: product.price,
-  // };
-  const orderProduct:TOrder = {
-    user:user?.userId,
-    product :product.id,
-  quantity,
+//   // Create an order with the product
+//   // const order = {
+//   //   items: [{ product, quantity: 1 }],
+//   //   total: product.price,
+//   // };
+//   const orderProduct:TOrder = {
+//     user:user?.userId,
+//     product :product.id,
+//   quantity,
 
-    totalPrice:product.price * quantity
-   }
-  try {
-    console.log(orderProduct);
-    await createOrder(orderProduct).unwrap();
-    navigate('/cart'); // Redirect to the cart page after creating the order
-  } catch (error) {
-    console.error('Failed to create order:', error);
-  }
-};
+//     totalPrice:product.price * quantity
+//    }
+//   try {
+//     console.log(orderProduct);
+//     await createOrder(orderProduct).unwrap();
+//     navigate('/cart'); // Redirect to the cart page after creating the order
+//   } catch (error) {
+//     console.error('Failed to create order:', error);
+//   }
+// };
 
     if (singleProductLoading) return <div className="text-center text-lg">Loading...</div>;
     if (error) return <div className="text-center text-red-500">Error loading product.</div>;
@@ -99,11 +113,11 @@ if(!user){
             <div className="flex space-x-4 mb-6">
            <Link to='/cart'>
            <button
-              onClick={handleAddToCartAndCreateOrder}
-              disabled={isCreatingOrder}
+              onClick={handleAddToCart}
+              // disabled={isCreatingOrder}
               className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition-colors duration-300"
             >
-              {isCreatingOrder ? 'Creating Order...' : 'Add to Cart & Create Order'}
+             Add to Cart 
             </button>
            </Link>
               <Link to='' className="bg-gray-200 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300">

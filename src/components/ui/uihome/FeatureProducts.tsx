@@ -1,11 +1,18 @@
 
 
 import { Link } from "react-router-dom";
-import { products } from "../../products/products";
+// import { products } from "../../products/products";
 import ProductCard from "../../products/ProductCard";
+import { useGetAllProductsQuery } from "../../../redux/features/products/productsApi";
+import Loading from "../Loading";
 
 const FeatureProducts = () => {
-  return (
+  const {data,isLoading}= useGetAllProductsQuery(undefined);
+  console.log("main data",data?.data);
+  const products = data?.data
+  return isLoading ? (
+    <Loading/>
+  ) : (
    
     <div className="container  pt-10">
       {/* Header section */}
@@ -23,10 +30,10 @@ const FeatureProducts = () => {
       </div>
       {/* Body section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  md:gap-10 place-items-center">
-        {products.map((product) => (
+        {products?.map((product) => (
          
          
-         <ProductCard key={product.id} {...product} />
+         <ProductCard key={product._id} product={product} />
          
         ))}
       </div>

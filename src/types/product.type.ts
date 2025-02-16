@@ -1,5 +1,4 @@
 export type TBike = {
-    id: string;
     _id: string;
     name: string;
     model: string;

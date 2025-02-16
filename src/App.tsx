@@ -12,9 +12,14 @@ import Cart from "./components/cartpage/Cart";
 import CheckoutPage from "./components/cheakoutPage/CheakOutPage";
 import SignUp from "./components/register/SignUp";
 import SignIn from "./components/register/SignIn";
-import OrderManagement from "./components/dashboard/orderManagement/OrderManagement";
-import ProductManagement from "./components/dashboard/productManagemant/OrderManagement";
+import OrderManagement from "./components/dashboard/admin/orderManagement/OrderManagement";
+import ProductManagement from "./components/dashboard/admin/productManagemant/OrderManagement";
 import UserProfile from "./components/dashboard/user profile/UserProfile";
+import VerifyOrder from "./components/order/VerifyOrder";
+import Order from "./components/order/Order";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
+import ProductDetails from "./components/products/ProductDetails";
+import MyOrder from "./components/dashboard/customer/MyOrder";
 // import React, { useEffect, useState } from "react"
 
 
@@ -53,17 +58,24 @@ function App() {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path="products" element={<ProductsPage />} />
+        <Route path="products/:productId" element={<ProductDetails />} />
         <Route path="about" element={<About/>} />
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="cart" element={<Cart />} />
         <Route path="checkout" element={<CheckoutPage />} />
+        <Route element={<ProtectedRoute />}>
+        <Route path="/order/verify" element={<VerifyOrder />} />
+        <Route path="/order" element={<Order />} />
+        </Route>
+        
       </Route>
 
       {/* Authenticated Routes with DashboardLayout */}
       <Route path="/dashboard" element={<DashboardLayout/>}>
         <Route index element={<Dashboard/>} />
         <Route path="orders" element={<OrderManagement/>} />
+        <Route path="my-orders" element={<MyOrder/>} />
         <Route path="products" element={<ProductManagement/>} />
         <Route path="profile" element={<UserProfile />} />
       </Route>

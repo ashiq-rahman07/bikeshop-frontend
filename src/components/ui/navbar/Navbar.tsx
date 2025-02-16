@@ -44,7 +44,7 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const token = useAppSelector(useCurrentToken);
   const dropdownRef = useRef<HTMLDivElement>(null);
-console.log(token);
+// console.log(token);
 
   
 

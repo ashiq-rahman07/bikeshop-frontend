@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
-import { products } from "./products";
+// import { products } from "./products";
 import ProductCard from "./ProductCard";
+import { useGetAllProductsQuery } from "../../redux/features/products/productsApi";
+import Loading from "../ui/Loading";
 
 
 const ProductsPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+    const {data,isLoading}= useGetAllProductsQuery(undefined);
+    
+    const products = data?.data
+    const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({
-    priceRange: [0, 20000],
+    priceRange: [0, 10000],
     brand: '',
     category: '',
     model: '',
@@ -16,7 +21,7 @@ const ProductsPage = () => {
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
+    setSearchTerm(e.target.value);
   };
 
   // Handle filter changes
@@ -29,12 +34,12 @@ const ProductsPage = () => {
   };
 
   // Filter and search products
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = products?.filter((product) => {
     // Search by brand, name, or category
     const matchesSearch =
-      product.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchQuery.toLowerCase());
+      product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.category.toLowerCase().includes(searchTerm.toLowerCase());
 
     // Filter by price range
     const matchesPrice =
@@ -50,22 +55,20 @@ const ProductsPage = () => {
     const matchesModel = filters.model ? product.model === filters.model : true;
 
     // Filter by availability
-    const matchesAvailability =
-      filters.availability === 'all'
-        ? true
-        : filters.availability === 'available'
-        ? product.availability
-        : !product.availability;
-        return (
-          matchesSearch &&
-          matchesPrice &&
-          matchesBrand &&
-          matchesCategory &&
-          matchesModel &&
-          matchesAvailability
-        );
-      });
-  return (
+
+    return (
+      matchesSearch &&
+      matchesPrice &&
+      matchesBrand &&
+      matchesCategory &&
+      matchesModel 
+   
+    );
+  });
+
+  return isLoading ? (
+    <Loading/>
+  ) :(
     <div className="container mx-auto p-4">
     <h1 className="text-3xl font-poppins font-bold text-center my-8">All Products</h1>
 
@@ -74,7 +77,7 @@ const ProductsPage = () => {
       <input
         type="text"
         placeholder="Search by brand, name, or category"
-        value={searchQuery}
+        value={searchTerm}
         onChange={handleSearchChange}
         className="w-full p-2 border border-gray-300 rounded-lg"
       />
@@ -100,10 +103,10 @@ const ProductsPage = () => {
             type="number"
             name="priceRangeMax"
             placeholder="Max"
-            value={filters.priceRange[1]}
-            onChange={(e) =>
-              setFilters({ ...filters, priceRange: [filters.priceRange[0], Number(e.target.value)] })
-            }
+            // value={filters.priceRange[1]}
+            // onChange={(e) =>
+            //   setFilters({ ...filters, priceRange: [filters.priceRange[0], Number(e.target.value)] })
+            // }
             className="w-full p-2 border border-gray-300 rounded-lg"
           />
         </div>
@@ -114,8 +117,8 @@ const ProductsPage = () => {
         <label className="block text-sm font-medium text-gray-700">Brand</label>
         <select
           name="brand"
-          value={filters.brand}
-          onChange={handleFilterChange}
+          // value={filters.brand}
+          // onChange={handleFilterChange}
           className="w-full p-2 border border-gray-300 rounded-lg"
         >
           <option value="">All Brands</option>
@@ -135,32 +138,20 @@ const ProductsPage = () => {
           className="w-full p-2 border border-gray-300 rounded-lg"
         >
           <option value="">All Categories</option>
-          <option value="Sport">Sport</option>
-          <option value="Cruiser">Cruiser</option>
-          <option value="Adventure">Adventure</option>
+          <option value="Mountain">Mountain</option>
+          <option value="Road">Road</option>
+          <option value="Hybrid">Hybrid</option>
+          <option value="Electric">Electric</option>
         </select>
       </div>
 
-      {/* Availability Filter */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Availability</label>
-        <select
-          name="availability"
-          value={filters.availability}
-          onChange={handleFilterChange}
-          className="w-full p-2 border border-gray-300 rounded-lg"
-        >
-          <option value="all">All</option>
-          <option value="available">Available</option>
-          <option value="unavailable">Unavailable</option>
-        </select>
-      </div>
+   
     </div>
 
     {/* Product Grid */}
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {filteredProducts.map((product) => (
-        <ProductCard key={product.id} {...product} />
+      {filteredProducts?.map((product) => (
+        <ProductCard key={product._id} product={product} />
       ))}
     </div>
   </div>

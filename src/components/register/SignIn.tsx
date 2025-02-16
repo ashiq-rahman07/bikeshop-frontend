@@ -13,6 +13,8 @@ import { TUser } from '../../types/alltypes';
 import { useAppDispatch } from '../../redux/hooks';
 import { verifyToken } from '../../utils/verifyToken';
 import { setUser } from '../../redux/features/user/authSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 
 
@@ -31,6 +33,7 @@ type TFormProps = {
 
 const SignIn = () => {
   const [signInUser, { isLoading, isError, error }] = useSignInUserMutation();
+  const cartItems = useSelector((state: RootState) => state.cart.items);
   // Define the form input types
 
 const navigate = useNavigate();
@@ -60,7 +63,13 @@ const dispatch = useAppDispatch();
       console.log(user);
       dispatch(setUser({ user: user, token: res.data.token }));
       // alert(`Sign-in successful! Token: ${res.token}`);
-      navigate(`/`);
+      if(cartItems.length){
+        navigate('/cart')
+      }else{
+        navigate(`/`);
+      }
+
+      
       // You can save the token to localStorage or Redux state for future requests
       // localStorage.setItem('token', response.token);
     } catch (err) {

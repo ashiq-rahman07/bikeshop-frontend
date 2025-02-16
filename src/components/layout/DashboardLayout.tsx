@@ -18,6 +18,11 @@ const [isSidebarOpen, setIsSidebarOpen] = useState(true);
       icon: '📦',
     },
     {
+      name: 'My Order',
+      path: '/dashboard/my-orders',
+      icon: '📦',
+    },
+    {
       name: 'User Profile',
       path: '/dashboard/profile',
       icon: '👤',
