@@ -1,19 +1,16 @@
-
-
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 // import { products } from "../../products/products";
-import ProductCard from "../../products/ProductCard";
-import { useGetAllProductsQuery } from "../../../redux/features/products/productsApi";
-import Loading from "../Loading";
+import ProductCard from '../../products/ProductCard';
+import { useGetAllProductsQuery } from '../../../redux/features/products/productsApi';
+import Loading from '../Loading';
 
 const FeatureProducts = () => {
-  const {data,isLoading}= useGetAllProductsQuery(undefined);
-  console.log("main data",data?.data);
-  const products = data?.data
+  const { data, isLoading } = useGetAllProductsQuery(undefined);
+  // console.log("main data",data?.data);
+  const products = data?.data;
   return isLoading ? (
-    <Loading/>
+    <Loading />
   ) : (
-   
     <div className="container  pt-10">
       {/* Header section */}
       <div className="mb-6 text-center">
@@ -31,18 +28,20 @@ const FeatureProducts = () => {
       {/* Body section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  md:gap-10 place-items-center">
         {products?.map((product) => (
-         
-         
-         <ProductCard key={product._id} product={product} />
-         
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
       <div className="text-center pb-10">
-        <Link to='/products' type="button" className="rounded-md  bg-gradient-to-r from-primary to-secondary  font-normal text-md text-gray-100 px-4 py-2 hover:bg-purple-400">Explore Our Products</Link>
+        <Link
+          to="/products"
+          type="button"
+          className="rounded-md  bg-gradient-to-r from-primary to-secondary  font-normal text-md text-gray-100 px-4 py-2 hover:bg-purple-400"
+        >
+          Explore Our Products
+        </Link>
       </div>
     </div>
- 
-  )
-}
+  );
+};
 
-export default FeatureProducts
+export default FeatureProducts;

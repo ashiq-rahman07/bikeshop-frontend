@@ -7,12 +7,15 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
+    "prettier:fix": "npx prettier --write src",
     "preview": "vite preview"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
     "aos": "^2.3.4",
     "jwt-decode": "^4.0.0",
+    "prettier": "^3.5.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
@@ -20,6 +23,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.5",
     "react-slick": "^0.30.3",
+    "react-toastify": "^11.0.3",
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
     "sonner": "^1.7.4"

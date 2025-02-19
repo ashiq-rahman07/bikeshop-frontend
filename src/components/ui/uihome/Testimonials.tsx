@@ -1,32 +1,32 @@
-import Slider from "react-slick";
+import Slider from 'react-slick';
 
-import Image1 from "../../../assets/hero/bike6.png";
-import Image2 from "../../../assets/hero/bike9.png";
-import Image3 from "../../../assets/hero/bike3.png";
+import Image1 from '../../../assets/hero/bike6.png';
+import Image2 from '../../../assets/hero/bike9.png';
+import Image3 from '../../../assets/hero/bike3.png';
 const TestimonialData = [
   {
     id: 1,
-    name: "Victor",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
+    name: 'Victor',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio',
     img: Image1,
   },
   {
     id: 2,
-    name: "Satya Nadella",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
+    name: 'Satya Nadella',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio',
     img: Image2,
   },
   {
     id: 3,
-    name: "Virat Kohli",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
+    name: 'Virat Kohli',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio',
     img: Image3,
   },
   {
     id: 5,
-    name: "Sachin Tendulkar",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
-    img: "https://picsum.photos/103/103",
+    name: 'Sachin Tendulkar',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio',
+    img: 'https://picsum.photos/103/103',
   },
 ];
 
@@ -39,7 +39,7 @@ const Testimonials = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
-    cssEase: "linear",
+    cssEase: 'linear',
     pauseOnHover: true,
     pauseOnFocus: true,
     responsive: [
@@ -90,7 +90,7 @@ const Testimonials = () => {
         <div data-aos="zoom-in">
           <Slider {...settings}>
             {TestimonialData.map((data) => (
-              <div className="my-6">
+              <div className="my-6" key={data.id}>
                 <div
                   key={data.id}
                   className="flex flex-col gap-4 dark:bg-gray-800 bg-primary/40 shadow-lg py-8 px-6 mx-4 rounded-xl relative"
@@ -105,9 +105,7 @@ const Testimonials = () => {
                   <div className="flex flex-col items-center gap-4">
                     <div className="space-y-3">
                       <p className="text-xs ">{data.text}</p>
-                      <h1 className="text-xl font-bold ">
-                        {data.name}
-                      </h1>
+                      <h1 className="text-xl font-bold ">{data.name}</h1>
                     </div>
                   </div>
                   <p className="  text-7xl font-serif absolute top-0 right-0">

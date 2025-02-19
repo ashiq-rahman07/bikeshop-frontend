@@ -1,39 +1,38 @@
-
-import footerLogo from "../../assets/hero/bike1.png"
-import Banner from "../../assets/footer-pattern.jpg";
+import footerLogo from '../../assets/hero/bike1.png';
+import Banner from '../../assets/footer-pattern.jpg';
 import {
   FaFacebook,
   FaInstagram,
   FaLinkedin,
   FaLocationArrow,
   FaMobileAlt,
-} from "react-icons/fa";
+} from 'react-icons/fa';
 
 const BannerImg = {
   backgroundImage: `url(${Banner})`,
-  backgroundPosition: "bottom",
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
-  height: "100%",
-  width: "100%",
+  backgroundPosition: 'bottom',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+  height: '100%',
+  width: '100%',
 };
 
 const FooterLinks = [
   {
-    title: "Home",
-    link: "/#",
+    title: 'Home',
+    link: '/#',
   },
   {
-    title: "About",
-    link: "/#about",
+    title: 'About',
+    link: '/#about',
   },
   {
-    title: "Contact",
-    link: "/#contact",
+    title: 'Contact',
+    link: '/#contact',
   },
   {
-    title: "Blog",
-    link: "/#blog",
+    title: 'Blog',
+    link: '/#blog',
   },
 ];
 

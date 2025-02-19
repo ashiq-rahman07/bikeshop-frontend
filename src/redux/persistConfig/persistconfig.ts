@@ -1,9 +1,9 @@
-import  storage  from 'redux-persist/lib/storage';
+import storage from 'redux-persist/lib/storage';
 export const authPersistConfig = {
-    key: 'auth',
-    storage,
-  };
+  key: 'auth',
+  storage,
+};
 export const cartPersistConfig = {
-    key: 'cart',
-    storage,
-  };
+  key: 'cart',
+  storage,
+};

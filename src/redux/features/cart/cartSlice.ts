@@ -4,13 +4,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // import { TBike } from '../../../types/product.type';
 // import { Product } from '../../data/products';
 
-interface CartItem  {
-  product:string,
-  name: string,
-  price: number,
-  quantity: number,
- 
-  imageUrl: string,
+interface CartItem {
+  product: string;
+  name: string;
+  price: number;
+  quantity: number;
+
+  imageUrl: string;
 }
 
 interface CartState {
@@ -26,7 +26,9 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<CartItem>) => {
-      const existingItem = state.items.find((item) => item.product === action.payload.product);
+      const existingItem = state.items.find(
+        (item) => item.product === action.payload.product,
+      );
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
@@ -34,22 +36,28 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart: (state, action: PayloadAction<string>) => {
-      state.items = state.items.filter((item) => item.product !== action.payload);
+      state.items = state.items.filter(
+        (item) => item.product !== action.payload,
+      );
     },
-    updateQuantity: (state, action: PayloadAction<{ product: string; quantity: number }>) => {
-      const item = state.items.find((item) => item.product === action.payload.product);
+    updateQuantity: (
+      state,
+      action: PayloadAction<{ product: string; quantity: number }>,
+    ) => {
+      const item = state.items.find(
+        (item) => item.product === action.payload.product,
+      );
       if (item) {
         item.quantity = action.payload.quantity;
       }
     },
-    removeAllCart:(state)=>{
-      state.items=[]
-    }
+    removeAllCart: (state) => {
+      state.items = [];
+    },
   },
 });
 
-
-
-export const { addToCart, removeFromCart, updateQuantity,removeAllCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity, removeAllCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

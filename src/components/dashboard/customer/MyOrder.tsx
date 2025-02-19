@@ -1,22 +1,19 @@
 // pages/dashboard/Orders.tsx
 
-import { Link } from "react-router-dom";
-import { useGetOrdersByUserQuery } from "../../../redux/features/order/order";
-import { selectCurrentUser } from "../../../redux/features/user/authSlice";
-import { useAppSelector } from "../../../redux/hooks";
-import { Order } from "../../order/Order";
-import Loading from "../../ui/Loading";
-
-
-
+import { Link } from 'react-router-dom';
+import { useGetOrdersByUserQuery } from '../../../redux/features/order/order';
+import { selectCurrentUser } from '../../../redux/features/user/authSlice';
+import { useAppSelector } from '../../../redux/hooks';
+import { Order } from '../../order/Order';
+import Loading from '../../ui/Loading';
 
 const MyOrder = () => {
-     const user = useAppSelector(selectCurrentUser);
-    const userId =user?.userId
-    const { isLoading, data,isError } = useGetOrdersByUserQuery(userId, {
-        refetchOnMountOrArgChange: true,
-      });
-      const orderData: Order[] = data?.data;
+  const user = useAppSelector(selectCurrentUser);
+  const userId = user?.userId;
+  const { isLoading, data, isError } = useGetOrdersByUserQuery(userId, {
+    refetchOnMountOrArgChange: true,
+  });
+  const orderData: Order[] = data?.data;
 
   if (isLoading) {
     return <Loading />;
@@ -51,17 +48,23 @@ const MyOrder = () => {
                       order.status === 'Completed'
                         ? 'bg-green-100 text-green-700'
                         : order.status === 'Pending'
-                        ? 'bg-yellow-100 text-yellow-700'
-                        : 'bg-red-100 text-red-700'
+                          ? 'bg-yellow-100 text-yellow-700'
+                          : 'bg-red-100 text-red-700'
                     }`}
                   >
                     {order.status}
                   </span>
                 </td>
-                <td className="py-2 px-4 border-b">${order.totalPrice.toFixed(2)}</td>
                 <td className="py-2 px-4 border-b">
-                    <Link to={`/order/verify?order_id=${order.transaction.id}`}  className="text-primary hover:text-primary-dark">View Details</Link>
-                  
+                  ${order.totalPrice.toFixed(2)}
+                </td>
+                <td className="py-2 px-4 border-b">
+                  <Link
+                    to={`/order/verify?order_id=${order.transaction.id}`}
+                    className="text-primary hover:text-primary-dark"
+                  >
+                    View Details
+                  </Link>
                 </td>
               </tr>
             ))}
