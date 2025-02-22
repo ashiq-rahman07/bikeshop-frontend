@@ -1,29 +1,23 @@
+import { TResponse, TResponseRedux } from '../../../types/global';
 import { IOrder } from '../../../types/order/orderType';
 import { baseApi } from '../../api/baseApi';
 
 // Define interfaces for your data structures
 interface OrderInfo {
   // Define the structure of the order information
-  id: string;
-  userId: string;
-  items: Array<{
-    productId: string;
-    quantity: number;
-  }>;
-  totalPrice: number;
+products:Cart[]
+  
+
   // Add other fields as necessary
 }
 
-interface Order {
-  id: string;
-  userId: string;
-  items: Array<{
-    productId: string;
-    quantity: number;
-  }>;
-  totalPrice: number;
-  status: string;
-  // Add other fields as necessary
+
+interface Cart {
+  product: string;
+  name: string;
+  price: number;
+  imageUrl: string;
+  quantity: number;
 }
 
 interface IOrderResponse {
@@ -31,16 +25,17 @@ interface IOrderResponse {
   message:string;
   data:IOrder[]
 }
-
-interface VerifyOrderResponse {
-  isValid: boolean;
-  message?: string;
+interface CreateResponse {
+  status:boolean;
+  message:string;
+  data:string
 }
 
 
+
 const orderApi = baseApi.injectEndpoints({
-  endpoints: (builder) => ({
-    createOrder: builder.mutation<Order, OrderInfo>({
+  endpoints: (builder) =>({
+    createOrder: builder.mutation <CreateResponse ,OrderInfo>({
       query: (orderInfo) => ({
         url: '/orders/create-order',
         method: 'POST',

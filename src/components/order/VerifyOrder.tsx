@@ -154,7 +154,7 @@ const VerifyOrder = () => {
                 </>
               ) : (
                 <>
-                  <span className="text-yellow-500">Not Verified</span>
+                 <span className="text-green-500">Verified</span>
                 </>
               )}
             </div>

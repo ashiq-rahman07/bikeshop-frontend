@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 const CustomerDashboardIndexPage: React.FC = () => {
@@ -16,11 +17,17 @@ const CustomerDashboardIndexPage: React.FC = () => {
   ];
 
   return (
-    <div className="p-6 bg-gray-100 dark:bg-gray-900 dark:text-gray-100 text-gray-950 min-h-screen">
+   <>
+   <Helmet>
+    <title>Dashboard-customer-Classic Riders</title>
+        
+
+    </Helmet>
+     <div className="p-6 bg-gray-100 dark:bg-gray-900 dark:text-gray-100 text-gray-950 min-h-screen">
       {/* Header */}
       <div className="mb-8 text-center">
         <h1 className="text-3xl font-bold">Welcome Back, John!</h1>
-        <p className="">Here's what's happening with your account today.</p>
+        <p className="">this page demo.later update</p>
       </div>
 
       {/* Recent Orders */}
@@ -114,6 +121,7 @@ const CustomerDashboardIndexPage: React.FC = () => {
         </div>
       </div>
     </div>
+   </>
   );
 };
 

@@ -14,11 +14,12 @@ import { useCurrentToken } from '../../redux/features/user/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../ui/Loading';
 import { FaLongArrowAltRight } from 'react-icons/fa';
+import { Helmet } from 'react-helmet';
 
 const Cart = () => {
   const token = useAppSelector(useCurrentToken);
   const cartItems = useSelector((state: RootState) => state.cart.items);
-  console.log(cartItems);
+                       
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,10 +36,11 @@ const Cart = () => {
     (total, item) => total + item.price * item.quantity,
     0,
   );
-  // console.log(useCreateOrderMutation());
+  
   const [createOrder, { isLoading, isSuccess, data, isError, error }] =
     useCreateOrderMutation();
-console.log(data);
+   
+
   const handlePlaceOrder = async () => {
     try {
       if (!token) {
@@ -46,6 +48,7 @@ console.log(data);
       }
 
       await createOrder({ products: cartItems });
+
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -57,24 +60,30 @@ console.log(data);
     if (isLoading && token) toast.loading('Processing ...', { id: toastId });
 
     if (isSuccess) {
-      toast.success(data?.message, { id: toastId });
+      toast.success(data?.status, { id: toastId });
 
       dispatch(removeAllCart());
 
       if (data?.data) {
         setTimeout(() => {
-          window.location.href = data.data;
+          window.location.href = data.data; 
         }, 500);
       }
     }
 
     if (isError) toast.error(JSON.stringify(error), { id: toastId });
   }, [data?.data, data?.message, error, isError, isLoading, isSuccess]);
-  // [data?.data, data?.message, error, isError, isLoading, isSuccess]
+  
 
   return isLoading ? (
     <Loading />
   ) : (
+    <>
+     <Helmet>
+    <title>Checkout - Classic Riders</title>
+        <meta name="description" content="Welcome to the home page of Classic Riders" />
+
+    </Helmet>
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-poppins font-bold text-center my-8">
         Your Cart
@@ -143,6 +152,8 @@ console.log(data);
         </div>
       )}
     </div>
+    </>
+    
   );
 };
 

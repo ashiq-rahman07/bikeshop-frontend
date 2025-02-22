@@ -2,23 +2,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Link, useNavigate } from 'react-router-dom';
 
-// import { FaRegUser } from "react-icons/fa";
-// import { MdOutlineMail, MdOutlineRemoveRedEye  } from "react-icons/md";
+
 import {
   RegisterUserPayload,
   useRegisterUserMutation,
 } from '../../redux/features/user/authApi';
 import { useForm } from 'react-hook-form';
 import { TUser } from '../../types/alltypes';
-// import PHInput from "../ui/form/PHInput";
-// import PHForm from "../ui/form/PHForm";
+
 import { style } from './form.style';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
-// type TFormConfig = {
-//   defaultValues?: Record<string, any>;
-//   resolver?: any;
-// };
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -29,16 +24,15 @@ const SignUp = () => {
     reset,
     formState: { errors },
   } = useForm<TUser>();
-  console.log(errors)
-  // Explicitly type the errors object
 
+ 
   const [registerUser, { isLoading, isError, error }] =
     useRegisterUserMutation();
-  // const onSubmit: SubmitHandler<TUser> = (data) => console.log(data)
+  
 
   const onSubmit = async (data: RegisterUserPayload) => {
     try {
-      console.log(data);
+    
       await registerUser(data as RegisterUserPayload).unwrap();
 
       toast.success('Register successfully!');
@@ -49,7 +43,13 @@ const SignUp = () => {
     }
   };
   return (
-    <div className="font-[sans-serif] relative">
+   <>
+       <Helmet>
+    <title>Sign In- Classic Riders</title>
+        <meta name="description" content="Welcome to the home page of Classic Riders" />
+
+    </Helmet>
+     <div className="font-[sans-serif] relative">
       <div className="h-[240px] font-[sans-serif]">
         <img
           src="https://i.ibb.co.com/wppqnqS/segway-xyber-header.jpg"
@@ -127,6 +127,7 @@ const SignUp = () => {
         </form>
       </div>
     </div>
+   </>
   );
 };
 
