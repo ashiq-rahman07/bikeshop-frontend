@@ -6,17 +6,18 @@ import { Helmet } from 'react-helmet';
 const Home = () => {
   return (
     <>
-    <Helmet>
-    <title>Home - Classic Riders</title>
-        <meta name="description" content="Welcome to the home page of Classic Riders" />
+      <Helmet>
+        <title>Home - Classic Riders</title>
+        <meta
+          name="description"
+          content="Welcome to the home page of Classic Riders"
+        />
+      </Helmet>
 
-    </Helmet>
-    
       <Hero />
       <FeatureProducts />
       <Subscribe />
       <Testimonials />
-    
     </>
   );
 };

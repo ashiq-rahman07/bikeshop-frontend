@@ -9,7 +9,7 @@ import DashboardLayout from './components/layout/DashboardLayout';
 import Dashboard from './components/dashboard/Dashboard';
 import React from 'react';
 import Cart from './components/cartpage/Cart';
-import CheckoutPage from './components/cheakoutPage/CheakOutPage';
+
 import SignUp from './components/register/SignUp';
 import SignIn from './components/register/SignIn';
 import OrderManagement from './components/dashboard/admin/orderManagement/OrderManagement';
@@ -28,8 +28,6 @@ import UpdateProdact from './components/dashboard/admin/productManagemant/Update
 // import React, { useEffect, useState } from "react"
 
 function App() {
- 
-
   React.useEffect(() => {
     AOS.init({
       offset: 100,
@@ -52,7 +50,7 @@ function App() {
           <Route path="signin" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="cart" element={<Cart />} />
-          <Route path="checkout" element={<CheckoutPage />} />
+
           <Route element={<ProtectedRoute />}>
             <Route path="/order/verify" element={<VerifyOrder />} />
             <Route path="/order" element={<Order />} />
@@ -62,16 +60,17 @@ function App() {
         {/* Authenticated Routes with DashboardLayout */}
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route index element={<Dashboard/>} />
+            <Route index element={<Dashboard />} />
             <Route path="orders" element={<OrderManagement />} />
             <Route path="my-orders" element={<MyOrder />} />
             <Route path="products" element={<ProductManagement />} />
             <Route path="customers" element={<CustomerManagementPage />} />
             <Route path="profile" element={<UserProfile />} />
             <Route path="products/create" element={<AddProdact />} />
-            <Route path="products/update/:productId" element={<UpdateProdact />} />
-            {/* <Route path="user" element={<CustomerDashboardIndexPage />} /> */}
-            
+            <Route
+              path="products/update/:productId"
+              element={<UpdateProdact />}
+            />
           </Route>
         </Route>
       </Routes>

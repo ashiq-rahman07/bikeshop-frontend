@@ -100,7 +100,6 @@ const ProductDetails = () => {
             <p className="mb-4 text-md font-medium">Model: {product?.model}</p>
             <div className="mb-4">
               <span className="text-2xl font-bold mr-2">${product?.price}</span>
-              
             </div>
             <p className="dark:bg-text-gray-400 mb-6">{product?.description}</p>
             <div className="mb-6">
@@ -134,7 +133,6 @@ const ProductDetails = () => {
                   Add to Cart
                 </button>
               </Link>
-            
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-2">Key Features:</h3>

@@ -1,6 +1,4 @@
-import React from 'react';
-
-const About= () => {
+const About = () => {
   return (
     <div className="bg-gray-100 dark:bg-gray-900 text-gray-950 dark:text-gray-200">
       {/* Hero Section */}
@@ -25,14 +23,15 @@ const About= () => {
           </div>
           <div className="flex flex-col justify-center">
             <p className=" mb-4">
-              Welcome to <strong>Bike Shop</strong>, where passion for cycling meets exceptional
-              service. Founded in 2010, we have been dedicated to providing high-quality bikes,
-              accessories, and expert advice to cyclists of all levels.
+              Welcome to <strong>Bike Shop</strong>, where passion for cycling
+              meets exceptional service. Founded in 2010, we have been dedicated
+              to providing high-quality bikes, accessories, and expert advice to
+              cyclists of all levels.
             </p>
             <p className="">
-              Our mission is to inspire and empower people to embrace cycling as a lifestyle. Whether
-              you're a seasoned rider or just starting, we're here to support you every pedal of the
-              way.
+              Our mission is to inspire and empower people to embrace cycling as
+              a lifestyle. Whether you're a seasoned rider or just starting,
+              we're here to support you every pedal of the way.
             </p>
           </div>
         </div>
@@ -88,8 +87,8 @@ const About= () => {
             <div className="text-4xl mb-4">🚴‍♂️</div>
             <h3 className="text-xl font-bold mb-2">Expert Advice</h3>
             <p className="">
-              Our team of cycling enthusiasts is here to guide you in finding the perfect bike and
-              gear.
+              Our team of cycling enthusiasts is here to guide you in finding
+              the perfect bike and gear.
             </p>
           </div>
 
@@ -98,7 +97,8 @@ const About= () => {
             <div className="text-4xl mb-4">🔧</div>
             <h3 className="text-xl font-bold mb-2">Quality Service</h3>
             <p className="">
-              We offer top-notch maintenance and repair services to keep your bike in peak condition.
+              We offer top-notch maintenance and repair services to keep your
+              bike in peak condition.
             </p>
           </div>
 
@@ -115,10 +115,12 @@ const About= () => {
 
       {/* Call to Action Section */}
       <div className="relative h-80 flex items-center justify-center bg-[url('https://i.ibb.co.com/BnJZb7L/the-top-10-street-bikes-we-cant-wait-to-ride-in-2019-ducati-diavel.jpg')] bg-cover bg-center opacity-90">
-      <div className="absolute inset-0 bg-black  opacity-80"></div>
-        <div className="container mx-auto px-6 text-center text-white opacity-90" >
+        <div className="absolute inset-0 bg-black  opacity-80"></div>
+        <div className="container mx-auto px-6 text-center text-white opacity-90">
           <h2 className="text-3xl font-bold mb-4 ">Ready to Ride?</h2>
-          <p className="text-xl mb-8">Explore our collection of bikes and gear today!</p>
+          <p className="text-xl mb-8">
+            Explore our collection of bikes and gear today!
+          </p>
           <a
             href="/products"
             className="bg-white text-gray-800 px-6 py-3 rounded-full font-bold hover:bg-gray-200 transition-colors"

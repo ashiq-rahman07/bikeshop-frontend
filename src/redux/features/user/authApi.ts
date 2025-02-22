@@ -53,21 +53,20 @@ export interface SignInUserPayload {
   email: string;
   password: string;
 }
-type  IUser ={
-  _id:string;
+type IUser = {
+  _id: string;
   name: string;
   email: string;
   password: string;
   role: 'admin' | 'customer';
-  isActive:boolean,
+  isActive: boolean;
   phone: string;
   address: string;
-}
-export interface UserResponse{
-  success:boolean;
-  message:string;
-  data:IUser[]
-
+};
+export interface UserResponse {
+  success: boolean;
+  message: string;
+  data: IUser[];
 }
 const registerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -92,18 +91,24 @@ const registerApi = baseApi.injectEndpoints({
       query: (userId) => `/user/${userId}`,
     }),
 
-    updateUser: builder.mutation< UserResponse,{ userId: string; userData: Partial<IUser> }>({
+    updateUser: builder.mutation<
+      UserResponse,
+      { userId: string; userData: Partial<IUser> }
+    >({
       query: ({ userId, userData }) => ({
         url: `/user/${userId}`,
         method: 'PATCH',
         body: userData,
       }),
     }),
-    updateUserStatus: builder.mutation< UserResponse,{ userId: string; isActive:boolean}>({
+    updateUserStatus: builder.mutation<
+      UserResponse,
+      { userId: string; isActive: boolean }
+    >({
       query: ({ userId, isActive }) => ({
         url: `/user/status/${userId}`,
         method: 'PATCH',
-        body: {isActive},
+        body: { isActive },
       }),
       // invalidatesTags: (result, error, { id }) => [{ type: 'User', id }]
     }),
@@ -117,13 +122,11 @@ const registerApi = baseApi.injectEndpoints({
 
     changePassword: builder.mutation({
       query: (data) => ({
-        
         url: '/auth/change-password',
         method: 'POST',
         body: data,
       }),
     }),
-
   }),
 });
 
@@ -135,7 +138,7 @@ export const {
   useUpdateUserMutation,
   useUpdateUserStatusMutation,
   useDeleteUserMutation,
-  useChangePasswordMutation
+  useChangePasswordMutation,
 } = registerApi;
 
 // export const { useRegisterUserMutation,  useSignInUserMutation,useGetUsersQuery,useGetSingleUserQuery,useDeleteUserMutation} = registerApi;

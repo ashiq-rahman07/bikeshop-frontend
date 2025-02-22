@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Action, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import cartReducer from '../redux/features/cart/cartSlice';
 import authReducer from '../redux/features/user/authSlice';
-// import authReducer from '../redux/features/user/authSlice'
+
 import {
   persistReducer,
   persistStore,
@@ -18,14 +18,7 @@ import {
   cartPersistConfig,
 } from './persistConfig/persistconfig';
 import { baseApi } from './api/baseApi';
-// import storage from 'redux-persist/lib/storage';
 
-// const persistConfig = {
-//   key: 'auth',
-//   storage,
-// };
-
-// const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer);
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 export const store = configureStore({

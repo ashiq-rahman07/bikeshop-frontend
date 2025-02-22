@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import PfImg from '../../../images/pf.png'
-import {
-  selectCurrentUser,
-  useCurrentToken,
-} from '../../../redux/features/user/authSlice';
+import PfImg from '../../../images/pf.png';
+import { selectCurrentUser } from '../../../redux/features/user/authSlice';
 import { useAppSelector } from '../../../redux/hooks';
 import {
   useGetSingleUserQuery,
@@ -12,11 +9,9 @@ import {
 } from '../../../redux/features/user/authApi';
 import Loading from '../../ui/Loading';
 
-
-import {  useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { style } from '../../register/form.style';
-
 
 import { TUser } from '../../../types/alltypes';
 import { useState } from 'react';
@@ -25,15 +20,15 @@ import { toast } from 'react-toastify';
 
 const UserProfile = () => {
   const user = useAppSelector(selectCurrentUser);
-  const token = useAppSelector(useCurrentToken);
+
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const { data, isLoading, isError, refetch } = useGetSingleUserQuery(
     user?.userId,
   );
   const userProfile = data?.data;
   // Update user mutation
-  const [updateUser, { isLoading: isUpdating,isSuccess:isUpdatingSucces,isError:isUpdatingError }] = useUpdateUserMutation();
-  
+  const [updateUser, { isError: isUpdatingError }] = useUpdateUserMutation();
+
   type TUpdateFormInputs = {
     name: string;
     email: string;
@@ -51,44 +46,26 @@ const UserProfile = () => {
   const {
     register,
     handleSubmit,
-    reset,
+
     formState: { errors },
   } = useForm<TUpdateFormInputs>();
-    // console.log(errors);
 
-  const onSubmit = async (data:TUpdateFormInputs) => {
-    console.log(data);
+  const onSubmit = async (data: TUpdateFormInputs) => {
     const userData = data as Partial<TUser>;
     const userId = userProfile?._id as string;
     try {
-      // const tostId = toast.loading("Profile Updating......")
-//do something else
-
       await updateUser({ userId, userData }).unwrap();
- 
-      toast.success("User profile updating....")
-      
-    
-   
- 
+
+      toast.success('User profile updating....');
+
       refetch();
-    
 
-      if(isUpdatingSucces){
-        toast.success('Profile Update Succesfully')
-
-        
+      if (isUpdatingError) {
+        toast.error('Profile Update Failed');
         refetch();
       }
-
-      if(isUpdatingError){
-        toast.error('Profile Update Failed')
-        refetch();
-      }
-      
-      
     } catch (err) {
-      toast.error('Profile Update Failed')
+      toast.error('Profile Update Failed');
     }
   };
   // // Show loading or error state
@@ -133,81 +110,73 @@ const UserProfile = () => {
           </h2>
 
           <form
-          onSubmit={handleSubmit(onSubmit)}
-        
-          className={`${style.formStyle} `}
-        >
-          <h2 className="text-xl font-bold text-center ">Register</h2>
-
-          <div>
-            <label className="block text-gray-400">Name</label>
-            <input
-              type="text"
-              {...register('name')}
-             defaultValue={defaultValues.name}
-              className={style.authInput}
-            />
-           
-          </div>
-          <div className="mt-4">
-            <label className="block text-gray-400">Email</label>
-            <input
-              type="email"
-              {...register('email')}
-              defaultValue={defaultValues.email}
-              className={style.authInput}
-            />
-         
-          </div>
-          <div className="mt-4">
-            <label className="block text-gray-400">Phone</label>
-            <input
-              type="text"
-              {...register('phone')}
-              defaultValue={defaultValues.phone}
-              className={style.authInput}
-            />
-          
-          </div>
-          <div className="mt-4">
-            <label className="block text-gray-400">Address</label>
-            <input
-              type="text"
-              {...register('address')}
-              defaultValue={defaultValues.address}
-              className={style.authInput}
-            />
-          
-          </div>
-
-        
-          {isError && (
-            <div>
-              Error: {(errors as any)?.data?.message || 'Something went wrong'}
-            </div>
-          )}
-           <div className='mt-4'>
-           <button
-           
-           className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700  duration-300 transition-colors"
-         >
-           Update Profile
-         </button>
-           </div>
-        </form>
-          <div >
-          <p className='text xl my-3'> Change Password</p>
-          <button
-            onClick={() => setIsPasswordModalOpen(true)}
-            className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700  duration-300 transition-colors"
+            onSubmit={handleSubmit(onSubmit)}
+            className={`${style.formStyle} `}
           >
-            Change Password
-          </button>
-        </div>
+            <h2 className="text-xl font-bold text-center ">Register</h2>
+
+            <div>
+              <label className="block text-gray-400">Name</label>
+              <input
+                type="text"
+                {...register('name')}
+                defaultValue={defaultValues.name}
+                className={style.authInput}
+              />
+            </div>
+            <div className="mt-4">
+              <label className="block text-gray-400">Email</label>
+              <input
+                type="email"
+                {...register('email')}
+                defaultValue={defaultValues.email}
+                className={style.authInput}
+              />
+            </div>
+            <div className="mt-4">
+              <label className="block text-gray-400">Phone</label>
+              <input
+                type="text"
+                {...register('phone')}
+                defaultValue={defaultValues.phone}
+                className={style.authInput}
+              />
+            </div>
+            <div className="mt-4">
+              <label className="block text-gray-400">Address</label>
+              <input
+                type="text"
+                {...register('address')}
+                defaultValue={defaultValues.address}
+                className={style.authInput}
+              />
+            </div>
+
+            {isError && (
+              <div>
+                Error:{' '}
+                {(errors as any)?.data?.message || 'Something went wrong'}
+              </div>
+            )}
+            <div className="mt-4">
+              <button className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700  duration-300 transition-colors">
+                Update Profile
+              </button>
+            </div>
+          </form>
+          <div>
+            <p className="text xl my-3"> Change Password</p>
+            <button
+              onClick={() => setIsPasswordModalOpen(true)}
+              className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700  duration-300 transition-colors"
+            >
+              Change Password
+            </button>
+          </div>
         </div>
       </div>
-         {/* Password Change Modal */}
-         <PasswordChangeModal
+      {/* Password Change Modal */}
+      <PasswordChangeModal
         isOpen={isPasswordModalOpen}
         onClose={() => setIsPasswordModalOpen(false)}
       />
@@ -216,4 +185,3 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
-

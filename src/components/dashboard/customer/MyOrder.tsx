@@ -4,16 +4,16 @@ import { Link } from 'react-router-dom';
 import { useGetOrdersByUserQuery } from '../../../redux/features/order/order';
 import { selectCurrentUser } from '../../../redux/features/user/authSlice';
 import { useAppSelector } from '../../../redux/hooks';
-import { Order } from '../../order/Order';
+
 import Loading from '../../ui/Loading';
 
 const MyOrder = () => {
   const user = useAppSelector(selectCurrentUser);
-  const userId = user?.userId;
+  const userId = user?.userId as string;
   const { isLoading, data, isError } = useGetOrdersByUserQuery(userId, {
     refetchOnMountOrArgChange: true,
   });
-  const orderData: Order[] = data?.data;
+  const orderData = data?.data;
 
   if (isLoading) {
     return <Loading />;
@@ -24,14 +24,15 @@ const MyOrder = () => {
   }
 
   return (
-
     <div className="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
-      <h1 className="text-2xl font-poppins font-bold py-6 text-center">My Orders</h1>
+      <h1 className="text-2xl font-poppins font-bold py-6 text-center">
+        My Orders
+      </h1>
 
       <div className="overflow-x-auto dark:bg-gray-800">
         <table className="min-w-full bg-white dark:dark:bg-gray-900">
           <thead>
-            <tr className='bg-gray-100 dark:bg-gray-900'>
+            <tr className="bg-gray-100 dark:bg-gray-900">
               <th className="py-2 px-4 border-b text-left">Order ID</th>
               <th className="py-2 px-4 border-b text-left">Date</th>
               <th className="py-2 px-4 border-b text-left">Status</th>

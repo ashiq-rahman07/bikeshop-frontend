@@ -92,9 +92,7 @@ const ProductsPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {/* Price Range */}
         <div>
-          <label className="block text-sm font-medium ">
-            Price Range
-          </label>
+          <label className="block text-sm font-medium ">Price Range</label>
           <div className="flex space-x-2">
             <input
               type="number"
@@ -115,7 +113,10 @@ const ProductsPage = () => {
               placeholder="Max"
               value={filters.priceRange[1]}
               onChange={(e) =>
-                setFilters({ ...filters, priceRange: [filters.priceRange[0], Number(e.target.value)] })
+                setFilters({
+                  ...filters,
+                  priceRange: [filters.priceRange[0], Number(e.target.value)],
+                })
               }
               className="w-full p-2 border border-gray-300 dark:bg-gray-800 rounded-lg"
             />
@@ -124,9 +125,7 @@ const ProductsPage = () => {
 
         {/* Brand Filter */}
         <div>
-          <label className="block text-sm font-medium ">
-            Brand
-          </label>
+          <label className="block text-sm font-medium ">Brand</label>
           <select
             name="brand"
             value={filters.brand}
@@ -145,9 +144,7 @@ const ProductsPage = () => {
 
         {/* Category Filter */}
         <div>
-          <label className="block text-sm font-medium">
-            Category
-          </label>
+          <label className="block text-sm font-medium">Category</label>
           <select
             name="category"
             value={filters.category}

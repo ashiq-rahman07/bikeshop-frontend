@@ -1,44 +1,40 @@
 import { Link } from 'react-router-dom';
-import { useDeleteProductMutation, useGetAllProductsQuery } from '../../../../redux/features/products/productsApi';
+import {
+  useDeleteProductMutation,
+  useGetAllProductsQuery,
+} from '../../../../redux/features/products/productsApi';
 import { useState } from 'react';
 
 import Loading from '../../../ui/Loading';
 
-
 const ProductManagement = () => {
-const [deleteProduct]=useDeleteProductMutation()
-
+  const [deleteProduct] = useDeleteProductMutation();
 
   const [currentPage, setCurrentPage] = useState(1);
 
-
   // Query parameters
-  const params =[
+  const params = [
     {
-      name:'page',
-      value:currentPage
-    }
-  ] ;
+      name: 'page',
+      value: currentPage,
+    },
+  ];
 
   const {
     data: products,
     isLoading,
     isError,
-    refetch
+    refetch,
   } = useGetAllProductsQuery(params);
- 
-   const allProducts = products?.data || [];
-   const totalProducts = products?.meta?.total || 0; 
-   const totalPages = products?.meta?.totalPage || 0; 
 
-
+  const allProducts = products?.data || [];
+  const totalProducts = products?.meta?.total || 0;
+  const totalPages = products?.meta?.totalPage || 0;
 
   // Handle page change
   const handlePageChange = (pageNumber: number) => {
-
- 
     setCurrentPage(pageNumber);
-    refetch()
+    refetch();
   };
 
   const handleDelete = async (productId: string) => {
@@ -46,7 +42,7 @@ const [deleteProduct]=useDeleteProductMutation()
       try {
         await deleteProduct(productId).unwrap();
         alert('Product deleted successfully!');
-        refetch()
+        refetch();
       } catch (error) {
         console.log(error);
         alert('Failed to delete product.');
@@ -54,21 +50,20 @@ const [deleteProduct]=useDeleteProductMutation()
     }
   };
 
-  if (isLoading) return <Loading/>;
+  if (isLoading) return <Loading />;
   if (isError) return <div>Error loading products.</div>;
   return (
     <div className="p-6 dark:bg-gray-800 dark:text-gray-100 text-gray-900">
       <h1 className="text-2xl font-bold mb-6">Product Management</h1>
 
-      <div className='flex justify-between items Center'>
-      <Link
-        to="/dashboard/products/create"
-       
-        className="bg-gradient-to-r from-primary to-secondary text-gray-100 px-4 py-2 rounded mb-4 inline-block"
-      >
-       Add New Product
-      </Link>
-      <p className='text-xl font-semibold'>Total Products: {totalProducts}</p>
+      <div className="flex justify-between items Center">
+        <Link
+          to="/dashboard/products/create"
+          className="bg-gradient-to-r from-primary to-secondary text-gray-100 px-4 py-2 rounded mb-4 inline-block"
+        >
+          Add New Product
+        </Link>
+        <p className="text-xl font-semibold">Total Products: {totalProducts}</p>
       </div>
       <table className="w-full  dark:dark:bg-slate-700 text-gray-900 dark:text-gray-100 shadow-md rounded-lg overflow-hidden text-center">
         <thead className="bg-gray-200 dark:bg-slate-700">
@@ -81,9 +76,12 @@ const [deleteProduct]=useDeleteProductMutation()
             <th className="px-4 py-2">Actions</th>
           </tr>
         </thead>
-        <tbody className='dark:bg-slate-800'>
+        <tbody className="dark:bg-slate-800">
           {allProducts?.map((product) => (
-            <tr key={product._id} className="border-b border-slate-300 dark:border-slate-600">
+            <tr
+              key={product._id}
+              className="border-b border-slate-300 dark:border-slate-600"
+            >
               <td className="px-4 py-2">{product.name}</td>
               <td className="px-4 py-2">${product.price}</td>
               <td className="px-4 py-2">{product.category}</td>
@@ -108,9 +106,6 @@ const [deleteProduct]=useDeleteProductMutation()
         </tbody>
       </table>
 
-
-
-      
       {/* Pagination */}
       <div className="flex justify-center mt-6">
         {Array.from({ length: totalPages }, (_, index) => (
@@ -127,10 +122,8 @@ const [deleteProduct]=useDeleteProductMutation()
           </button>
         ))}
       </div>
-
-      </div>
-    
-      );
+    </div>
+  );
 };
 
 export default ProductManagement;

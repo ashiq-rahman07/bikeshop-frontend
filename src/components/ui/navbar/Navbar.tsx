@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // import { BiSolidSun, BiSolidMoon } from "react-icons/bi";
 import { HiMenuAlt3, HiMenuAlt1 } from 'react-icons/hi';
 import ResponsiveMenu from './ResponsiveMenu';
@@ -9,10 +9,9 @@ import CartSlide from './CartSlide';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import {
   logout,
-  selectCurrentUser,
   useCurrentToken,
 } from '../../../redux/features/user/authSlice';
-import { verifyToken } from '../../../utils/verifyToken';
+
 import { FaRegUserCircle } from 'react-icons/fa';
 
 export const Navlinks = [
@@ -44,7 +43,7 @@ const Navbar = () => {
 
   const token = useAppSelector(useCurrentToken);
   // console.log('navbar token', token)
-  const user = useAppSelector(selectCurrentUser);
+
   // console.log("navbar user", user)
 
   const dropdownRef = useRef<HTMLDivElement>(null);

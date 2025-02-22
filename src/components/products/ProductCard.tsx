@@ -6,7 +6,6 @@ import { TBike } from '../../types/product.type';
 import { addToCart } from '../../redux/features/cart/cartSlice';
 import { useDispatch } from 'react-redux';
 
-
 type TProductCardProps = {
   product: TBike;
 };

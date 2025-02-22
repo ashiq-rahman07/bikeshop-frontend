@@ -3,6 +3,7 @@ import { useGetOrdersByUserQuery } from '../../redux/features/order/order';
 import { selectCurrentUser } from '../../redux/features/user/authSlice';
 import { useAppSelector } from '../../redux/hooks';
 import Loading from '../ui/Loading';
+import { IOrder } from '../../types/order/orderType';
 
 export interface Transaction {
   id: string;
@@ -33,13 +34,13 @@ export interface Order {
 }
 const Order = () => {
   const user = useAppSelector(selectCurrentUser);
-  const userId = user?.userId;
+  const userId = user?.userId as string;
   console.log(userId);
   const { isLoading, data } = useGetOrdersByUserQuery(userId, {
     refetchOnMountOrArgChange: true,
   });
-  const orderData: Order[] = data?.data;
-  if (orderData.length === 0) {
+  const orderData = data?.data as IOrder[] | undefined;
+  if (orderData?.length === 0) {
     <p className="text-md">
       You Have not Order Yet,{' '}
       <Link to="/product" className="text-blue-600">

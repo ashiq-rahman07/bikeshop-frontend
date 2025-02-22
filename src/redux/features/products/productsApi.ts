@@ -7,7 +7,6 @@ const productsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllProducts: builder.query({
       query: (args) => {
-       
         const params = new URLSearchParams();
 
         if (args) {

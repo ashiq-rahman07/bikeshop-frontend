@@ -1,8 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../store';
 
-
-
 // const backUrl = "https://asignment-2-five.vercel.app/api/v1"
 
 export const baseApi = createApi({

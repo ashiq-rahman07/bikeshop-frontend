@@ -19,7 +19,6 @@ import { Helmet } from 'react-helmet';
 const Cart = () => {
   const token = useAppSelector(useCurrentToken);
   const cartItems = useSelector((state: RootState) => state.cart.items);
-                       
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,10 +35,9 @@ const Cart = () => {
     (total, item) => total + item.price * item.quantity,
     0,
   );
-  
+
   const [createOrder, { isLoading, isSuccess, data, isError, error }] =
     useCreateOrderMutation();
-   
 
   const handlePlaceOrder = async () => {
     try {
@@ -48,7 +46,6 @@ const Cart = () => {
       }
 
       await createOrder({ products: cartItems });
-
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -66,94 +63,94 @@ const Cart = () => {
 
       if (data?.data) {
         setTimeout(() => {
-          window.location.href = data.data; 
+          window.location.href = data.data;
         }, 500);
       }
     }
 
     if (isError) toast.error(JSON.stringify(error), { id: toastId });
   }, [data?.data, data?.message, error, isError, isLoading, isSuccess]);
-  
 
   return isLoading ? (
     <Loading />
   ) : (
     <>
-     <Helmet>
-    <title>Checkout - Classic Riders</title>
-        <meta name="description" content="Welcome to the home page of Classic Riders" />
-
-    </Helmet>
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-poppins font-bold text-center my-8">
-        Your Cart
-      </h1>
-      {cartItems.length === 0 ? (
-        <p className="text-center text-gray-600">Your cart is empty.</p>
-      ) : (
-        <div>
-          <div className="space-y-4">
-            {cartItems.map((item) => (
-              <div
-                key={item.product}
-                className="flex items-center justify-between p-4 border border-gray-400 rounded-lg"
-              >
-                <img
-                  src={item.imageUrl}
-                  alt={item.name}
-                  className="w-20 h-20 object-cover"
-                />
-                <div>
-                  <h3 className="font-poppins font-semibold">{item.name}</h3>
-                  <p className="text-gray-600">${item.price}</p>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <input
-                    type="number"
-                    value={item.quantity}
-                    onChange={(e) =>
-                      handleQuantityChange(
-                        item.product,
-                        parseInt(e.target.value),
-                      )
-                    }
-                    className="w-16 p-2 border border-gray-300 dark:bg-gray-700 rounded-lg"
+      <Helmet>
+        <title>Checkout - Classic Riders</title>
+        <meta
+          name="description"
+          content="Welcome to the home page of Classic Riders"
+        />
+      </Helmet>
+      <div className="container mx-auto p-4">
+        <h1 className="text-3xl font-poppins font-bold text-center my-8">
+          Your Cart
+        </h1>
+        {cartItems.length === 0 ? (
+          <p className="text-center text-gray-600">Your cart is empty.</p>
+        ) : (
+          <div>
+            <div className="space-y-4">
+              {cartItems.map((item) => (
+                <div
+                  key={item.product}
+                  className="flex items-center justify-between p-4 border border-gray-400 rounded-lg"
+                >
+                  <img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    className="w-20 h-20 object-cover"
                   />
-                  <button
-                    onClick={() => handleRemoveFromCart(item.product)}
-                    className="text-red-600 hover:text-red-800"
-                  >
-                    Remove
-                  </button>
+                  <div>
+                    <h3 className="font-poppins font-semibold">{item.name}</h3>
+                    <p className="text-gray-600">${item.price}</p>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <input
+                      type="number"
+                      value={item.quantity}
+                      onChange={(e) =>
+                        handleQuantityChange(
+                          item.product,
+                          parseInt(e.target.value),
+                        )
+                      }
+                      className="w-16 p-2 border border-gray-300 dark:bg-gray-700 rounded-lg"
+                    />
+                    <button
+                      onClick={() => handleRemoveFromCart(item.product)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
+              ))}
+            </div>
+            <div className="mt-8 text-right">
+              <p className="text-xl font-poppins font-bold">
+                Total: ${totalPrice.toFixed(2)}
+              </p>
+              <div className="flex justify-between">
+                <Link
+                  to="/products"
+                  className=" flex  items-center justify-center hover:text-primary"
+                >
+                  <span>Continue Shopping</span>{' '}
+                  <FaLongArrowAltRight className="pt-2 text-xl" />
+                </Link>
+                <button
+                  onClick={handlePlaceOrder}
+                  className="mt-4 bg-primary text-white px-6 py-2 rounded hover:bg-primary-dark"
+                >
+                  Checkout
+                </button>
               </div>
-            ))}
-          </div>
-          <div className="mt-8 text-right">
-            <p className="text-xl font-poppins font-bold">
-              Total: ${totalPrice.toFixed(2)}
-            </p>
-            <div className="flex justify-between">
-              <Link
-                to="/products"
-                className=" flex  items-center justify-center hover:text-primary"
-              >
-                <span>Continue Shopping</span>{' '}
-                <FaLongArrowAltRight className="pt-2 text-xl" />
-              </Link>
-              <button
-                onClick={handlePlaceOrder}
-                className="mt-4 bg-primary text-white px-6 py-2 rounded hover:bg-primary-dark"
-              >
-                Checkout
-              </button>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
     </>
-    
   );
 };
 

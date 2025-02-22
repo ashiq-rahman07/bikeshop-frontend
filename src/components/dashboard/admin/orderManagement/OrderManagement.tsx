@@ -1,18 +1,20 @@
 // import { useState } from "react";
 // import OrderList, { Order } from "./OrderList";
 
-
-
 import React from 'react';
-import { useDeleteOrderMutation, useGetOrdersQuery, useUpdateOrderStatusMutation } from '../../../../redux/features/order/order';
+import {
+  useDeleteOrderMutation,
+  useGetOrdersQuery,
+  useUpdateOrderStatusMutation,
+} from '../../../../redux/features/order/order';
 import { IOrder } from '../../../../types/order/orderType';
 import { toast } from 'react-toastify';
 // import { useGetOrdersQuery, useUpdateOrderStatusMutation, useDeleteOrderMutation } from '../features/orders/ordersApi';
 
 const OrderManagementPage: React.FC = () => {
   // Fetch orders
-  const { data, isLoading, isError,refetch, } = useGetOrdersQuery();
-  const ordersData = data?.data
+  const { data, isLoading, isError, refetch } = useGetOrdersQuery();
+  const ordersData = data?.data;
   console.log(ordersData?.length);
 
   // Update order status
@@ -22,10 +24,13 @@ const OrderManagementPage: React.FC = () => {
   const [deleteOrder] = useDeleteOrderMutation();
 
   // Handle status update
-  const handleUpdateStatus = async (id: string, newStatus:IOrder['status']) => {
+  const handleUpdateStatus = async (
+    id: string,
+    newStatus: IOrder['status'],
+  ) => {
     try {
-      await updateOrderStatus({ orderId:id, status: newStatus }).unwrap();
-      toast.success('Order Status Updating... ')
+      await updateOrderStatus({ orderId: id, status: newStatus }).unwrap();
+      toast.success('Order Status Updating... ');
       refetch();
     } catch (error) {
       console.error('Failed to update order status:', error);
@@ -35,10 +40,10 @@ const OrderManagementPage: React.FC = () => {
   // Handle order deletion
   const handleDeleteOrder = async (orderId: string) => {
     try {
-      alert('Confirm To Delete This Order')
+      alert('Confirm To Delete This Order');
       await deleteOrder(orderId).unwrap();
-      toast.success("Order Deleted....")
-      refetch()
+      toast.success('Order Deleted....');
+      refetch();
     } catch (error) {
       console.error('Failed to delete .order:', error);
     }
@@ -53,7 +58,9 @@ const OrderManagementPage: React.FC = () => {
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Order Management</h1>
-          <p className='text-xl font-semibold'>Total Orders: {ordersData?.length}</p>
+          <p className="text-xl font-semibold">
+            Total Orders: {ordersData?.length}
+          </p>
         </div>
 
         {/* Orders Table */}
@@ -74,19 +81,26 @@ const OrderManagementPage: React.FC = () => {
                 <tr key={order.id} className="border-b border-gray-600">
                   <td className="py-3 px-4">{order.id}</td>
                   <td className="py-3 px-4">{order.user}</td>
-                  <td className="py-3 px-4">{new Date(order.createdAt).toLocaleDateString()}</td>
+                  <td className="py-3 px-4">
+                    {new Date(order.createdAt).toLocaleDateString()}
+                  </td>
                   <td className="py-3 px-4">
                     <select
                       value={order.status}
-                      onChange={(e) => handleUpdateStatus(order.id, e.target.value as IOrder['status'])}
+                      onChange={(e) =>
+                        handleUpdateStatus(
+                          order.id,
+                          e.target.value as IOrder['status'],
+                        )
+                      }
                       className={`px-2 py-1 text-sm rounded-full ${
                         order.status === 'Pending'
                           ? 'bg-yellow-100 text-yellow-800'
                           : order.status === 'Shipped'
-                          ? 'bg-green-100 text-green-800'
-                          : order.status === 'Completed'
-                          ? 'bg-purple-100 text-purple-800'
-                          : 'bg-red-100 text-red-800'
+                            ? 'bg-green-100 text-green-800'
+                            : order.status === 'Completed'
+                              ? 'bg-purple-100 text-purple-800'
+                              : 'bg-red-100 text-red-800'
                       }`}
                     >
                       <option value="Pending">Pending</option>
@@ -95,8 +109,7 @@ const OrderManagementPage: React.FC = () => {
                       <option value="Cancelled">Cancelled</option>
                     </select>
                   </td>
-                  <td className="py-3 px-4">${order.totalPrice
-.toFixed(2)}</td>
+                  <td className="py-3 px-4">${order.totalPrice.toFixed(2)}</td>
                   <td className="py-3 px-4">
                     <div className="flex space-x-2">
                       <button

@@ -1,4 +1,3 @@
-
 import { useForm } from 'react-hook-form';
 import { AddBikePayload } from '../../../../types/alltypes';
 import { style } from '../../../register/form.style';
@@ -6,9 +5,8 @@ import { useAddProductMutation } from '../../../../redux/features/products/produ
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-
 const AddProdact = () => {
- const navigate =  useNavigate()
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -21,15 +19,15 @@ const AddProdact = () => {
   const onSubmit = async (data: AddBikePayload) => {
     const addData = {
       ...data,
-      price:Number(data.price),
-      quantity:Number(data.quantity)
-    }
+      price: Number(data.price),
+      quantity: Number(data.quantity),
+    };
     // reset();
     try {
       await addProduct(addData as AddBikePayload).unwrap();
       toast.success('Product added successfully!');
       reset(); // Reset the form
-      navigate('/')
+      navigate('/');
     } catch (error) {
       console.log(error);
       toast.error('Failed to Add Product.');
@@ -45,13 +43,13 @@ const AddProdact = () => {
         />
       </div>
       <div className="relative -mt-40 mb-0">
-     
-
         <form
           onSubmit={handleSubmit(onSubmit)}
           className={`${style.formStyle} `}
         >
-          <h2 className="text-xl font-bold text-center pb-4">Add New Product</h2>
+          <h2 className="text-xl font-bold text-center pb-4">
+            Add New Product
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label className="block text-gray-400 mb-2">Name</label>
@@ -175,4 +173,3 @@ const AddProdact = () => {
 };
 
 export default AddProdact;
-
