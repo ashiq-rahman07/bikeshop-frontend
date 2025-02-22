@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { TBike } from '../../types/product.type';
 import { addToCart } from '../../redux/features/cart/cartSlice';
 import { useDispatch } from 'react-redux';
+import { toast } from 'sonner';
 
 type TProductCardProps = {
   product: TBike;
@@ -23,6 +24,7 @@ const ProductCard: React.FC<TProductCardProps> = ({ product }) => {
         imageUrl: product.bikeImg as string,
       }),
     );
+    toast.success("Added this product..")
   };
 
   return (
