@@ -44,8 +44,9 @@ function App() {
         {/* Public Routes with MainLayout */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="products" element={<ProductsPage />} />
           <Route path="products/:productId" element={<ProductDetails />} />
+          <Route path="products" element={<ProductsPage />} />
+          
           <Route path="about" element={<About />} />
           <Route path="signin" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />
