@@ -84,7 +84,7 @@ const ProductsPage = () => {
           placeholder="Search by brand, name, or category"
           value={searchTerm}
           onChange={handleSearchChange}
-          className="w-full p-2 border border-gray-300 rounded-lg"
+          className="w-full p-2 border dark:bg-gray-800 border-gray-300 rounded-lg"
         />
       </div>
 
@@ -92,7 +92,7 @@ const ProductsPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {/* Price Range */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium ">
             Price Range
           </label>
           <div className="flex space-x-2">
@@ -107,49 +107,52 @@ const ProductsPage = () => {
                   priceRange: [Number(e.target.value), filters.priceRange[1]],
                 })
               }
-              className="w-full p-2 border border-gray-300 rounded-lg"
+              className="w-full p-2 border border-gray-300 dark:bg-gray-800 rounded-lg"
             />
             <input
               type="number"
               name="priceRangeMax"
               placeholder="Max"
-              // value={filters.priceRange[1]}
-              // onChange={(e) =>
-              //   setFilters({ ...filters, priceRange: [filters.priceRange[0], Number(e.target.value)] })
-              // }
-              className="w-full p-2 border border-gray-300 rounded-lg"
+              value={filters.priceRange[1]}
+              onChange={(e) =>
+                setFilters({ ...filters, priceRange: [filters.priceRange[0], Number(e.target.value)] })
+              }
+              className="w-full p-2 border border-gray-300 dark:bg-gray-800 rounded-lg"
             />
           </div>
         </div>
 
         {/* Brand Filter */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium ">
             Brand
           </label>
           <select
             name="brand"
-            // value={filters.brand}
-            // onChange={handleFilterChange}
-            className="w-full p-2 border border-gray-300 rounded-lg"
+            value={filters.brand}
+            onChange={handleFilterChange}
+            className="w-full p-2 border border-gray-300 dark:bg-gray-800 rounded-lg"
           >
             <option value="">All Brands</option>
             <option value="Yamaha">Yamaha</option>
-            <option value="Harley-Davidson">Harley-Davidson</option>
-            <option value="KTM">KTM</option>
+            <option value="Honda">Honda</option>
+            <option value="Suzuki">Suzuki</option>
+            <option value="Hero">Hero</option>
+            <option value="Tvs">Tvs</option>
+            <option value="Bajaj">Bajaj</option>
           </select>
         </div>
 
         {/* Category Filter */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium">
             Category
           </label>
           <select
             name="category"
             value={filters.category}
             onChange={handleFilterChange}
-            className="w-full p-2 border border-gray-300 rounded-lg"
+            className="w-full p-2 border border-gray-300 dark:bg-gray-800 rounded-lg"
           >
             <option value="">All Categories</option>
             <option value="Mountain">Mountain</option>

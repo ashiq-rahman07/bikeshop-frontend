@@ -2,37 +2,60 @@
 import { useForm } from 'react-hook-form';
 import { AddBikePayload } from '../../../../types/alltypes';
 import { style } from '../../../register/form.style';
-import { useAddProductMutation } from '../../../../redux/features/products/productsApi';
+import { useGetProductByIdQuery, useUpdateProductMutation } from '../../../../redux/features/products/productsApi';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 
-const AddProdact = () => {
+
+const UpdateProdact = () => {
  const navigate =  useNavigate()
+ const { productId } = useParams<{ productId: string }>();
   const {
     register,
     handleSubmit,
-    // control,
-    reset,
+
+reset,
     formState: { errors },
   } = useForm<AddBikePayload>();
-  const [addProduct, { isLoading }] = useAddProductMutation();
+
+
+  const [updateProduct, { isLoading }] = useUpdateProductMutation();
+
+  const{ data:singleProducts, isLoading: singleProductLoading,refetch} = useGetProductByIdQuery(productId as string);
+  const singleProduct =singleProducts?.data;
+ const bikeId = singleProduct?._id as string
+ 
+
+ useEffect(() => {
+    if (singleProduct) {
+     reset({
+        ...singleProduct
+     })
+    }
+  }, [singleProduct,,refetch]);
+//  const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
   const onSubmit = async (data: AddBikePayload) => {
-    const addData = {
+    const bikeData = {
+        
       ...data,
-      price:Number(data.price),
-      quantity:Number(data.quantity)
+     
     }
+    console.log(bikeData);
     // reset();
     try {
-      await addProduct(addData as AddBikePayload).unwrap();
-      toast.success('Product added successfully!');
-      reset(); // Reset the form
-      navigate('/')
+    
+      await updateProduct({ bikeId, bikeData}).unwrap();
+
+      toast.success('Product Updated successfully!');
+    //   refetch() // Reset the form
+      navigate('/dashboard/products')
+    //   refetch()
     } catch (error) {
       console.log(error);
-      toast.error('Failed to Add Product.');
+      toast.error('Failed to update Product.');
     }
   };
   return (
@@ -56,18 +79,19 @@ const AddProdact = () => {
             <div>
               <label className="block text-gray-400 mb-2">Name</label>
               <input
-                {...register('name', { required: 'Name is required' })}
-                placeholder="Enter Your Bike Name"
+                {...register('name')}
+ 
+                defaultValue={singleProduct?.name}
+               
                 className="w-full  px-4 py-2 border border-gray-700 rounded-lg dark:bg-slate-900 dark:text-gray-100"
               />
-              {errors.name && (
-                <p className="text-red-500 text-sm">{errors.name.message}</p>
-              )}
+             
             </div>
-            <div>
+            {/* <div>
               <label className="block  text-gray-400 mb-2">Brand</label>
               <select
-                {...register('brand', { required: 'Category is required' })}
+                {...register('brand')}
+                defaultValue={singleProduct?.brand}
                 className="w-full px-4 border-gray-700 py-2 border rounded-lg dark:bg-slate-900 dark:text-100"
               >
                 <option value="">Select a Brand</option>
@@ -77,27 +101,22 @@ const AddProdact = () => {
                 <option value="Tvs">Tvs</option>
                 <option value="Bajaj">Bajaj</option>
               </select>
-              {errors.category && (
-                <p className="text-red-500 text-sm">
-                  {errors.category.message}
-                </p>
-              )}
-            </div>
+            
+            </div> */}
             <div>
               <label className="block text-gray-400 mb-2">Modal</label>
               <input
-                {...register('model', { required: 'Model is required' })}
-                placeholder="Enter Your Model Name"
+                {...register('model')}
+                defaultValue={singleProduct?.model}
                 className="w-full px-4 border-gray-700 py-2 border rounded-lg dark:bg-slate-900 dark:text-100"
               />
-              {errors.model && (
-                <p className="text-red-500 text-sm">{errors.model.message}</p>
-              )}
+             
             </div>
-            <div>
+            {/* <div>
               <label className="block text-gray-400 mb-2">Category</label>
               <select
-                {...register('category', { required: 'Category is required' })}
+                {...register('category')}
+                defaultValue={singleProduct?.category}
                 className="w-full border-gray-700 px-4 py-2 border rounded-lg dark:bg-slate-900 dark:text-100"
               >
                 <option value="">Select a category</option>
@@ -106,55 +125,43 @@ const AddProdact = () => {
                 <option value="Hybrid">Hybrid</option>
                 <option value="Electric">Electric</option>
               </select>
-              {errors.category && (
-                <p className="text-red-500 text-sm">
-                  {errors.category.message}
-                </p>
-              )}
-            </div>
+        
+            </div> */}
             <div>
               <label className="block text-gray-400 mb-2">Quantity</label>
               <input
                 type="number"
-                {...register('quantity', { required: 'Quantity is required' })}
-                placeholder="Enter Stock Quantity"
+                {...register('quantity', { valueAsNumber: true })}
+                defaultValue={singleProduct?.quantity}
                 className="w-full border-gray-700 px-4 py-2 border rounded-lg dark:bg-slate-900 dark:text-100"
               />
-              {errors.quantity && (
-                <p className="text-red-500 text-sm">
-                  {errors.quantity.message}
-                </p>
-              )}
+            
             </div>
             <div>
               <label className="block text-gray-400 mb-2">Price</label>
               <input
                 type="number"
-                {...register('price', { required: 'Price is required' })}
-                placeholder="Enter  Bike Price"
+                {...register('price', { valueAsNumber: true })}
+                defaultValue={singleProduct?.price}
                 className="w-full border-gray-700 px-4 py-2 border rounded-lg dark:bg-slate-900 dark:text-100"
               />
-              {errors.price && (
-                <p className="text-red-500 text-sm">{errors.price.message}</p>
-              )}
+           
             </div>
             <div>
               <label className="block mb-2 text-gray-400">Bike Image Url</label>
               <input
                 type="string"
-                {...register('bikeImg', { required: 'Price is required' })}
-                placeholder="Enter  Bike Image url link"
+                {...register('bikeImg')}
+                defaultValue={singleProduct?.bikeImg}
                 className="w-full border-gray-700 px-4 py-2 border rounded-lg dark:bg-slate-900 dark:text-100"
               />
-              {errors.bikeImg && (
-                <p className="text-red-500 text-sm">{errors.bikeImg.message}</p>
-              )}
+            
             </div>
             <div>
               <label className="block text-gray-400 mb-2">Description</label>
               <textarea
                 {...register('description')}
-                placeholder="Write Bike Description"
+                defaultValue={singleProduct?.description}
                 className="w-full border-gray-700 px-4 py-2 border rounded-lg dark:bg-slate-900 dark:text-100"
               />
             </div>
@@ -162,10 +169,10 @@ const AddProdact = () => {
 
           <button
             type="submit"
-            disabled={isLoading}
+           
             className="bg-secondary text-xl w-full text-white px-4 py-2 mt-4 rounded hover:bg-blue-600"
           >
-            {isLoading ? 'Add Product...' : 'Add Product'}
+            {isLoading ? 'Update Product...' : 'Update Product'}
             {/* Create Product */}
           </button>
         </form>
@@ -174,5 +181,5 @@ const AddProdact = () => {
   );
 };
 
-export default AddProdact;
+export default UpdateProdact;
 

@@ -53,7 +53,22 @@ export interface SignInUserPayload {
   email: string;
   password: string;
 }
+type  IUser ={
+  _id:string;
+  name: string;
+  email: string;
+  password: string;
+  role: 'admin' | 'customer';
+  isActive:boolean,
+  phone: string;
+  address: string;
+}
+export interface UserResponse{
+  success:boolean;
+  message:string;
+  data:IUser[]
 
+}
 const registerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     registerUser: builder.mutation<TUser, RegisterUserPayload>({
@@ -70,28 +85,45 @@ const registerApi = baseApi.injectEndpoints({
         body: credentials,
       }),
     }),
-    getUsers: builder.query<TUser[], void>({
+    getUsers: builder.query<UserResponse, void>({
       query: () => '/user',
     }),
     getSingleUser: builder.query({
       query: (userId) => `/user/${userId}`,
     }),
-    updateUser: builder.mutation<
-      TUser,
-      { userId: string; userData: Partial<TUser> }
-    >({
+
+    updateUser: builder.mutation< UserResponse,{ userId: string; userData: Partial<IUser> }>({
       query: ({ userId, userData }) => ({
         url: `/user/${userId}`,
         method: 'PATCH',
         body: userData,
       }),
     }),
+    updateUserStatus: builder.mutation< UserResponse,{ userId: string; isActive:boolean}>({
+      query: ({ userId, isActive }) => ({
+        url: `/user/status/${userId}`,
+        method: 'PATCH',
+        body: {isActive},
+      }),
+      // invalidatesTags: (result, error, { id }) => [{ type: 'User', id }]
+    }),
+
     deleteUser: builder.mutation<void, string>({
       query: (userId) => ({
         url: `/user/${userId}`,
         method: 'DELETE',
       }),
     }),
+
+    changePassword: builder.mutation({
+      query: (data) => ({
+        
+        url: '/auth/change-password',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
   }),
 });
 
@@ -101,7 +133,9 @@ export const {
   useGetUsersQuery,
   useGetSingleUserQuery,
   useUpdateUserMutation,
+  useUpdateUserStatusMutation,
   useDeleteUserMutation,
+  useChangePasswordMutation
 } = registerApi;
 
 // export const { useRegisterUserMutation,  useSignInUserMutation,useGetUsersQuery,useGetSingleUserQuery,useDeleteUserMutation} = registerApi;

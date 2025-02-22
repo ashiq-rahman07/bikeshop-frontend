@@ -33,7 +33,7 @@ const SignIn = () => {
     reset,
     formState: { errors },
   } = useForm<TUser>();
-
+// console.log(errors)
   // Explicitly type the errors object
 
   const [signInUser, { isLoading, isError, error }] = useSignInUserMutation();
@@ -43,7 +43,7 @@ const SignIn = () => {
     try {
       console.log(data);
       const res = await signInUser(data).unwrap();
-      console.log(res.data.token);
+      // console.log(res.data.token);
       const token = res.data.token;
 
       const user = verifyToken(token);
@@ -74,28 +74,28 @@ const SignIn = () => {
           <h2 className="text-xl font-bold text-center ">Sign In</h2>
 
           <div className="mt-8">
-            <label className="block text-gray-700">Email</label>
+            <label className="block text-gray-400">Email</label>
             <input
               type="email"
               {...register('email', { required: 'Email is required' })}
               placeholder="Enter Your Email"
-              className="w-full px-4 py-2 border rounded-lg"
+              className={style.authInput}
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm">{errors.name.message}</p>
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
             )}
           </div>
 
           <div className="mt-8">
-            <label className="block text-gray-700">Password</label>
+            <label className="block text-gray-400">Password</label>
             <input
               type="password"
               {...register('password', { required: 'Password is required' })}
               placeholder="Enter Your Strong Password "
-              className="w-full px-4 py-2 border rounded-lg"
+              className={style.authInput}
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm">{errors.name.message}</p>
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
             )}
           </div>
 

@@ -1,22 +1,12 @@
 import { BsCart3 } from 'react-icons/bs';
-// import { useDispatch } from "react-redux";
-// import { addToCart } from "../../redux/features/cart/cartSlice";
+
 import { Link } from 'react-router-dom';
-// import { Product } from "./products";
+
 import { TBike } from '../../types/product.type';
 import { addToCart } from '../../redux/features/cart/cartSlice';
 import { useDispatch } from 'react-redux';
 
-// interface ProductCardProps {
-//     id: string;
-//     name: string;
-//     brand: string;
-//     category: string;
-//     price: number;
-//     model: string;
-//     availability: boolean;
-//     image: string;
-//   }
+
 type TProductCardProps = {
   product: TBike;
 };
@@ -41,9 +31,9 @@ const ProductCard: React.FC<TProductCardProps> = ({ product }) => {
       data-aos="zoom-in"
       className="rounded-2xl bg-gray-100  dark:bg-gray-800  relative shadow-xl duration-300 mb-20 group   m-10 flex w-full max-w-xs flex-col overflow-hidden   "
     >
-      <a
+      <Link
         className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl"
-        href="#"
+        to={`/products/${product._id}`}
       >
         <img
           className="object-cover"
@@ -53,7 +43,7 @@ const ProductCard: React.FC<TProductCardProps> = ({ product }) => {
         <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
           39% OFF
         </span>
-      </a>
+      </Link>
       <div className="mt-4 px-5 pb-5">
         <a href="#">
           <h5 className="text-xl tracking-tight">{product.name}</h5>

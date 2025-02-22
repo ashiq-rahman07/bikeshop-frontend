@@ -28,7 +28,7 @@ const OrderActions: React.FC<OrderActionsProps> = ({
       <select
         value={newStatus}
         onChange={handleStatusChange}
-        className="px-2 py-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+        className="px-2 py-1 border dark:bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
       >
         <option value="Pending">Pending</option>
         <option value="Processing">Processing</option>

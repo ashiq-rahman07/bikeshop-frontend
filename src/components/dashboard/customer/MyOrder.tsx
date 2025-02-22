@@ -24,12 +24,14 @@ const MyOrder = () => {
   }
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <h1 className="text-2xl font-poppins font-bold mb-6">My Orders</h1>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white">
+
+    <div className="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+      <h1 className="text-2xl font-poppins font-bold py-6 text-center">My Orders</h1>
+
+      <div className="overflow-x-auto dark:bg-gray-800">
+        <table className="min-w-full bg-white dark:dark:bg-gray-900">
           <thead>
-            <tr>
+            <tr className='bg-gray-100 dark:bg-gray-900'>
               <th className="py-2 px-4 border-b text-left">Order ID</th>
               <th className="py-2 px-4 border-b text-left">Date</th>
               <th className="py-2 px-4 border-b text-left">Status</th>
@@ -39,7 +41,7 @@ const MyOrder = () => {
           </thead>
           <tbody>
             {orderData?.map((order) => (
-              <tr key={order._id} className="hover:bg-gray-50">
+              <tr key={order._id} className="bg-gray-100 dark:bg-gray-900">
                 <td className="py-2 px-4 border-b">{order._id}</td>
                 <td className="py-2 px-4 border-b">{order.createdAt}</td>
                 <td className="py-2 px-4 border-b">

@@ -1,53 +1,77 @@
 import { Link } from 'react-router-dom';
-import { useGetAllProductsQuery } from '../../../../redux/features/products/productsApi';
+import { useDeleteProductMutation, useGetAllProductsQuery } from '../../../../redux/features/products/productsApi';
 import { useState } from 'react';
-import AddProductModal from './Modal/AddProductModal';
-// import { TBike } from "../../../../types/product.type";
+
+import Loading from '../../../ui/Loading';
+
 
 const ProductManagement = () => {
+const [deleteProduct]=useDeleteProductMutation()
+
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+
+  // Query parameters
+  const params =[
+    {
+      name:'page',
+      value:currentPage
+    }
+  ] ;
+
   const {
     data: products,
     isLoading,
     isError,
-  } = useGetAllProductsQuery(undefined);
-  const allProducts = products?.data;
+    refetch
+  } = useGetAllProductsQuery(params);
+ 
+   const allProducts = products?.data || [];
+   const totalProducts = products?.meta?.total || 0; 
+   const totalPages = products?.meta?.totalPage || 0; 
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [deleteProduct] = useDeleteProductMutation();
 
-  // const handleDelete = async (id: string) => {
-  //   if (window.confirm('Are you sure you want to delete this product?')) {
-  //     try {
-  //       await deleteProduct(id).unwrap();
-  //       alert('Product deleted successfully!');
-  //     } catch (error) {
-  //       console.log(error);
-  //       alert('Failed to delete product.');
-  //     }
-  //   }
-  // };
 
-  if (isLoading) return <div>Loading...</div>;
+  // Handle page change
+  const handlePageChange = (pageNumber: number) => {
+
+ 
+    setCurrentPage(pageNumber);
+    refetch()
+  };
+
+  const handleDelete = async (productId: string) => {
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      try {
+        await deleteProduct(productId).unwrap();
+        alert('Product deleted successfully!');
+        refetch()
+      } catch (error) {
+        console.log(error);
+        alert('Failed to delete product.');
+      }
+    }
+  };
+
+  if (isLoading) return <Loading/>;
   if (isError) return <div>Error loading products.</div>;
   return (
-    <div className="p-6">
+    <div className="p-6 dark:bg-gray-800 dark:text-gray-100 text-gray-900">
       <h1 className="text-2xl font-bold mb-6">Product Management</h1>
-      <button
-        // to="/dashboard/products/create"
-        onClick={() => setIsModalOpen(true)}
-        className="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block"
-      >
-        Create New Product
-      </button>
+
+      <div className='flex justify-between items Center'>
       <Link
         to="/dashboard/products/create"
-        // onClick={() => setIsModalOpen(true)}
-        className="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block"
+       
+        className="bg-gradient-to-r from-primary to-secondary text-gray-100 px-4 py-2 rounded mb-4 inline-block"
       >
-        Create New Product Link
+       Add New Product
       </Link>
-      <table className="w-full bg-white shadow-md rounded-lg overflow-hidden text-center">
-        <thead className="bg-gray-200">
+      <p className='text-xl font-semibold'>Total Products: {totalProducts}</p>
+      </div>
+      <table className="w-full  dark:dark:bg-slate-700 text-gray-900 dark:text-gray-100 shadow-md rounded-lg overflow-hidden text-center">
+        <thead className="bg-gray-200 dark:bg-slate-700">
           <tr>
             <th className="px-4 py-2">Name</th>
             <th className="px-4 py-2">Price</th>
@@ -57,9 +81,9 @@ const ProductManagement = () => {
             <th className="px-4 py-2">Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='dark:bg-slate-800'>
           {allProducts?.map((product) => (
-            <tr key={product._id} className="border-b">
+            <tr key={product._id} className="border-b border-slate-300 dark:border-slate-600">
               <td className="px-4 py-2">{product.name}</td>
               <td className="px-4 py-2">${product.price}</td>
               <td className="px-4 py-2">{product.category}</td>
@@ -67,13 +91,13 @@ const ProductManagement = () => {
 
               <td className="px-4 py-2">
                 <Link
-                  to={`/dashboard/products/edit/${product._id}`}
-                  className="text-blue-500 hover:underline mr-2"
+                  to={`/dashboard/products/update/${product._id}`}
+                  className="text-primary hover:underline mr-2"
                 >
                   Edit
                 </Link>
                 <button
-                  // onClick={() => handleDelete(product.id)}
+                  onClick={() => handleDelete(product._id)}
                   className="text-red-500 hover:underline"
                 >
                   Delete
@@ -84,13 +108,29 @@ const ProductManagement = () => {
         </tbody>
       </table>
 
-      {/* Add Product Modal */}
-      <AddProductModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
-    </div>
-  );
+
+
+      
+      {/* Pagination */}
+      <div className="flex justify-center mt-6">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={`mx-1 px-4 py-2 rounded ${
+              currentPage === index + 1
+                ? 'bg-primary text-white'
+                : 'bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-gray-100'
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+
+      </div>
+    
+      );
 };
 
 export default ProductManagement;

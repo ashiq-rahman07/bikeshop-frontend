@@ -2,11 +2,13 @@ import footerLogo from '../../assets/hero/bike1.png';
 import Banner from '../../assets/footer-pattern.jpg';
 import {
   FaFacebook,
+  FaGithub,
   FaInstagram,
   FaLinkedin,
   FaLocationArrow,
   FaMobileAlt,
 } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const BannerImg = {
   backgroundImage: `url(${Banner})`,
@@ -20,19 +22,16 @@ const BannerImg = {
 const FooterLinks = [
   {
     title: 'Home',
-    link: '/#',
+    link: '/',
   },
   {
     title: 'About',
-    link: '/#about',
+    link: '/about',
   },
+
   {
-    title: 'Contact',
-    link: '/#contact',
-  },
-  {
-    title: 'Blog',
-    link: '/#blog',
+    title: 'Product',
+    link: '/product',
   },
 ];
 
@@ -45,7 +44,7 @@ const Footer = () => {
           <div className="py-8 px-4">
             <h1 className="sm:text-3xl text-xl font-bold sm:text-left text-justify mb-3 flex items-center gap-3">
               <img src={footerLogo} alt="" className="max-w-[50px]" />
-              Shopsy
+              Rider
             </h1>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum in
@@ -66,7 +65,7 @@ const Footer = () => {
                       className="cursor-pointer hover:text-primary hover:translate-x-1 duration-300 text-gray-200"
                       key={link.title}
                     >
-                      <span>{link.title}</span>
+                      <Link to={link.link}><span>{link.title}</span></Link>
                     </li>
                   ))}
                 </ul>
@@ -79,12 +78,10 @@ const Footer = () => {
                 </h1>
                 <ul className="flex flex-col gap-3">
                   {FooterLinks.map((link) => (
-                    <li
-                      className="cursor-pointer hover:text-primary hover:translate-x-1 duration-300 text-gray-200"
-                      key={link.title}
-                    >
-                      <span>{link.title}</span>
-                    </li>
+                    
+                      <Link  className="cursor-pointer hover:text-primary hover:translate-x-1 duration-300 text-gray-200"
+                      key={link.title} to={link.link}><span>{link.title}</span></Link>
+                    
                   ))}
                 </ul>
               </div>
@@ -94,15 +91,15 @@ const Footer = () => {
 
             <div>
               <div className="flex items-center gap-3 mt-6">
-                <a href="#">
-                  <FaInstagram className="text-3xl" />
-                </a>
-                <a href="#">
+                <Link target='_blank' to="https://github.com/ashiq-rahman07">
+                  <FaGithub className="text-3xl" />
+                </Link>
+                <Link to="https://www.facebook.com/ashiq.id/" target='_blank'>
                   <FaFacebook className="text-3xl" />
-                </a>
-                <a href="#">
+                </Link>
+                <Link to="https://www.linkedin.com/in/ashiq07/" target='_blank'>
                   <FaLinkedin className="text-3xl" />
-                </a>
+                </Link>
               </div>
               <div className="mt-6">
                 <div className="flex items-center gap-3">

@@ -1,6 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../store';
 
+
+
+
+
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: fetchBaseQuery({
@@ -16,6 +20,6 @@ export const baseApi = createApi({
       return headers;
     },
   }),
-
+  tagTypes: ['product', 'order', 'user'],
   endpoints: () => ({}),
 });

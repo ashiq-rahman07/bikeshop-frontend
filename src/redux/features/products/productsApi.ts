@@ -7,6 +7,7 @@ const productsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllProducts: builder.query({
       query: (args) => {
+       
         const params = new URLSearchParams();
 
         if (args) {
@@ -44,7 +45,7 @@ const productsApi = baseApi.injectEndpoints({
     }),
     addProduct: builder.mutation<TBike, AddBikePayload>({
       query: (bikeData) => ({
-        url: '/product',
+        url: '/product/create-product',
         method: 'POST',
         body: bikeData,
       }),

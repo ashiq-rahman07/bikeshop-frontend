@@ -22,25 +22,13 @@ import ProductDetails from './components/products/ProductDetails';
 import MyOrder from './components/dashboard/customer/MyOrder';
 import ProductManagement from './components/dashboard/admin/productManagemant/ProductManagement';
 import AddProdact from './components/dashboard/admin/productManagemant/AddProdact';
+
+import CustomerManagementPage from './components/dashboard/admin/customerManagement/CustomerManagementPage';
+import UpdateProdact from './components/dashboard/admin/productManagemant/UpdateProduct';
 // import React, { useEffect, useState } from "react"
 
 function App() {
-  // dark mode start
-  //  const [theme, setTheme] = useState(
-  //   localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
-  // );
-  // const element = document.documentElement;
-
-  // useEffect(() => {
-  //   if (theme === "dark") {
-  //     element.classList.add("dark");
-  //     localStorage.setItem("theme", "dark");
-  //   } else {
-  //     element.classList.remove("dark");
-  //     localStorage.setItem("theme", "light");
-  //   }
-  // }, [theme]);
-  // // dark mode end
+ 
 
   React.useEffect(() => {
     AOS.init({
@@ -72,13 +60,19 @@ function App() {
         </Route>
 
         {/* Authenticated Routes with DashboardLayout */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="orders" element={<OrderManagement />} />
-          <Route path="my-orders" element={<MyOrder />} />
-          <Route path="products" element={<ProductManagement />} />
-          <Route path="profile" element={<UserProfile />} />
-          <Route path="products/create" element={<AddProdact />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index element={<Dashboard/>} />
+            <Route path="orders" element={<OrderManagement />} />
+            <Route path="my-orders" element={<MyOrder />} />
+            <Route path="products" element={<ProductManagement />} />
+            <Route path="customers" element={<CustomerManagementPage />} />
+            <Route path="profile" element={<UserProfile />} />
+            <Route path="products/create" element={<AddProdact />} />
+            <Route path="products/update/:productId" element={<UpdateProdact />} />
+            {/* <Route path="user" element={<CustomerDashboardIndexPage />} /> */}
+            
+          </Route>
         </Route>
       </Routes>
     </Router>

@@ -4,7 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { logout, selectCurrentUser } from '../../redux/features/user/authSlice';
 import { useGetSingleUserQuery } from '../../redux/features/user/authApi';
 import { TUser } from '../../types/alltypes';
-import { FaRegUserCircle } from 'react-icons/fa';
+import { FaArrowAltCircleLeft, FaRegUserCircle } from 'react-icons/fa';
+import DarkMode from '../ui/navbar/DarkMode';
 
 const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -12,7 +13,7 @@ const DashboardLayout = () => {
   const location = useLocation();
   const user = useAppSelector(selectCurrentUser);
 
-  console.log('dashboard', user?.role);
+ 
   const navigate = useNavigate();
   const { data } = useGetSingleUserQuery(user?.userId);
   const userProfile = data?.data as TUser;
@@ -80,9 +81,10 @@ const DashboardLayout = () => {
         }  transition-transform duration-200 ease-in-out `}
       >
         <div className="text-white flex items-center space-x-2 px-4">
-          <span className="text-2xl font-extrabold">Dashboard</span>
+          <Link to='/dashboard' className="text-2xl font-extrabold">Dashboard</Link>
+          
         </div>
-        <nav>
+        <nav className=''>
           {user?.role === 'admin' && (
             <>
               <Link
@@ -106,6 +108,17 @@ const DashboardLayout = () => {
               >
                 <span>{'🛍️'}</span>
                 <span>Order Management</span>
+              </Link>
+              <Link
+                to="/dashboard/customers"
+                className={`flex items-center space-x-2 py-2 px-4 rounded transition-colors ${
+                  location.pathname === '/dashboard/customers'
+                    ? 'bg-gray-700 text-white'
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                }`}
+              >
+                <span>{'🛍️'}</span>
+                <span>Customer Management </span>
               </Link>
             </>
           )}
@@ -151,28 +164,16 @@ const DashboardLayout = () => {
       <div
         className={`flex-1 ${
           isSidebarOpen ? 'ml-64' : 'ml-0'
-        } transition-all duration-200`}
+        } transition-all duration-200 `}
       >
         {/* Header */}
-        <header className="bg-white shadow-md p-4">
-          <div className="flex justify-between items-center">
+        <header className=" shadow-xl border-b dark:border-b-gray-700 p-4 bg-gray-100 dark:bg-gray-900 text-gray-950 dark:text-gray-100">
+          <div className="flex justify-between items-center ">
             <button
               onClick={toggleSidebar}
               className=" text-gray-500 focus:outline-none"
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                ></path>
-              </svg>
+              <FaArrowAltCircleLeft size={30} />
             </button>
 
             <div className="flex justify-center items-center gap-3">
@@ -197,6 +198,12 @@ const DashboardLayout = () => {
                       >
                         Profile
                       </Link>
+                      <Link
+                        to="/dashboard"
+                        className="block px-4 py-2 hover:text-primary rounded-lg"
+                      >
+                        Dashboard
+                      </Link>
                       <button
                         onClick={handleLogout}
                         className="w-full text-left px-4 py-2 hover:text-primary rounded-lg"
@@ -207,12 +214,13 @@ const DashboardLayout = () => {
                   </div>
                 )}
               </div>
+              <DarkMode/>
             </div>
           </div>
         </header>
 
         {/* Page Content */}
-        <main className="p-6 overflow-x-auto">
+        <main className=" overflow-x-auto dark:bg-gray-900 ">
           <Outlet /> {/* This will render the nested routes */}
         </main>
       </div>

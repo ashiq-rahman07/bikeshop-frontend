@@ -42,3 +42,8 @@ export interface RegisterUserRequest {
   email: string;
   password: string;
 }
+
+export type TQueryParam = {
+  name: string;
+  value: boolean | React.Key;
+};

@@ -24,6 +24,9 @@ const PHInput = ({ type, name, style }: TInputProps) => {
             placeholder={`Enter your ${name}`}
             className={style.authInput}
           />
+          {errors.name && (
+              <p className="text-red-500 text-sm">{errors.name.message}</p>
+            )}
         </>
       )}
     />

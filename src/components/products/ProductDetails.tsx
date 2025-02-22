@@ -39,7 +39,7 @@ const ProductDetails = () => {
         product: product?._id as string,
         name: product?.name as string,
         price: product?.price as number,
-        quantity: 1,
+        quantity,
         imageUrl: product?.bikeImg as string,
       }),
     );
@@ -82,7 +82,7 @@ const ProductDetails = () => {
     );
 
   return (
-    <div className="bg-gray-100">
+    <div className="bg-gray-100 dark:bg-gray-900 dark:text-gray-300">
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-wrap -mx-4">
           {/* Product Images */}
@@ -97,12 +97,12 @@ const ProductDetails = () => {
           {/* Product Details */}
           <div className="w-full md:w-1/2 px-4">
             <h2 className="text-3xl font-bold mb-2">{product?.name}</h2>
-            <p className="text-gray-600 mb-4">Model:{product?.model}</p>
+            <p className="mb-4 text-md font-medium">Model: {product?.model}</p>
             <div className="mb-4">
               <span className="text-2xl font-bold mr-2">${product?.price}</span>
-              <span className="text-gray-500 line-through">$399.99</span>
+              
             </div>
-            <p className="text-gray-700 mb-6">{product?.description}</p>
+            <p className="dark:bg-text-gray-400 mb-6">{product?.description}</p>
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-2">Color:</h3>
               <div className="flex space-x-2">
@@ -121,7 +121,7 @@ const ProductDetails = () => {
                 min="1"
                 value={quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
-                className="w-12 text-center rounded-md border-gray-300 shadow-sm"
+                className="w-12 text-center rounded-md border-gray-600 border dark:bg-gray-800 shadow-sm"
               />
             </div>
             <div className="flex space-x-4 mb-6">
@@ -134,12 +134,7 @@ const ProductDetails = () => {
                   Add to Cart
                 </button>
               </Link>
-              <Link
-                to=""
-                className="bg-gray-200 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300"
-              >
-                Wishlist
-              </Link>
+            
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-2">Key Features:</h3>

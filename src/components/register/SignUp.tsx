@@ -29,7 +29,7 @@ const SignUp = () => {
     reset,
     formState: { errors },
   } = useForm<TUser>();
-
+  console.log(errors)
   // Explicitly type the errors object
 
   const [registerUser, { isLoading, isError, error }] =
@@ -66,36 +66,36 @@ const SignUp = () => {
           <h2 className="text-xl font-bold text-center ">Register</h2>
 
           <div>
-            <label className="block text-gray-700">Name</label>
+            <label className="block text-gray-400">Name</label>
             <input
               type="text"
               {...register('name', { required: 'Name is required' })}
               placeholder="Enter Your Full Name"
-              className="w-full px-4 py-2 border rounded-lg"
+              className={style.authInput}
             />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name.message}</p>
             )}
           </div>
           <div className="mt-8">
-            <label className="block text-gray-700">Email</label>
+            <label className="block text-gray-400">Email</label>
             <input
               type="email"
               {...register('email', { required: 'Email is required' })}
               placeholder="Enter Your Email"
-              className="w-full px-4 py-2 border rounded-lg"
+              className={style.authInput}
             />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name.message}</p>
             )}
           </div>
           <div className="mt-8">
-            <label className="block text-gray-700">Password</label>
+            <label className="block text-gray-400">Password</label>
             <input
               type="password"
               {...register('password', { required: 'Password is required' })}
               placeholder="Enter Your Strong Password "
-              className="w-full px-4 py-2 border rounded-lg"
+              className={style.authInput}
             />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name.message}</p>

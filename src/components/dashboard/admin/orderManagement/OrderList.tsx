@@ -20,10 +20,14 @@ interface OrderListProps {
 
 const OrderList: React.FC<OrderListProps> = ({ orders, onUpdateStatus, onDeleteOrder }) => {
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white border border-gray-200">
+    <div className="overflow-x-auto dark:bg-gray-900 dark:text-gray-100">
+        <div className='text-center py-4'>
+        <h2 className='text-2xl font-semibold'>Order Mangement</h2>
+        <p className='text-sm py-2'>Update Order Status Or, Delete Order</p>
+        </div>
+      <table className="min-w-full text-center   border-b border-gray-400 dark:border-gray-700">
         <thead>
-          <tr className="bg-gray-100">
+          <tr className="">
             <th className="py-2 px-4 border-b">Order ID</th>
             <th className="py-2 px-4 border-b">Customer Name</th>
             <th className="py-2 px-4 border-b">Order Date</th>
@@ -34,7 +38,7 @@ const OrderList: React.FC<OrderListProps> = ({ orders, onUpdateStatus, onDeleteO
         </thead>
         <tbody>
           {orders.map((order) => (
-            <tr key={order.id} className="hover:bg-gray-50">
+            <tr key={order.id} className="hover:bg-gray-50 hover:dark:bg-gray-700">
               <td className="py-2 px-4 border-b">{order.id}</td>
               <td className="py-2 px-4 border-b">{order.customerName}</td>
               <td className="py-2 px-4 border-b">{new Date(order.orderDate).toLocaleDateString()}</td>

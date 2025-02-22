@@ -159,7 +159,7 @@ const VerifyOrder = () => {
               )}
             </div>
           </div>
-          <Link to="/order">
+          <Link to="/dashboard/my-orders">
             <button className="w-96 py-2 text-lg font-medium   mt-4 bg-primary">
               View Orders
             </button>

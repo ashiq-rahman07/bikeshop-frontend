@@ -18,6 +18,7 @@ import { FaLongArrowAltRight } from 'react-icons/fa';
 const Cart = () => {
   const token = useAppSelector(useCurrentToken);
   const cartItems = useSelector((state: RootState) => state.cart.items);
+  console.log(cartItems);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const Cart = () => {
   // console.log(useCreateOrderMutation());
   const [createOrder, { isLoading, isSuccess, data, isError, error }] =
     useCreateOrderMutation();
-
+console.log(data);
   const handlePlaceOrder = async () => {
     try {
       if (!token) {
@@ -86,7 +87,7 @@ const Cart = () => {
             {cartItems.map((item) => (
               <div
                 key={item.product}
-                className="flex items-center justify-between p-4 border rounded-lg"
+                className="flex items-center justify-between p-4 border border-gray-400 rounded-lg"
               >
                 <img
                   src={item.imageUrl}
@@ -107,7 +108,7 @@ const Cart = () => {
                         parseInt(e.target.value),
                       )
                     }
-                    className="w-16 p-2 border border-gray-300 rounded-lg"
+                    className="w-16 p-2 border border-gray-300 dark:bg-gray-700 rounded-lg"
                   />
                   <button
                     onClick={() => handleRemoveFromCart(item.product)}
