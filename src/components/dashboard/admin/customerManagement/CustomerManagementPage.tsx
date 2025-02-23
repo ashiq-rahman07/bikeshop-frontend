@@ -22,7 +22,7 @@ const CustomerManagementPage: React.FC = () => {
       userId: id,
       isActive: !isActive,
     };
-    console.log(payload);
+    // console.log(payload);
     try {
       await updateUser(payload).unwrap();
       toast.success('User Status Updating...');
@@ -35,9 +35,11 @@ const CustomerManagementPage: React.FC = () => {
 
   // Handle delete user
   const handleDeleteUser = async (userId: string) => {
-    console.log(userId);
+    // console.log(userId);
     try {
       await deleteUser(userId).unwrap();
+      toast.success('Customer Deleting.......')
+      refetch();
     } catch (error) {
       console.error('Failed to delete user:', error);
     }
