@@ -10,13 +10,4 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // server: {
-  //   proxy: {
-  //     '/api': {
-  //       target: 'https://asignment-2-five.vercel.app',
-  //       changeOrigin: true,
-  //       secure: false,
-  //     },
-  //   },
-  // },
 })

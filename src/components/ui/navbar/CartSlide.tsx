@@ -10,10 +10,11 @@ import { useNavigate } from 'react-router-dom';
 // import { toast } from "sonner";
 // import { useCreateOrderMutation } from '../../../redux/features/order/order';
 
-const CartSlide = () => {
+const CartSlide = ({isScrolled}) => {
   const navigate = useNavigate();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -29,6 +30,8 @@ const CartSlide = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  
 
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
@@ -58,7 +61,8 @@ const CartSlide = () => {
     >
       <button
         onClick={() => setIsCartOpen(!isCartOpen)}
-        className="text-gray-900 dark:text-gray-200 hover:text-primary relative"
+        className={` dark:text-gray-200 hover:text-primary relative ${isScrolled ? 'text-black ':'text-gray-300'}`}
+        
       >
         <span className="text-2xl">
           <BsCart3 className="w-6 h-6" />

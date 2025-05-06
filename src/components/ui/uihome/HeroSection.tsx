@@ -1,11 +1,14 @@
-
+import { Link } from "react-router-dom"
+import { Button } from "../button"
+import herobg from "../../../assets/bike/road/herobg.jpg"
 
 const HeroSection = () => {
   return (
     <section className="hero-section relative">
     <div className="absolute inset-0 overflow-hidden">
       <img 
-        src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=1600&h=800&fit=crop" 
+        // src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=1600&h=800&fit=crop" 
+        src={herobg} 
         alt="Hero" 
         className="w-full h-full object-cover"
       />

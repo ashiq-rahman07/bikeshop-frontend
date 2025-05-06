@@ -6,7 +6,7 @@ import { RootState } from '../store';
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://asignment-2-five.vercel.app/api/v1',
+    baseUrl: 'http://localhost:5000/api/v1',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
