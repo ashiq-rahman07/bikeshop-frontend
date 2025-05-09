@@ -14,6 +14,7 @@ import { toast } from 'react-toastify';
 import { Helmet } from 'react-helmet';
 
 const SignUp = () => {
+  
   const navigate = useNavigate();
 
   const {

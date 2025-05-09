@@ -6,21 +6,25 @@ import { Button } from "@/components/ui/button";
 import { getFeaturedProducts } from "@/data/products";
 import { Product } from "@/types";
 import ProductCard from "../product/ProductCard";
+import { useGetAllProductsQuery } from "@/redux/features/products/productsApi";
 
 const FeaturedProducts = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [products, setProducts] = useState<Product[]>([]);
+  // const [isLoading, setIsLoading] = useState(true);
+    const { data, isLoading } = useGetAllProductsQuery(undefined);
+    // console.log("main data",data?.data);
+    const products = data?.data;
 
-  useEffect(() => {
-    // Simulate API call delay
-    const timer = setTimeout(() => {
-      const featured = getFeaturedProducts();
-      setProducts(featured);
-      setIsLoading(false);
-    }, 500);
+  // useEffect(() => {
+  //   // Simulate API call delay
+  //   const timer = setTimeout(() => {
+  //     const featured = getFeaturedProducts();
+  //     setProducts(featured);
+  //     setIsLoading(false);
+  //   }, 500);
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   if (isLoading) {
     return (
@@ -51,7 +55,7 @@ const FeaturedProducts = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
       

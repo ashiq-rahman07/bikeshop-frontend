@@ -9,7 +9,7 @@ const MainLayout = () => {
     <div className="flex flex-col min-h-screen">
       <Navbar/>
       {/* <Navbar /> */}
-      <main className="flex-grow">
+      <main className="flex-grow pt-[6rem]">
         <Outlet /> {/* This will render the child routes */}
       </main>
       <Footer />

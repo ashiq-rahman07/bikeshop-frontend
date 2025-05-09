@@ -4,6 +4,7 @@ import ProductCard from '../../products/ProductCard';
 import { useGetAllProductsQuery } from '../../../redux/features/products/productsApi';
 import Loading from '../Loading';
 
+
 const FeatureProducts = () => {
   const { data, isLoading } = useGetAllProductsQuery(undefined);
   // console.log("main data",data?.data);

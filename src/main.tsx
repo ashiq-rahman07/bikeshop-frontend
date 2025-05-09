@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')!).render(
       <div className="bg-gray-100 text-[#2D3436]  dark:bg-gray-950 dark:text-white duration-200">
         <App />
       </div>
-      <Toaster />
+      <Toaster className='z-50' />
       <ToastContainer />
     </Provider>
   </StrictMode>,

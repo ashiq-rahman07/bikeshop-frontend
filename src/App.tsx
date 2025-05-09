@@ -25,6 +25,14 @@ import AddProdact from './components/dashboard/admin/productManagemant/AddProdac
 
 import CustomerManagementPage from './components/dashboard/admin/customerManagement/CustomerManagementPage';
 import UpdateProdact from './components/dashboard/admin/productManagemant/UpdateProduct';
+import ProductDetailPage from './components/products/ProductDetailPage';
+import Register from './components/register/Register';
+import DemoRegister from './components/register/DemoRegister';
+import DemoLogin from './components/register/DemoLogin';
+import AboutPage from './components/about/AboutPage';
+import AdminDashboard from './components/Admin/AdminDashboard';
+import AdminOrders from './components/Admin/AdminOrders';
+import CustomerProfile from './components/customer/CustomerProfile';
 // import React, { useEffect, useState } from "react"
 
 function App() {
@@ -44,12 +52,12 @@ function App() {
         {/* Public Routes with MainLayout */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="products/:productId" element={<ProductDetails />} />
+          <Route path="products/:productId" element={<ProductDetailPage />} />
           <Route path="products" element={<ProductsPage />} />
           
-          <Route path="about" element={<About />} />
-          <Route path="signin" element={<SignIn />} />
-          <Route path="signup" element={<SignUp />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="login" element={<DemoLogin />} />
+          <Route path="register" element={<DemoRegister/>} />
           <Route path="cart" element={<Cart />} />
 
           <Route element={<ProtectedRoute />}>
@@ -60,8 +68,10 @@ function App() {
 
         {/* Authenticated Routes with DashboardLayout */}
         <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route index element={<Dashboard />} />
+          <Route>
+            <Route path="/dashboard" element={<AdminDashboard />} />
+            <Route path="dashboard/orders" element={<AdminOrders/>} />
+            <Route path="dashboard/profile" element={<CustomerProfile />} />
             <Route path="orders" element={<OrderManagement />} />
             <Route path="my-orders" element={<MyOrder />} />
             <Route path="products" element={<ProductManagement />} />
