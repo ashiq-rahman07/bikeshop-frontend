@@ -94,7 +94,7 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-700">
-          {['Home', 'Bikes', 'About'].map((label, i) => (
+          {['Home', 'Bikes', 'About','Financing'].map((label, i) => (
             <Link
               key={i}
               to={label === 'Home' ? '/' : `/${label.toLowerCase()}`}
@@ -145,7 +145,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
-          {['Home', 'Bikes', 'About'].map((label, i) => (
+          {['Home', 'Bikes', 'About','Financing'].map((label, i) => (
             <Link
               key={i}
               to={label === 'Home' ? '/' : `/${label.toLowerCase()}`}

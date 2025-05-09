@@ -33,6 +33,8 @@ import AboutPage from './components/about/AboutPage';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import AdminOrders from './components/Admin/AdminOrders';
 import CustomerProfile from './components/customer/CustomerProfile';
+import FinancingPage from './components/pages/FinancingPage';
+import RidingGear from './components/pages/RidingGear';
 // import React, { useEffect, useState } from "react"
 
 function App() {
@@ -54,6 +56,9 @@ function App() {
           <Route index element={<Home />} />
           <Route path="products/:productId" element={<ProductDetailPage />} />
           <Route path="products" element={<ProductsPage />} />
+          <Route path="financing" element={<FinancingPage />} />
+          <Route path="riding-gear" element={<RidingGear />} />
+          
           
           <Route path="about" element={<AboutPage />} />
           <Route path="login" element={<DemoLogin />} />

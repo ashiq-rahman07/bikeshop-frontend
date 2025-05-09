@@ -1,125 +1,157 @@
-import footerLogo from '../../assets/hero/bike1.png';
-import Banner from '../../assets/footer-pattern.jpg';
-import {
-  FaFacebook,
-  FaGithub,
-  FaLinkedin,
-  FaLocationArrow,
-  FaMobileAlt,
-} from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-
-const BannerImg = {
-  backgroundImage: `url(${Banner})`,
-  backgroundPosition: 'bottom',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-  height: '100%',
-  width: '100%',
-};
-
-const FooterLinks = [
-  {
-    title: 'Home',
-    link: '/',
-  },
-  {
-    title: 'About',
-    link: '/about',
-  },
-
-  {
-    title: 'Product',
-    link: '/product',
-  },
-];
+import { Link } from "react-router-dom";
+import { Facebook, Instagram, Twitter, Youtube, Mail, MapPin, Phone, Heart } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   return (
-    <div style={BannerImg} className="text-white">
-      <div className="container">
-        <div data-aos="zoom-in" className="grid md:grid-cols-3 pb-44 pt-5">
-          {/* company details */}
-          <div className="py-8 px-4">
-            <h1 className="sm:text-3xl text-xl font-bold sm:text-left text-justify mb-3 flex items-center gap-3">
-              <img src={footerLogo} alt="" className="max-w-[50px]" />
-              Rider
-            </h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum in
-              beatae ea recusandae blanditiis veritatis.
+    <footer className="bg-gradient-to-b from-gray-900 to-black text-white">
+      {/* Top section with newsletter and contact */}
+    
+      
+      {/* Main footer content */}
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+          <div className="col-span-2">
+            <Link to="/" className="inline-block mb-6">
+              <span className="text-3xl font-montserrat font-bold bg-gradient-to-r from-primary to-white bg-clip-text text-transparent">
+                VelocityVibe
+              </span>
+            </Link>
+            <p className="text-gray-400 mb-6 max-w-xs">
+              Premium motorcycles and gear for enthusiasts who demand the best experience on two wheels.
             </p>
+            <div className="flex space-x-4">
+              <a href="#" className="bg-white/10 hover:bg-white/20 transition-colors p-2 rounded-full">
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a href="#" className="bg-white/10 hover:bg-white/20 transition-colors p-2 rounded-full">
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a href="#" className="bg-white/10 hover:bg-white/20 transition-colors p-2 rounded-full">
+                <Twitter className="h-5 w-5" />
+              </a>
+              <a href="#" className="bg-white/10 hover:bg-white/20 transition-colors p-2 rounded-full">
+                <Youtube className="h-5 w-5" />
+              </a>
+            </div>
           </div>
-
-          {/* Footer Links */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 col-span-2 md:pl-10">
-            <div>
-              <div className="py-8 px-4">
-                <h1 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3">
-                  Important Links
-                </h1>
-                <ul className="flex flex-col gap-3">
-                  {FooterLinks.map((link) => (
-                    <li
-                      className="cursor-pointer hover:text-primary hover:translate-x-1 duration-300 text-gray-200"
-                      key={link.title}
-                    >
-                      <Link to={link.link}>
-                        <span>{link.title}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div>
-              <div className="py-8 px-4">
-                <h1 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3">
-                  Links
-                </h1>
-                <ul className="flex flex-col gap-3">
-                  {FooterLinks.map((link) => (
-                    <Link
-                      className="cursor-pointer hover:text-primary hover:translate-x-1 duration-300 text-gray-200"
-                      key={link.title}
-                      to={link.link}
-                    >
-                      <span>{link.title}</span>
-                    </Link>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* social links */}
-
-            <div>
-              <div className="flex items-center gap-3 mt-6">
-                <Link target="_blank" to="https://github.com/ashiq-rahman07">
-                  <FaGithub className="text-3xl" />
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-primary">Shop</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/products" className="text-gray-400 hover:text-white transition-colors">
+                  All Motorcycles
                 </Link>
-                <Link to="https://www.facebook.com/ashiq.id/" target="_blank">
-                  <FaFacebook className="text-3xl" />
+              </li>
+              <li>
+                <Link to="/products?category=Sport" className="text-gray-400 hover:text-white transition-colors">
+                  Sport Bikes
                 </Link>
-                <Link to="https://www.linkedin.com/in/ashiq07/" target="_blank">
-                  <FaLinkedin className="text-3xl" />
+              </li>
+              <li>
+                <Link to="/products?category=Cruiser" className="text-gray-400 hover:text-white transition-colors">
+                  Cruisers
                 </Link>
-              </div>
-              <div className="mt-6">
-                <div className="flex items-center gap-3">
-                  <FaLocationArrow />
-                  <p>Chhatak, Sylhet</p>
-                </div>
-                <div className="flex items-center gap-3 mt-3">
-                  <FaMobileAlt />
-                  <p>+8801727504474</p>
-                </div>
-              </div>
-            </div>
+              </li>
+              <li>
+                <Link to="/products?category=Adventure" className="text-gray-400 hover:text-white transition-colors">
+                  Adventure Bikes
+                </Link>
+              </li>
+              <li>
+                <Link to="/riding-gear" className="text-gray-400 hover:text-white transition-colors">
+                  Riding Gear
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-primary">Company</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/about" className="text-gray-400 hover:text-white transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="text-gray-400 hover:text-white transition-colors">
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="text-gray-400 hover:text-white transition-colors">
+                  News & Events
+                </Link>
+              </li>
+              <li>
+                <Link to="/financing" className="text-gray-400 hover:text-white transition-colors">
+                  Financing
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="text-gray-400 hover:text-white transition-colors">
+                  Sustainability
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-primary">Support</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="#" className="text-gray-400 hover:text-white transition-colors">
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="text-gray-400 hover:text-white transition-colors">
+                  FAQs
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="text-gray-400 hover:text-white transition-colors">
+                  Warranty Info
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="text-gray-400 hover:text-white transition-colors">
+                  Service Centers
+                </Link>
+              </li>
+              <li>
+                <Link to="#" className="text-gray-400 hover:text-white transition-colors">
+                  Maintenance Tips
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
+      
+      {/* Bottom section */}
+      <div className="border-t border-white/10">
+        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-gray-400 text-sm mb-4 md:mb-0">
+            &copy; {new Date().getFullYear()} VelocityVibe. All rights reserved.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
+            <Link to="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="#" className="hover:text-white transition-colors">Terms of Service</Link>
+            <Link to="#" className="hover:text-white transition-colors">Cookie Policy</Link>
+            <Link to="#" className="hover:text-white transition-colors">Accessibility</Link>
+          </div>
+        </div>
+        
+        <div className="bg-black/50 py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-gray-500">
+            <p>All product names, logos, and brands are property of their respective owners. All company, product, and service names are for identification purposes only.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };
 

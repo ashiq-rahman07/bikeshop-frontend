@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { MapPin, TrendingUp, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import prmotor from "../../../assets/bike/road/herobg.jpg"
 
 const CommunitySection = () => {
   return (
-    <section className="py-20 bg-[url('https://images.unsplash.com/photo-1593536774492-ef54bfa9e9a4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')] bg-cover bg-center relative">
+    <section className="py-20 bg-[url('https://www.saint.cc/cdn/shop/articles/cover-photo_bd317a7b-d619-43f5-8952-9f561f8ca126.jpg?v=1689765998')] bg-cover bg-center relative">
       <div className="absolute inset-0 bg-black/60"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12">
@@ -21,7 +22,7 @@ const CommunitySection = () => {
             <p className="text-white/80 text-center">Weekly organized rides exploring scenic routes with experienced guides.</p>
             <div className="mt-6 text-center">
               <Link to="/community">
-                <Button variant="outline" className="border-white/50 text-white hover:bg-white/10">Learn More</Button>
+                <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white/10 px-4 py-3 text-lg font-semibold" >Learn More</Button>
               </Link>
             </div>
           </div>
@@ -34,7 +35,7 @@ const CommunitySection = () => {
             <p className="text-white/80 text-center">Improve your riding technique with our certified instructors in a safe environment.</p>
             <div className="mt-6 text-center">
               <Link to="/workshops">
-                <Button variant="outline" className="border-white/50 text-white hover:bg-white/10">Learn More</Button>
+              <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white/10 px-4 py-3 text-lg font-semibold" >Learn More</Button>
               </Link>
             </div>
           </div>
@@ -47,7 +48,7 @@ const CommunitySection = () => {
             <p className="text-white/80 text-center">Share your passion, stories, and technical knowledge with our global community.</p>
             <div className="mt-6 text-center">
               <Link to="/events">
-                <Button variant="outline" className="border-white/50 text-white hover:bg-white/10">Learn More</Button>
+              <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white/10 px-4 py-3 text-lg font-semibold" >Learn More</Button>
               </Link>
             </div>
           </div>
