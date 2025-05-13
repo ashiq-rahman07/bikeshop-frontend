@@ -35,6 +35,17 @@ import AdminOrders from './components/Admin/AdminOrders';
 import CustomerProfile from './components/customer/CustomerProfile';
 import FinancingPage from './components/pages/FinancingPage';
 import RidingGear from './components/pages/RidingGear';
+import ProtectRoute from './components/route/ProtectRoute';
+import CustomerDashboard from './components/customer/CustomerDashboard';
+import CustomerOrders from './components/dashboard/customer/CustomerOrders';
+import Checkout from './components/pages/CheckOutPage';
+import AdminBikes from './components/dashboard/admin/AdminBikes';
+import AddBike from './components/dashboard/admin/AddBike';
+import AddGear from './components/dashboard/admin/AddGear';
+import AdminGear from './components/dashboard/admin/AdminGear';
+import AllBikesPage from './components/pages/AllBikesPage';
+import ProductDetailsPage from './components/pages/ProductDetailsPage';
+import GearDetailsPage from './components/pages/GearDetailsPage';
 // import React, { useEffect, useState } from "react"
 
 function App() {
@@ -54,10 +65,12 @@ function App() {
         {/* Public Routes with MainLayout */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="products/:productId" element={<ProductDetailPage />} />
-          <Route path="products" element={<ProductsPage />} />
+          
+          <Route path="bikes" element={<AllBikesPage />} />
+          <Route path="bikes/:bikeId" element={<ProductDetailsPage />} />
           <Route path="financing" element={<FinancingPage />} />
           <Route path="riding-gear" element={<RidingGear />} />
+          <Route path="riding-gear/:gearId" element={<GearDetailsPage />} />
           
           
           <Route path="about" element={<AboutPage />} />
@@ -72,7 +85,7 @@ function App() {
         </Route>
 
         {/* Authenticated Routes with DashboardLayout */}
-        <Route element={<ProtectedRoute />}>
+        {/* <Route element={<ProtectedRoute />}>
           <Route>
             <Route path="/dashboard" element={<AdminDashboard />} />
             <Route path="dashboard/orders" element={<AdminOrders/>} />
@@ -88,7 +101,65 @@ function App() {
               element={<UpdateProdact />}
             />
           </Route>
-        </Route>
+        </Route> */}
+        <Route path="/checkout" element={
+                <ProtectRoute>
+                  <Checkout />
+                </ProtectRoute>
+              } />
+              <Route path="/dashboard" element={
+                <ProtectRoute>
+                  <CustomerDashboard />
+                </ProtectRoute>
+              } />
+              <Route path="/dashboard/orders" element={
+                <ProtectRoute>
+                  <CustomerOrders />
+                </ProtectRoute>
+              } />
+              <Route path="/dashboard/profile" element={
+                <ProtectRoute>
+                  <CustomerProfile />
+                </ProtectRoute>
+              } />
+
+              {/* Protected Routes - Admin Only */}
+              <Route path="/admin/dashboard" element={
+                <ProtectRoute allowedRoles={["admin"]}>
+                  <AdminDashboard />
+                </ProtectRoute>
+              } />
+              <Route path="/admin/orders-management" element={
+                <ProtectRoute allowedRoles={["admin"]}>
+                  <AdminOrders />
+                </ProtectRoute>
+              } />
+              <Route path="/admin/bikes-management" element={
+                <ProtectRoute allowedRoles={["admin"]}>
+                  <AdminBikes />
+                </ProtectRoute>
+              } />
+              <Route path="/admin/add-bike" element={
+                <ProtectRoute allowedRoles={["admin"]}>
+                  <AddBike />
+                </ProtectRoute>
+              } />
+              <Route path="/admin/gears-management" element={
+                <ProtectRoute allowedRoles={["admin"]}>
+                  <AdminGear />
+                </ProtectRoute>
+              } />
+              <Route path="/admin/add-gears" element={
+                <ProtectRoute allowedRoles={["admin"]}>
+                  <AddGear />
+                </ProtectRoute>
+              } />
+              <Route path="/admin/customers-management" element={
+                <ProtectRoute allowedRoles={["admin"]}>
+                  <CustomerManagementPage />
+                </ProtectRoute>
+              } />
+
       </Routes>
     </Router>
   );

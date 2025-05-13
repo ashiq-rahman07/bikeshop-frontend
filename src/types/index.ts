@@ -1,4 +1,3 @@
-
 export type UserRole = 'customer' | 'admin';
 
 export interface User {
@@ -23,7 +22,7 @@ export interface Product {
   images: string[];
   rating: number;
   reviewCount: number;
-  isFeatured: boolean;
+  isStock: boolean;
 }
 
 export interface CartItem {

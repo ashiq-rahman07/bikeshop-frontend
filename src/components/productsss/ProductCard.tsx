@@ -11,55 +11,49 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { addToCart } = useCart();
+  // const { addToCart } = useCart();
   
   // const handleAddToCart = () => {
   //   addToCart(product, 1);
   // };
 
-  // const discount = product.originalPrice
-  //   ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-  //   : 0;
+  const discount = product.originalPrice
+    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+    : 0;
 
   return (
-    <div className="product-card group">
+     <div className="product-card group">
       <div className="relative overflow-hidden">
-        <Link to={`/products/${product._id}`}>
+        <Link to={`/bikes/${product._id}`}>
           <img 
-            src={product?.bikeImg} 
+            src={product.images[0]} 
             alt={product.name} 
             className="w-full h-48 object-cover transform transition-transform duration-500 group-hover:scale-105"
           />
-          {/* {discount > 0 && (
+          {discount > 0 && (
             <Badge className="absolute top-2 right-2 bg-primary">
               {discount}% OFF
             </Badge>
-          )} */}
-         
-            <Badge className="absolute top-2 right-2 bg-primary">
-             17% OFF
-            </Badge>
-          
+          )}
         </Link>
       </div>
 
       <div className="p-4">
         <div className="flex justify-between items-start">
           <div>
-            <Link to={`/products/${product._id}`}>
+            <Link to={`/bikes/${product._id}`}>
               <h3 className="text-lg font-semibold line-clamp-1">{product.name}</h3>
             </Link>
             <div className="text-sm text-gray-600">{product.brand} | {product.category}</div>
           </div>
           <div className="flex items-center">
             <span className="text-yellow-500">★</span>
-            {/* <span className="ml-1 text-sm">{product.rating.toFixed(1)}</span> */}
-            <span className="ml-1 text-sm">4.8</span>
+            <span className="ml-1 text-sm">{product.rating.toFixed(1)}</span>
           </div>
         </div>
 
         <div className="mt-3 flex justify-between items-center">
-          {/* <div className="flex items-center">
+          <div className="flex items-center">
             {product.originalPrice ? (
               <>
                 <span className="font-bold text-lg">${product.price.toLocaleString()}</span>
@@ -70,18 +64,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
             ) : (
               <span className="font-bold text-lg">${product.price.toLocaleString()}</span>
             )}
-          </div> */}
-          <div className="flex items-center">
-         
-                <span className="font-bold text-lg">${product.price.toLocaleString()}</span>
-                <span className="ml-2 text-sm text-gray-500 line-through">
-                  $1199
-                </span>
-            
-          
           </div>
           <div>
-            {product.inStock ? (
+            {product.stock > 0 ? (
               <span className="text-xs text-green-600 font-medium">In Stock</span>
             ) : (
               <span className="text-xs text-red-600 font-medium">Out of Stock</span>
@@ -90,12 +75,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </div>
 
         <div className="mt-4 flex space-x-2">
-          <Link to={`/products/${product._id}`} className="flex-1">
+          <Link to={`/bikes/${product._id}`} className="flex-1">
             <Button variant="outline" className="w-full">Details</Button>
           </Link>
           <Button 
             // onClick={handleAddToCart} 
-            // disabled={product.stock <= 0}
+            disabled={product.stock <= 0}
             className="flex-1"
           >
             Add to Cart

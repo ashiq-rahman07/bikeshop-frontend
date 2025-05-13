@@ -65,7 +65,7 @@ const RidingGearSection = () => {
         </div>
         
         <div className="text-center mt-12">
-          <Link to="/products?category=gear">
+          <Link to="/riding-gear">
             <Button variant="outline" className="border-primary text-primary hover:bg-primary/5">View All Riding Gear</Button>
           </Link>
         </div>

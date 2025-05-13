@@ -23,7 +23,7 @@ const CategorySection = () => {
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <h3 className="text-xl font-bold text-white">Sport Bikes</h3>
                 <p className="text-gray-300 mt-2">Experience the thrill of speed and performance.</p>
-                <Link to="/products?category=Sport" className="mt-3 inline-block text-primary hover:underline">
+                <Link to="/bikes?category=Sport" className="mt-3 inline-block text-primary hover:underline">
                   View Collection &rarr;
                 </Link>
               </div>
@@ -39,7 +39,7 @@ const CategorySection = () => {
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <h3 className="text-xl font-bold text-white">Cruiser Bikes</h3>
                 <p className="text-gray-300 mt-2">Ride in style and comfort for the long road ahead.</p>
-                <Link to="/products?category=Cruiser" className="mt-3 inline-block text-primary hover:underline">
+                <Link to="/bikes?category=Cruiser" className="mt-3 inline-block text-primary hover:underline">
                   View Collection &rarr;
                 </Link>
               </div>
@@ -55,7 +55,7 @@ const CategorySection = () => {
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <h3 className="text-xl font-bold text-white">Adventure Bikes</h3>
                 <p className="text-gray-300 mt-2">Go beyond the road with unmatched versatility.</p>
-                <Link to="/products?category=Adventure" className="mt-3 inline-block text-primary hover:underline">
+                <Link to="/bikes?category=Adventure" className="mt-3 inline-block text-primary hover:underline">
                   View Collection &rarr;
                 </Link>
               </div>

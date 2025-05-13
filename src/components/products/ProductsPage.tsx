@@ -6,6 +6,7 @@ import { useGetAllProductsQuery } from '../../redux/features/products/productsAp
 import Loading from '../ui/Loading';
 
 const ProductsPage = () => {
+  
   const { data, isLoading } = useGetAllProductsQuery(undefined);
 
   const products = data?.data;

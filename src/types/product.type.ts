@@ -1,17 +1,21 @@
 export type TBike = {
   _id: string;
   name: string;
-  model: string;
   brand: string;
-  category: 'Mountain' | 'Road' | 'Hybrid' | 'Electric';
-  description: string;
+  category: string;
+  model: string;
   price: number;
-  quantity: number;
-  inStock: boolean;
-  bikeImg: string;
-  createdAt: string;
-  updatedAt: string;
+  originalPrice?: number;
+  description: string;
+  features: string[];
+  specifications: Record<string, string>;
+  stock: number;
+  images: string[];
+  rating: number;
+  reviewCount: number;
+  isStock: boolean;
 };
+
 
 export type TRBike = {
   data: TBike;

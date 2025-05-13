@@ -1,110 +1,15 @@
 import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
-import { Filter, Shield, Tag, Bike } from "lucide-react";
+import { Filter, Shield, Tag, Bike, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { getAllGear, getAvailableGearCategories, IGear } from "@/data/gear";
 
-interface GearProduct {
-  id: string;
-  name: string;
-  category: string;
-  price: number;
-  originalPrice?: number;
-  description: string;
-  rating: number;
-  image: string;
-  isFeatured: boolean;
-}
-
-const gearProducts: GearProduct[] = [
-  {
-    id: "g1",
-    name: "Pro Carbon Helmet",
-    category: "Helmets",
-    price: 599.99,
-    originalPrice: 699.99,
-    description: "Premium carbon fiber helmet with advanced ventilation system and integrated Bluetooth communication.",
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1552568283-2667b8e8d9a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    isFeatured: true
-  },
-  {
-    id: "g2",
-    name: "Adventure Riding Jacket",
-    category: "Jackets",
-    price: 449.99,
-    description: "All-weather adventure jacket with removable thermal liner and impact protection.",
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1591534446793-0c4a1cb186a3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    isFeatured: true
-  },
-  {
-    id: "g3",
-    name: "Pro Grip Racing Gloves",
-    category: "Gloves",
-    price: 129.99,
-    originalPrice: 159.99,
-    description: "Premium racing gloves with superior grip and knuckle protection for maximum control.",
-    rating: 4.7,
-    image: "https://images.unsplash.com/photo-1603312568312-cfce4f6f8549?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    isFeatured: true
-  },
-  {
-    id: "g4",
-    name: "Touring Boots",
-    category: "Footwear",
-    price: 279.99,
-    description: "Waterproof touring boots designed for long-distance comfort and protection.",
-    rating: 4.6,
-    image: "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    isFeatured: false
-  },
-  {
-    id: "g5",
-    name: "Armored Riding Pants",
-    category: "Pants",
-    price: 219.99,
-    originalPrice: 249.99,
-    description: "Reinforced riding pants with CE-approved armor and abrasion-resistant material.",
-    rating: 4.5,
-    image: "https://images.unsplash.com/photo-1578948856697-db91d246b7b8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    isFeatured: false
-  },
-  {
-    id: "g6",
-    name: "Hydration Backpack",
-    category: "Accessories",
-    price: 89.99,
-    description: "Motorcycle-specific hydration backpack with 2L water capacity and reflective details.",
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1576770133818-5f9864c4489d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    isFeatured: true
-  },
-  {
-    id: "g7",
-    name: "All-Season Base Layer",
-    category: "Base Layers",
-    price: 69.99,
-    description: "Moisture-wicking base layer designed for all-season comfort under your riding gear.",
-    rating: 4.7,
-    image: "https://images.unsplash.com/photo-1618354691792-d1d42acfd860?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    isFeatured: false
-  },
-  {
-    id: "g8",
-    name: "Wireless Helmet Communicator",
-    category: "Electronics",
-    price: 349.99,
-    originalPrice: 399.99,
-    description: "Premium Bluetooth communicator with 1.6km range and HD audio quality.",
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1605663864774-784f476c7c30?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    isFeatured: true
-  }
-];
-
-const categories = Array.from(new Set(gearProducts.map(product => product.category)));
 
 const RidingGear = () => {
+  const gearProducts = getAllGear();
+  const categories = getAvailableGearCategories();
+  
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
   const [showFilters, setShowFilters] = useState(false);
@@ -117,29 +22,102 @@ const RidingGear = () => {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-gray-900 to-gray-800 py-24">
-        <div className="absolute inset-0 overflow-hidden opacity-20">
-          <img 
-            src="https://images.unsplash.com/photo-1552568283-2667b8e8d9a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-            alt="Background" 
-            className="w-full h-full object-cover"
-          />
+      {/* Enhanced Hero Section */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-gray-800 -z-10"></div>
+        
+        {/* Hero Background Image Grid */}
+        <div className="absolute inset-0 grid grid-cols-3 opacity-30 -z-10">
+          <div className="bg-[url('https://images.unsplash.com/photo-1552568283-2667b8e8d9a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80')] bg-cover bg-center"></div>
+          <div className="bg-[url('https://images.unsplash.com/photo-1591534446793-0c4a1cb186a3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80')] bg-cover bg-center"></div>
+          <div className="bg-[url('https://images.unsplash.com/photo-1603312568312-cfce4f6f8549?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80')] bg-cover bg-center"></div>
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Premium Riding Gear</h1>
-            <p className="max-w-2xl mx-auto text-lg text-gray-300 mb-8">
-              Equip yourself with the best gear for safety, comfort, and style on your two-wheeled adventures.
-            </p>
-            <div className="flex justify-center gap-4">
-              <Button variant="default" size="lg" className="bg-primary hover:bg-primary/90">
-                Shop All Gear
-              </Button>
-              <Button variant="outline" size="lg" className="border-white bg-transparent text-white hover:bg-white/10">
-                View Safety Ratings
-              </Button>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="animate-fade-in">
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Premium Riding Gear</h1>
+              <p className="text-xl text-gray-300 mb-8 max-w-xl">
+                Equip yourself with top-tier safety gear for maximum protection, all-day comfort, and unmatched style on your two-wheeled adventures.
+              </p>
+              
+              <div className="flex flex-wrap gap-4">
+                <Button size="lg" className="bg-primary hover:bg-primary/90">
+                  Shop All Gear
+                </Button>
+                <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+                  View Safety Ratings
+                </Button>
+              </div>
+              
+              <div className="mt-12 flex items-center gap-8">
+                <div className="flex items-center gap-2">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                    <Shield className="h-6 w-6 text-primary" />
+                  </div>
+                  <span className="text-white">CE Certified</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                    <Shield className="h-6 w-6 text-primary" />
+                  </div>
+                  <span className="text-white">DOT Approved</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                    <Bike className="h-6 w-6 text-primary" />
+                  </div>
+                  <span className="text-white">Rider Tested</span>
+                </div>
+              </div>
             </div>
+            
+            <div className="hidden lg:block">
+              <div className="relative">
+                <div className="absolute -top-8 -left-8 w-64 h-64 bg-gradient-to-br from-primary/40 to-secondary/40 rounded-full blur-3xl"></div>
+                <div className="absolute -bottom-12 -right-12 w-80 h-80 bg-gradient-to-tr from-primary/30 to-secondary/30 rounded-full blur-3xl"></div>
+                
+                <div className="relative bg-white/10 backdrop-blur-sm p-6 rounded-2xl shadow-2xl border border-white/20 hover-scale">
+                  <img 
+                    src="https://images.unsplash.com/photo-1599833975787-5c143f373c30?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                    alt="Premium Motorcycle Helmet" 
+                    className="w-full h-auto rounded-lg"
+                  />
+                  
+                  <div className="mt-6 flex justify-between items-center">
+                    <div>
+                      <h3 className="text-xl font-bold text-white">Pro Carbon Helmet</h3>
+                      <p className="text-gray-300">Premium Protection</p>
+                    </div>
+                    <div className="bg-primary/90 text-white px-4 py-2 rounded-full">
+                      $599.99
+                    </div>
+                  </div>
+                  
+                  <Link to="/riding-gear/g1" className="mt-4 flex items-center text-primary hover:text-primary/80">
+                    View Details <ChevronRight className="h-4 w-4 ml-1" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+            {["Helmets", "Jackets", "Gloves", "Boots"].map((category, index) => (
+              <div 
+                key={category}
+                className="group bg-white/5 backdrop-blur-sm p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300 text-center"
+              >
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-3">
+                  {index === 0 && <Shield className="h-6 w-6 text-primary" />}
+                  {index === 1 && <Shield className="h-6 w-6 text-primary" />}
+                  {index === 2 && <Bike className="h-6 w-6 text-primary" />}
+                  {index === 3 && <Tag className="h-6 w-6 text-primary" />}
+                </div>
+                <h3 className="text-lg font-medium text-white mb-1">{category}</h3>
+                <p className="text-sm text-gray-400">Premium Quality</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -259,12 +237,13 @@ const RidingGear = () => {
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredProducts.map(product => (
-                  <Link to={`/products/gear/${product.id}`} key={product.id} className="group">
+                
+                {filteredProducts.map((product: IGear) => (
+                  <Link to={`/riding-gear/${product.id}`} key={product.id} className="group">
                     <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
                       <div className="relative h-60 overflow-hidden">
                         <img 
-                          src={product.image}
+                          src={product.images[0]}
                           alt={product.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
@@ -310,6 +289,7 @@ const RidingGear = () => {
                     </div>
                   </Link>
                 ))}
+
               </div>
             </div>
           </div>
@@ -322,7 +302,7 @@ const RidingGear = () => {
           <h2 className="text-3xl font-bold text-center mb-12">Shop By Category</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {["Helmets", "Jackets", "Gloves", "Footwear"].map((category) => (
+            {["Helmet", "Jacket", "Gloves", "Boots"].map((category) => (
               <div 
                 key={category} 
                 className="relative overflow-hidden rounded-xl aspect-square shadow-lg group cursor-pointer"
@@ -373,7 +353,7 @@ const RidingGear = () => {
             </div>
             <div className="rounded-xl overflow-hidden shadow-xl">
               <img 
-                src="https://www.thebikeinsurer.co.uk/static/5452a01a5e1d3a77f2f98b81e7554cd5/motorcycle_safety_4fc429c762.jpg"
+                src="https://images.unsplash.com/photo-1559057287-ce0f57d4c1b9?w=800&h=600&fit=crop"
                 alt="Motorcycle Safety"
                 className="w-full h-full object-cover"
               />
@@ -390,7 +370,7 @@ const RidingGear = () => {
             Browse our complete collection of premium riding gear and ride with confidence knowing you're protected by the best.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="outline" className="border-white bg-transparent text-white hover:bg-white hover:text-primary">
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
               Shop All Gear
             </Button>
             <Button size="lg" className="bg-white text-primary hover:bg-gray-100">

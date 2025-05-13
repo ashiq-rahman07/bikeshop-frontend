@@ -19,7 +19,7 @@ const FinancingPage = () => {
               <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg">
                 Apply Now
               </Button>
-              <Button variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
+              <Button variant="outline" className="border-white bg-transparent text-white hover:bg-white/10 px-8 py-6 text-lg">
                 Calculate Payment
               </Button>
             </div>
@@ -356,7 +356,7 @@ const FinancingPage = () => {
               Apply Now
             </Button>
             <Link to="/products">
-              <Button variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold">
+              <Button variant="outline" className="border-white bg-transparent text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold">
                 Browse Motorcycles
               </Button>
             </Link>

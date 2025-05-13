@@ -2,31 +2,24 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-
+import ProductCard from "./ProductCard";
 import { getFeaturedProducts } from "@/data/products";
 import { Product } from "@/types";
 
-import { useGetAllProductsQuery } from "@/redux/features/products/productsApi";
-import ProductCard from "@/components/productsss/ProductCard";
-
 const FeaturedProducts = () => {
-  // const [products, setProducts] = useState<Product[]>([]);
-  // const [isLoading, setIsLoading] = useState(true);
-    const { data, isLoading } = useGetAllProductsQuery(undefined);
-    // console.log("main data",data?.data);
-    const products = data?.data;
-    console.log(products);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect(() => {
-  //   // Simulate API call delay
-  //   const timer = setTimeout(() => {
-  //     const featured = getFeaturedProducts();
-  //     setProducts(featured);
-  //     setIsLoading(false);
-  //   }, 500);
+  useEffect(() => {
+    // Simulate API call delay
+    const timer = setTimeout(() => {
+      const featured = getFeaturedProducts();
+      setProducts(featured);
+      setIsLoading(false);
+    }, 500);
 
-  //   return () => clearTimeout(timer);
-  // }, []);
+    return () => clearTimeout(timer);
+  }, []);
 
   if (isLoading) {
     return (
@@ -56,13 +49,13 @@ const FeaturedProducts = () => {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {products?.map((product) => (
-          <ProductCard key={product._id} product={product} />
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
       
       <div className="text-center mt-10">
-        <Link to="/bikes">
+        <Link to="/products">
           <Button size="lg">
             View All Motorcycles
           </Button>

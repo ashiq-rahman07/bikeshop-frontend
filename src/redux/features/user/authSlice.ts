@@ -2,9 +2,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 
+type Role = "admin" | "customer";
 export type TUser = {
   userId: string;
-  role: string;
+  role: Role;
   iat: number;
   exp: number;
 };
@@ -12,11 +13,13 @@ export type TUser = {
 type TAuthState = {
   user: null | TUser;
   token: null | string;
+  loading: boolean
 };
 
 const initialState: TAuthState = {
   user: null,
   token: null,
+  loading: false,
 };
 
 const authSlice = createSlice({
@@ -27,15 +30,20 @@ const authSlice = createSlice({
       const { user, token } = action.payload;
       state.user = user;
       state.token = token;
+      state.loading = false
+    },
+    setLoading: (state, action) => {
+      state.loading = action.payload; // true or false
     },
     logout: (state) => {
       state.user = null;
       state.token = null;
+      state.loading = false;
     },
   },
 });
 
-export const { setUser, logout } = authSlice.actions;
+export const { setUser, logout,setLoading, } = authSlice.actions;
 
 export default authSlice.reducer;
 
