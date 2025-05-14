@@ -21,6 +21,7 @@ import { baseApi } from './api/baseApi';
 
 const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer);
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,

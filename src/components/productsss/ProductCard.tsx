@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
 import { Badge } from "@/components/ui/badge";
-import { TBike } from "@/types/product.type";
+import { TBike, TGear } from "@/types/product.type";
 
 interface ProductCardProps {
-  product: TBike;
+  product: TGear;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  console.log(product);
   // const { addToCart } = useCart();
   
   // const handleAddToCart = () => {

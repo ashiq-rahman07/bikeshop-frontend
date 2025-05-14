@@ -40,7 +40,7 @@ const RidingGearSection = () => {
             <div className="p-6">
               <h3 className="text-xl font-bold mb-2">Riding Jackets</h3>
               <p className="text-gray-600 mb-4">All-weather protection with reinforced impact zones and maximum comfort.</p>
-              <Link to="/riding-gear" className="text-primary hover:text-primary/80 font-medium inline-flex items-center">
+              <Link to="/gears" className="text-primary hover:text-primary/80 font-medium inline-flex items-center">
                 Shop Jackets <ChevronRight className="h-4 w-4 ml-1" />
               </Link>
             </div>
@@ -65,7 +65,7 @@ const RidingGearSection = () => {
         </div>
         
         <div className="text-center mt-12">
-          <Link to="/riding-gear">
+          <Link to="/gears">
             <Button variant="outline" className="border-primary text-primary hover:bg-primary/5">View All Riding Gear</Button>
           </Link>
         </div>

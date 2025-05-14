@@ -16,6 +16,7 @@
   reviewCount: number;
   isFeatured: boolean;
 }
+
 // Dedicated gear data for the riding gear section
 export const gearProducts: IGear[] = [
   {
@@ -316,6 +317,7 @@ export const gearProducts: IGear[] = [
 export const getGearById = (id: string): IGear | undefined => {
   return gearProducts.find(gear => gear.id === id);
 };
+
 
 export const getFeaturedGear = (): IGear[] => {
   return gearProducts.filter(gear => gear.isFeatured).slice(0, 6);

@@ -339,7 +339,7 @@ export const products: Product[] = [
     ],
     rating: 4.9,
     reviewCount: 27,
-    isFeatured: true
+    isStock: true
   }
 ];
 
@@ -348,7 +348,7 @@ export const getProductById = (id: string): Product | undefined => {
 };
 
 export const getFeaturedProducts = (): Product[] => {
-  return products.filter(product => product.isFeatured).slice(0, 6);
+  return products.filter(product => product.isStock).slice(0, 6);
 };
 
 export const getAllProducts = (): Product[] => {
@@ -373,6 +373,7 @@ export const searchProducts = (query: string): Product[] => {
       product.model.toLowerCase().includes(lowerCaseQuery)
   );
 };
+
 
 export const getAvailableCategories = (): string[] => {
   const categories = new Set<string>();

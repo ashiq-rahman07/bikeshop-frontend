@@ -94,7 +94,7 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-700">
-          {['Home', 'Bikes', 'About','Financing'].map((label, i) => (
+          {['Home', 'Bikes','Gears', 'About','Financing'].map((label, i) => (
             <Link
               key={i}
               to={label === 'Home' ? '/' : `/${label.toLowerCase()}`}

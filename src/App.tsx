@@ -34,7 +34,6 @@ import AdminDashboard from './components/Admin/AdminDashboard';
 import AdminOrders from './components/Admin/AdminOrders';
 import CustomerProfile from './components/customer/CustomerProfile';
 import FinancingPage from './components/pages/FinancingPage';
-import RidingGear from './components/pages/RidingGear';
 import ProtectRoute from './components/route/ProtectRoute';
 import CustomerDashboard from './components/customer/CustomerDashboard';
 import CustomerOrders from './components/dashboard/customer/CustomerOrders';
@@ -46,6 +45,8 @@ import AdminGear from './components/dashboard/admin/AdminGear';
 import AllBikesPage from './components/pages/AllBikesPage';
 import ProductDetailsPage from './components/pages/ProductDetailsPage';
 import GearDetailsPage from './components/pages/GearDetailsPage';
+import AllGearPage from './components/pages/AllGearPage';
+import DemoGearPage from './components/pages/DemoGearpage';
 // import React, { useEffect, useState } from "react"
 
 function App() {
@@ -69,7 +70,8 @@ function App() {
           <Route path="bikes" element={<AllBikesPage />} />
           <Route path="bikes/:bikeId" element={<ProductDetailsPage />} />
           <Route path="financing" element={<FinancingPage />} />
-          <Route path="riding-gear" element={<RidingGear />} />
+          {/* <Route path="gears" element={<AllGearPage/>} /> */}
+          <Route path="gears" element={<DemoGearPage/>} />
           <Route path="riding-gear/:gearId" element={<GearDetailsPage />} />
           
           

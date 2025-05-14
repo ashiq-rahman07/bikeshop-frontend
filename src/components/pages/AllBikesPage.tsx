@@ -49,6 +49,7 @@ useEffect(() => {
   }
 }, [bikes, filters, sortBy]);
 
+
 const filterProducts = (productsToFilter: TBike[], currentFilters: FilterOptions) => {
   let result = [...productsToFilter];
 
