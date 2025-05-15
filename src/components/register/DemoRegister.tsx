@@ -79,7 +79,7 @@ const DemoRegister = () => {
         <div className="absolute -top-32 -left-40 w-[500px] h-[500px] bg-[hsl(0,72.2%,50.6%)] opacity-20 blur-[140px] rounded-full z-0"></div>
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[hsl(0,72.2%,50.6%)] opacity-20 blur-[120px] rounded-full z-0"></div>
 
-    <div className=" relative z-10 max-w-7xl w-full p-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center animate-fade-in">
+    <div className=" relative z-10 max-w-5xl w-full p-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center animate-fade-in">
       
     
 

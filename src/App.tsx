@@ -48,6 +48,7 @@ import GearDetailsPage from './components/pages/GearDetailsPage';
 import AllGearPage from './components/pages/AllGearPage';
 import DemoGearPage from './components/pages/DemoGearpage';
 import GearDemoPage from './components/pages/GearDemoPage';
+import CartPage from './components/pages/CartPage';
 // import React, { useEffect, useState } from "react"
 
 function App() {
@@ -77,35 +78,19 @@ function App() {
           
           
           <Route path="about" element={<AboutPage />} />
-          <Route path="login" element={<DemoLogin />} />
-          <Route path="register" element={<DemoRegister/>} />
-          <Route path="cart" element={<Cart />} />
+       
+          {/* <Route path="cart" element={<Cart />} /> */}
+          <Route path="cart" element={<CartPage />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/order/verify" element={<VerifyOrder />} />
             <Route path="/order" element={<Order />} />
           </Route>
         </Route>
+           <Route path="login" element={<DemoLogin />} />
+          <Route path="register" element={<DemoRegister/>} />
 
-        {/* Authenticated Routes with DashboardLayout */}
-        {/* <Route element={<ProtectedRoute />}>
-          <Route>
-            <Route path="/dashboard" element={<AdminDashboard />} />
-            <Route path="dashboard/orders" element={<AdminOrders/>} />
-            <Route path="dashboard/profile" element={<CustomerProfile />} />
-            <Route path="orders" element={<OrderManagement />} />
-            <Route path="my-orders" element={<MyOrder />} />
-            <Route path="products" element={<ProductManagement />} />
-            <Route path="customers" element={<CustomerManagementPage />} />
-            <Route path="profile" element={<UserProfile />} />
-            <Route path="products/create" element={<AddProdact />} />
-            <Route
-              path="products/update/:productId"
-              element={<UpdateProdact />}
-            />
-          </Route>
-        </Route> */}
-        <Route path="/checkout" element={
+              <Route path="/checkout" element={
                 <ProtectRoute>
                   <Checkout />
                 </ProtectRoute>

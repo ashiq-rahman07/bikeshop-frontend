@@ -5,20 +5,34 @@ import { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
 import { Badge } from "@/components/ui/badge";
 import { TBike, TGear } from "@/types/product.type";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/features/cart/cartSlice";
+import { toast } from "sonner";
 
 interface ProductCardProps {
   product: TGear;
-  routes:string;
+  routes?:string;
 }
 
 const ProductCard = ({ product,routes }: ProductCardProps) => {
-  console.log(product);
-  // const { addToCart } = useCart();
-  
-  // const handleAddToCart = () => {
-  //   addToCart(product, 1);
-  // };
+ const dispatch = useDispatch();
 
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        product: product._id,
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+        productStock:product.stock,
+        imageUrl: product.images[0] as string,
+        routes:routes,
+        brand:product.brand,
+        category:product.category,
+      }),
+    );
+    toast.success("Added this product..")
+  };
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
@@ -81,7 +95,7 @@ const ProductCard = ({ product,routes }: ProductCardProps) => {
             <Button variant="outline" className="w-full">Details</Button>
           </Link>
           <Button 
-            // onClick={handleAddToCart} 
+           onClick={handleAddToCart}
             disabled={product.stock <= 0}
             className="flex-1"
           >

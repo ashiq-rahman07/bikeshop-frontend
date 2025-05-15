@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 // import { toast } from "sonner";
 // import { useCreateOrderMutation } from '../../../redux/features/order/order';
 
-const CartSlide = ({isScrolled}) => {
+const CartSlide = () => {
   const navigate = useNavigate();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -61,10 +61,10 @@ const CartSlide = ({isScrolled}) => {
     >
       <button
         onClick={() => setIsCartOpen(!isCartOpen)}
-        className={` dark:text-gray-200 hover:text-primary relative ${isScrolled ? 'text-black ':'text-gray-300'}`}
+        className= 'hover:text-primary relative  text-orange-500'
         
       >
-        <span className="text-2xl">
+        <span className="">
           <BsCart3 className="w-6 h-6" />
         </span>
         {cartItems.length > 0 && (
