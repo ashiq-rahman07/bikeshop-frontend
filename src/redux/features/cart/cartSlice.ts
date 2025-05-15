@@ -4,13 +4,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // import { TBike } from '../../../types/product.type';
 // import { Product } from '../../data/products';
 
+
 interface CartItem {
   product: string;
   name: string;
   price: number;
   quantity: number;
-
+  productStock:number;
   imageUrl: string;
+  routes?:string;
+  brand:string,
+  category:string,
 }
 
 interface CartState {

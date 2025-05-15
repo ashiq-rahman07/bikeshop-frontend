@@ -16,6 +16,8 @@ import Loading from '../ui/Loading';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import { Helmet } from 'react-helmet';
 
+
+
 const Cart = () => {
   const token = useAppSelector(useCurrentToken);
   const cartItems = useSelector((state: RootState) => state.cart.items);

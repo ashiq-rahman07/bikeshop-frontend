@@ -152,7 +152,7 @@ const Navbar = () => {
               {/* <Link to='/cart'>
                 Cart
               </Link> */}
-              <CartSlide />
+              <CartSlide  />
               {/* DarkMode feature implement */}
               <DarkMode />
             </ul>
@@ -163,6 +163,7 @@ const Navbar = () => {
             {/* <Link to='/cart'>
                 Cart
               </Link> */}
+
             <CartSlide />
             {/* dark  mode */}
             <DarkMode />

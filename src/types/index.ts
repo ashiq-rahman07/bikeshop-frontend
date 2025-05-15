@@ -57,5 +57,5 @@ export interface FilterOptions {
   priceRange: [number, number];
   brands: string[];
   categories: string[];
-  inStock: boolean;
+  isStock: boolean;
 }

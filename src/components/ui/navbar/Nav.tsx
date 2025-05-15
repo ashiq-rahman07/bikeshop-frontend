@@ -91,10 +91,8 @@ const Navbar = () => {
             ClassicRider
           </span>
         </Link>
-
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-700">
-          {['Home', 'Bikes','Gears', 'About','Financing'].map((label, i) => (
+<div className="hidden md:flex items-center space-x-4 text-sm font-medium text-gray-700">
+  {['Home', 'Bikes','Gears', 'About','Financing'].map((label, i) => (
             <Link
               key={i}
               to={label === 'Home' ? '/' : `/${label.toLowerCase()}`}
@@ -104,7 +102,15 @@ const Navbar = () => {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
             </Link>
           ))}
+</div>
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center space-x-4 text-sm font-medium text-gray-700">
+          
 
+          {/* cart */}
+            <div>
+              <CartSlide />
+            </div>
           {/* Auth / User Dropdown */}
           {token ? (
             <div className="relative" ref={dropdownRef}>
@@ -125,7 +131,7 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="flex items-center gap-4">
-              <Link to="/signin" className="hover:text-primary">Login</Link>
+              <Link to="/login" className="hover:text-primary">Login</Link>
               <Link to="/register">
                 <Button className="bg-gradient-to-r from-primary to-secondary text-white">Sign Up</Button>
               </Link>
@@ -135,7 +141,7 @@ const Navbar = () => {
 
         {/* Mobile Hamburger */}
         <div className="md:hidden flex items-center gap-3">
-          {token && <CartSlide isScrolled={isScrolled} />}
+          {token && <CartSlide  />}
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-700 focus:outline-none">
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -145,7 +151,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
-          {['Home', 'Bikes', 'About','Financing'].map((label, i) => (
+          {['Home', 'Bikes', 'About','Gears','Financing'].map((label, i) => (
             <Link
               key={i}
               to={label === 'Home' ? '/' : `/${label.toLowerCase()}`}
@@ -164,7 +170,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link to="/signin" className="block px-6 py-3 hover:bg-gray-100">Login</Link>
+              <Link to="/login" className="block px-6 py-3 hover:bg-gray-100">Login</Link>
               <Link to="/register" className="block px-6 py-3 hover:bg-gray-100">Sign Up</Link>
             </>
           )}

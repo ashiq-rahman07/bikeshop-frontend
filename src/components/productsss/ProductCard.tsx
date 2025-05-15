@@ -5,19 +5,34 @@ import { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
 import { Badge } from "@/components/ui/badge";
 import { TBike, TGear } from "@/types/product.type";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/features/cart/cartSlice";
+import { toast } from "sonner";
 
 interface ProductCardProps {
   product: TGear;
+  routes?:string;
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
-  console.log(product);
-  // const { addToCart } = useCart();
-  
-  // const handleAddToCart = () => {
-  //   addToCart(product, 1);
-  // };
+const ProductCard = ({ product,routes }: ProductCardProps) => {
+ const dispatch = useDispatch();
 
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        product: product._id,
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+        productStock:product.stock,
+        imageUrl: product.images[0] as string,
+        routes:routes,
+        brand:product.brand,
+        category:product.category,
+      }),
+    );
+    toast.success("Added this product..")
+  };
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
@@ -25,7 +40,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
      <div className="product-card group">
       <div className="relative overflow-hidden">
-        <Link to={`/bikes/${product._id}`}>
+        <Link to={`/${routes}/${product._id}`}>
           <img 
             src={product.images[0]} 
             alt={product.name} 
@@ -42,7 +57,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <div className="p-4">
         <div className="flex justify-between items-start">
           <div>
-            <Link to={`/bikes/${product._id}`}>
+            <Link to={`/${routes}/${product._id}`}>
               <h3 className="text-lg font-semibold line-clamp-1">{product.name}</h3>
             </Link>
             <div className="text-sm text-gray-600">{product.brand} | {product.category}</div>
@@ -76,11 +91,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </div>
 
         <div className="mt-4 flex space-x-2">
-          <Link to={`/bikes/${product._id}`} className="flex-1">
+          <Link to={`/${routes}/${product._id}`} className="flex-1">
             <Button variant="outline" className="w-full">Details</Button>
           </Link>
           <Button 
-            // onClick={handleAddToCart} 
+           onClick={handleAddToCart}
             disabled={product.stock <= 0}
             className="flex-1"
           >

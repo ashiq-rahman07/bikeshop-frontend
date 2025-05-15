@@ -10,23 +10,13 @@ import { useGetAllProductsQuery } from "@/redux/features/products/productsApi";
 import ProductCard from "@/components/productsss/ProductCard";
 
 const FeaturedProducts = () => {
-  // const [products, setProducts] = useState<Product[]>([]);
-  // const [isLoading, setIsLoading] = useState(true);
+ 
     const { data, isLoading } = useGetAllProductsQuery(undefined);
-    // console.log("main data",data?.data);
+
     const products = data?.data;
-    console.log(products);
+   
 
-  // useEffect(() => {
-  //   // Simulate API call delay
-  //   const timer = setTimeout(() => {
-  //     const featured = getFeaturedProducts();
-  //     setProducts(featured);
-  //     setIsLoading(false);
-  //   }, 500);
-
-  //   return () => clearTimeout(timer);
-  // }, []);
+ 
 
   if (isLoading) {
     return (
