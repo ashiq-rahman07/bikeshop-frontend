@@ -26,7 +26,7 @@ import GearFilter from "../productsss/GearFilter";
 const AllGearPage = () => {
      const { data:gearsData, isLoading } = useGetAllGearsQuery(undefined);
        
-       
+       const [priceRange,setPriceRange]=useState<[number, number]>([0, 1000])
        const gears = gearsData?.data || [];
      
      const [searchParams, setSearchParams] = useSearchParams();
@@ -34,20 +34,10 @@ const AllGearPage = () => {
      const [showFilters, setShowFilters] = useState(false);
      const [sortBy, setSortBy] = useState<string>("featured");
      
-      const getPriceRange = (): [number, number] => {
-       let min = Infinity;
-       let max = 0;
-       
-      gears.forEach(product => {
-         if (Math.floor(product.price) < min) min = Math.floor(product.price) ;
-         if (Math.floor(product.price) > max) max = Math.floor(product.price) ;
-       });
-       
-       return [min, max];
-     };
+    
      // Initialize filter options
-     const initPriceRange = getPriceRange(); // [min, max] based on your app logic
-     
+     const initPriceRange = priceRange; // [min, max] based on your app logic
+     console.log(initPriceRange)
      const initialFilters: FilterOptions = {
        search: searchParams.get("search") || "",
        priceRange: initPriceRange,
@@ -63,7 +53,18 @@ const AllGearPage = () => {
        if (gears.length) {
          filterProducts(gears, filters);
        }
-     }, [gears, filters, sortBy]);
+         const getPriceRange = (): [number, number] => {
+       let min = Infinity;
+       let max = 0;
+       
+      gears.forEach(product => {
+         if (product.price < min) min = Math.floor(product.price) ;
+         if (product.price > max) max = Math.floor(product.price) ;
+       });
+       return [min, max];
+     };
+     setPriceRange(getPriceRange ())
+     }, [gears, filters, sortBy,setPriceRange]);
      
      
      const filterProducts = (productsToFilter: TBike[], currentFilters: FilterOptions) => {
@@ -218,7 +219,8 @@ const AllGearPage = () => {
             <GearFilter 
               onFilterChange={handleFilterChange}
               initialFilters={initialFilters}
-              getPriceRange={getPriceRange}
+              // getPriceRange={getPriceRange}
+              priceRange={priceRange}
             />
           </div>
           
@@ -228,7 +230,7 @@ const AllGearPage = () => {
               <GearFilter 
                 onFilterChange={handleFilterChange}
                 initialFilters={initialFilters}
-                getPriceRange={getPriceRange}
+                priceRange={priceRange}
               />
             </div>
           )}

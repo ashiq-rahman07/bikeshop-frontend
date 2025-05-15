@@ -20,15 +20,15 @@ export interface GearFilterOptions {
 interface ProductFilterProps {
   onFilterChange: (filters: GearFilterOptions) => void;
   initialFilters: GearFilterOptions;
-  getPriceRange:()=>[number,number]
+  priceRange:[number,number]
 }
 
 
 
-const GearFilter = ({ onFilterChange, initialFilters,getPriceRange }: ProductFilterProps) => {
+const GearFilter = ({ onFilterChange, initialFilters,priceRange:pRange }: ProductFilterProps) => {
    
   const [filters, setFilters] = useState<GearFilterOptions>(initialFilters);
-  const [priceRange, setPriceRange] = useState<[number, number]>(getPriceRange());
+  const [priceRange, setPriceRange] = useState<[number, number]>(pRange);
   const categories = ['Helmet','Gloves','Jacket','Boots','Protection','Accessories','Rain Gear','Electronics']
   const  brands = ["RideTalk","ThermoTech","AdventureGear","RideReady","RoadMaster","RaceTech","SafeRide"]
   
