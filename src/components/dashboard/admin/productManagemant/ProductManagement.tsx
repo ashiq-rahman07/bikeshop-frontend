@@ -6,6 +6,7 @@ import {
 import { useState } from 'react';
 
 import Loading from '../../../ui/Loading';
+import DashboardLayout from '@/components/newDashboard/DashboardLayout';
 
 const ProductManagement = () => {
   const [deleteProduct] = useDeleteProductMutation();
@@ -53,6 +54,7 @@ const ProductManagement = () => {
   if (isLoading) return <Loading />;
   if (isError) return <div>Error loading products.</div>;
   return (
+    <DashboardLayout>
     <div className="p-6 dark:bg-gray-800 dark:text-gray-100 text-gray-900">
       <h1 className="text-2xl font-bold mb-6">Product Management</h1>
 
@@ -123,6 +125,7 @@ const ProductManagement = () => {
         ))}
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 

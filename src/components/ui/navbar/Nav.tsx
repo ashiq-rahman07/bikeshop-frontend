@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout, useCurrentToken } from "@/redux/features/user/authSlice";
 import { FaRegUserCircle } from "react-icons/fa";
 import CartSlide from "./CartSlide";
+import { removeAllCart } from "@/redux/features/cart/cartSlice";
 
 
 
@@ -33,7 +34,7 @@ export const Navlinks = [
 const Navbar = () => {
   // const { user, logout, isAdmin } = useAuth();
   const token = useAppSelector(useCurrentToken);
-  const { totalItems } = useCart();
+ 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -70,8 +71,10 @@ const Navbar = () => {
     setIsMenuOpen(false);
   };
   const dispatch = useAppDispatch();
+
     const handleLogout = () => {
       dispatch(logout());
+      dispatch(removeAllCart())
     };
 
  

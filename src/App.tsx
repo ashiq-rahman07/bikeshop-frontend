@@ -124,6 +124,7 @@ function App() {
               <Route path="/admin/bikes-management" element={
                 <ProtectRoute allowedRoles={["admin"]}>
                   <AdminBikes />
+                 
                 </ProtectRoute>
               } />
               <Route path="/admin/add-bike" element={

@@ -2,20 +2,25 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { products } from "@/data/products";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Search, Plus, Edit, Trash, ShoppingBag } from "lucide-react";
 import { toast } from "sonner";
 import DashboardLayout from "@/components/newDashboard/DashboardLayout";
-import { gearProducts } from "@/data/gear";
+
+import { useGetAllGearsQuery } from "@/redux/features/gears/gearsApi";
 
 const AdminGear = () => {
+    const { data:gearsData, isLoading } = useGetAllGearsQuery(undefined);
+         
+       
+         const gears = gearsData?.data || [];
   const [searchTerm, setSearchTerm] = useState("");
   
   // Filter only gear products
-  const gear = gearProducts.filter(product => 
+  const gear = gears.filter(product => 
    
     (product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
      product.category.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -71,10 +76,10 @@ const AdminGear = () => {
             <TableBody>
               {gear.length > 0 ? (
                 gear.map(item => (
-                  <TableRow key={item.id}>
+                  <TableRow key={item._id}>
                     <TableCell>
                       <img 
-                        src={item.image} 
+                        src={item.images[0]} 
                         alt={item.name} 
                         className="h-12 w-16 object-cover rounded"
                       />
@@ -101,7 +106,7 @@ const AdminGear = () => {
                           size="sm" 
                           variant="ghost" 
                           className="text-red-500 hover:text-red-600"
-                          onClick={() => handleDelete(item.id)}
+                          onClick={() => handleDelete(item._id)}
                         >
                           <Trash className="h-4 w-4" />
                         </Button>

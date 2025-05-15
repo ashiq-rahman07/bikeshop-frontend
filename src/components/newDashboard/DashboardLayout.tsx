@@ -71,11 +71,12 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     ? [
         { name: "Dashboard", icon: LayoutDashboard, path: "/admin/dashboard" },
         { name: "Bikes Management", icon: Package, path: "/admin/bikes-management" },
-        { name: "Add Bike", icon: Package, path: "/admin/add-bike" },
         { name: "Gears Management", icon: Package, path: "/admin/gears-management" },
-        { name: "Add Gears", icon: Package, path: "/admin/add-gears" },
         { name: "Orders Management", icon: ShoppingBag, path: "/admin/orders-management" },
         { name: "Customers Management", icon: Users, path: "/admin/customers-management" },
+
+        { name: "Add Bike", icon: Package, path: "/admin/add-bike" },
+        { name: "Add Gears", icon: Package, path: "/admin/add-gears" },
         { name: "Settings", icon: Settings, path: "/admin/settings" }
       ]
     : [
@@ -101,7 +102,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       {/* Mobile header */}
       <div className="md:hidden bg-white shadow-sm p-4 flex justify-between items-center">
         <Link to="/" className="flex items-center">
-          <span className="text-xl font-bold">VelocityVibe</span>
+          <span className="text-xl font-bold">ClassicRiders</span>
         </Link>
         <Button
           variant="ghost"
@@ -166,7 +167,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           <div className="flex flex-col flex-grow bg-white shadow-sm overflow-y-auto">
             <div className="p-4 border-b">
               <Link to="/" className="flex items-center">
-                <span className="text-xl font-bold">VelocityVibe</span>
+                <span className="text-xl font-bold">ClassicRiders</span>
               </Link>
             </div>
             
@@ -217,16 +218,8 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <div className="md:ml-64 flex-1 flex flex-col">
           {/* Top Navigation */}
           <header className="bg-white shadow-sm border-b px-4 sm:px-6 py-3">
-            <div className="flex items-center justify-between">
-              {/* Search bar */}
-              <div className="relative w-full max-w-xs hidden md:flex items-center">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                <Input 
-                  type="search" 
-                  placeholder="Search..." 
-                  className="pl-9 h-9 bg-gray-50 border-gray-200 focus:bg-white"
-                />
-              </div>
+            <div className="flex items-center justify-end">
+            
               
               {/* Right side actions */}
               <div className="flex items-center space-x-3">
@@ -315,3 +308,50 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 };
 
 export default DashboardLayout;
+
+
+
+// import { ReactNode, useState } from "react";
+// import { Menu, X, ChevronRight } from "lucide-react";
+
+// import DashboardHeader from "./DashboardHeader";
+// import DashboardSidebar from "./DashboardSidebar";
+
+// interface DashboardLayoutProps {
+//   children: ReactNode;
+// }
+
+// const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+  
+//   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+//   const toggleMobileMenu = () => {
+//     setIsMobileMenuOpen(!isMobileMenuOpen);
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-background">
+//       {/* Header for mobile devices */}
+//       <DashboardHeader 
+//         toggleMobileMenu={toggleMobileMenu} 
+//         isMobileMenuOpen={isMobileMenuOpen} 
+//       />
+      
+//       <div className="flex flex-col md:flex-row">
+//         {/* Sidebar component */}
+//         <DashboardSidebar 
+//           isMobileMenuOpen={isMobileMenuOpen}
+//           toggleMobileMenu={toggleMobileMenu}
+//         />
+        
+//         {/* Main content */}
+//         <div className="md:ml-64 flex-1 flex flex-col">
+//           {/* Page content */}
+//           <main className="dashboard-content flex-1">{children}</main>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default DashboardLayout;

@@ -1,20 +1,24 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { products } from "@/data/products";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Bike, Search, Plus, Edit, Trash } from "lucide-react";
 import { toast } from "sonner";
 import DashboardLayout from "@/components/newDashboard/DashboardLayout";
+import { useGetAllProductsQuery } from "@/redux/features/products/productsApi";
 
 const AdminBikes = () => {
+    const { data:bikesData, isLoading } = useGetAllProductsQuery(undefined);
+    
+    
+    const allBikes = bikesData?.data || [];
   const [searchTerm, setSearchTerm] = useState("");
   
   // Filter only bikes (not gear)
-  const bikes = products.filter(product => 
-    product.category !== "gear" &&
+  const bikes = allBikes.filter(product => 
     (product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
      product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
      product.model.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -70,7 +74,7 @@ const AdminBikes = () => {
             <TableBody>
               {bikes.length > 0 ? (
                 bikes.map(bike => (
-                  <TableRow key={bike.id}>
+                  <TableRow key={bike._id}>
                     <TableCell>
                       <img 
                         src={bike.images[0]} 
@@ -100,7 +104,7 @@ const AdminBikes = () => {
                           size="sm" 
                           variant="ghost" 
                           className="text-red-500 hover:text-red-600"
-                          onClick={() => handleDelete(bike.id)}
+                          onClick={() => handleDelete(bike._id)}
                         >
                           <Trash className="h-4 w-4" />
                         </Button>

@@ -12,6 +12,7 @@ import { toast } from "sonner";
 interface ProductCardProps {
   product: TGear;
   routes?:string;
+  type:'gear' | 'bike'
 }
 
 const ProductCard = ({ product,routes }: ProductCardProps) => {
@@ -29,6 +30,7 @@ const ProductCard = ({ product,routes }: ProductCardProps) => {
         routes:routes,
         brand:product.brand,
         category:product.category,
+       
       }),
     );
     toast.success("Added this product..")
