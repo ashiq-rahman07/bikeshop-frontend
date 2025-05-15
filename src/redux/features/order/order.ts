@@ -3,10 +3,9 @@ import { baseApi } from '../../api/baseApi';
 
 // Define interfaces for your data structures
 interface OrderInfo {
-  // Define the structure of the order information
+  
   products: Cart[];
 
-  // Add other fields as necessary
 }
 
 interface Cart {
@@ -27,6 +26,7 @@ interface CreateResponse {
   message: string;
   data: string;
 }
+
 
 const orderApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

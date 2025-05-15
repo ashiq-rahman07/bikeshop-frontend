@@ -84,7 +84,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     {/* Mobile header */}
     <div className="md:hidden bg-white shadow-sm p-4 flex justify-between items-center">
       <Link to="/" className="flex items-center">
-        <span className="text-xl font-bold">VelocityVibe</span>
+        <span className="text-xl font-bold">ClassicRider</span>
       </Link>
       <Button
         variant="ghost"
@@ -148,7 +148,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <div className="flex flex-col flex-grow bg-white shadow-sm overflow-y-auto">
           <div className="p-4 border-b">
             <Link to="/" className="flex items-center">
-              <span className="text-xl font-bold">VelocityVibe</span>
+              <span className="text-xl font-bold">ClassicRider</span>
             </Link>
           </div>
           

@@ -8,11 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Mail, Lock } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+// import { useToast } from "@/hooks/use-toast";
 import { useAppDispatch } from "@/redux/hooks";
 import { useSignInUserMutation } from "@/redux/features/user/authApi";
 import { verifyToken } from "@/utils/verifyToken";
 import { setUser } from "@/redux/features/user/authSlice";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -26,7 +27,7 @@ const DemoLogin = () => {
     const dispatch = useAppDispatch();
      const [signInUser, { isLoading, isError, error ,isSuccess}] = useSignInUserMutation();
 
-  const { toast } = useToast();
+  // const { toast } = useToast();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -45,17 +46,13 @@ const DemoLogin = () => {
                    const user = verifyToken(token);
              
                    dispatch(setUser({ user, token: token }));
-                   toast({
-                        title: "Login In Successfully",
-                    });
+                  toast.success('Login Successfully')
 
                     form.reset();
                     navigate(`/`);
-            } catch (err) {
-              toast({
-                title: "Failed to Login Attempt ",
-                description: `Login functionality can not implemented for ${err.message}`,
-              });
+            } catch (err:any) {
+              console.log(err)
+              toast.error('Login Failed for', err.message)
             }
  
   };
