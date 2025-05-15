@@ -47,6 +47,7 @@ import ProductDetailsPage from './components/pages/ProductDetailsPage';
 import GearDetailsPage from './components/pages/GearDetailsPage';
 import AllGearPage from './components/pages/AllGearPage';
 import DemoGearPage from './components/pages/DemoGearpage';
+import GearDemoPage from './components/pages/GearDemoPage';
 // import React, { useEffect, useState } from "react"
 
 function App() {
@@ -71,8 +72,8 @@ function App() {
           <Route path="bikes/:bikeId" element={<ProductDetailsPage />} />
           <Route path="financing" element={<FinancingPage />} />
           {/* <Route path="gears" element={<AllGearPage/>} /> */}
-          <Route path="gears" element={<DemoGearPage/>} />
-          <Route path="riding-gear/:gearId" element={<GearDetailsPage />} />
+          <Route path="gears" element={<AllGearPage/>} />
+          <Route path="gears/:gearId" element={<GearDetailsPage />} />
           
           
           <Route path="about" element={<AboutPage />} />

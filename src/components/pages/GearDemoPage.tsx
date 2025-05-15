@@ -1,34 +1,50 @@
-
-import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-
-
+import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Filter, SlidersHorizontal, X } from "lucide-react";
-import { Product, FilterOptions } from "@/types";
-import { 
-  getAllProducts, 
-  getPriceRange,
-  searchProducts
-} from "@/data/products";
+import { Filter, Shield, Tag, Bike, ChevronRight, X, SlidersHorizontal } from "lucide-react";
+import { Link, useSearchParams } from "react-router-dom";
+// import { getAllGear, getAvailableGearCategories, IGear } from "@/data/gear";
+import GearHero from "../ridingGear/GearHero";
+import { TBike, TGear } from "@/types/product.type";
+import { FilterOptions } from "@/types";
+import { getPriceRange } from "@/data/products";
+import { useGetAllGearsQuery } from "@/redux/features/gears/gearsApi";
+import { Input } from "../ui/input";
 import ProductFilter from "../productsss/ProductFilter";
 import ProductCard from "../productsss/ProductCard";
-import { useGetAllProductsQuery } from "@/redux/features/products/productsApi";
-import { TBike } from "@/types/product.type";
+import GearFilter from "../productsss/GearFilter";
 
-const AllBikesPage = () => {
-  const { data:bikesData, isLoading } = useGetAllProductsQuery(undefined);
+export interface GearFilterOptions {
+  search: string;
+  priceRange: [number, number];
+  brands: string[];
+  categories: string[];
+  isStock: boolean;
+  sortBy?:string
+}
+
+const GearDemoPage = () => {
+const { data:gearsData, isLoading } = useGetAllGearsQuery(undefined);
   
   
-  const bikes = bikesData?.data || [];
+  const gears = gearsData?.data || [];
 
 const [searchParams, setSearchParams] = useSearchParams();
 const [filteredProducts, setFilteredProducts] = useState<TBike[]>([]);
 const [showFilters, setShowFilters] = useState(false);
 const [sortBy, setSortBy] = useState<string>("featured");
 
+ const getPriceRange = (): [number, number] => {
+  let min = Infinity;
+  let max = 0;
+  
+ gears.forEach(product => {
+    if (product.price < min) min = product.price;
+    if (product.price > max) max = product.price;
+  });
+  
+  return [min, max];
+};
 // Initialize filter options
 const initPriceRange = getPriceRange(); // [min, max] based on your app logic
 
@@ -44,10 +60,10 @@ const [filters, setFilters] = useState<FilterOptions>(initialFilters);
 
 // 🔁 Filter whenever bikes or filters change
 useEffect(() => {
-  if (bikes.length) {
-    filterProducts(bikes, filters);
+  if (gears.length) {
+    filterProducts(gears, filters);
   }
-}, [bikes, filters, sortBy]);
+}, [gears, filters, sortBy]);
 
 
 const filterProducts = (productsToFilter: TBike[], currentFilters: FilterOptions) => {
@@ -142,8 +158,7 @@ const sortProducts = (productsToSort: TBike[], sortOption: string):  TBike[] => 
 
 const toggleFilters = () => setShowFilters(prev => !prev);
 
-return (
-
+  return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col md:flex-row justify-between items-start mb-8">
           <div>
@@ -195,18 +210,20 @@ return (
         <div className="flex flex-col md:flex-row gap-6">
           {/* Filters - Desktop */}
           <div className="hidden md:block w-64 flex-shrink-0">
-            <ProductFilter 
+            <GearFilter 
               onFilterChange={handleFilterChange}
               initialFilters={initialFilters}
+              getPriceRange={getPriceRange}
             />
           </div>
           
           {/* Filters - Mobile */}
           {showFilters && (
             <div className="md:hidden w-full mb-6">
-              <ProductFilter 
+              <GearFilter 
                 onFilterChange={handleFilterChange}
                 initialFilters={initialFilters}
+                getPriceRange={getPriceRange}
               />
             </div>
           )}
@@ -222,7 +239,7 @@ return (
             ) : filteredProducts.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProducts.map((product) => (
-                  <ProductCard key={product._id} product={product} routes="bikes" />
+                  <ProductCard key={product._id} product={product} />
                 ))}
               </div>
             ) : (
@@ -242,7 +259,7 @@ return (
                       isStock: false,
                     };
                     setFilters(defaultFilters);
-                    filterProducts(bikes, defaultFilters);
+                    filterProducts(gears, defaultFilters);
                     setSortBy("featured");
                     setSearchParams({});
                   }}
@@ -254,8 +271,7 @@ return (
           </div>
         </div>
       </div>
-   
   );
 };
 
-export default AllBikesPage;
+export default GearDemoPage;

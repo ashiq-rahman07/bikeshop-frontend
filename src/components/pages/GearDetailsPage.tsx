@@ -16,64 +16,45 @@ import {
 import { useCart } from "@/context/CartContext";
 import { getProductById } from "@/data/products";
 import { Product } from "@/types";
+import { useAppSelector } from "@/redux/hooks";
+import { selectCurrentUser } from "@/redux/features/user/authSlice";
+import { useGetProductByIdQuery } from "@/redux/features/products/productsApi";
+import { useGetGearByIdQuery } from "@/redux/features/gears/gearsApi";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/features/cart/cartSlice";
 
 const GearDetailsPage = () => {
+    const navigate = useNavigate();
   const { gearId } = useParams<{ gearId: string }>();
-  const navigate = useNavigate();
-  const { addToCart } = useCart();
-  
-  const [product, setProduct] = useState<Product | null>(null);
+   const [selectedImage, setSelectedImage] = useState(0);
+  const user = useAppSelector(selectCurrentUser);
+  console.log(user);
   const [quantity, setQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  
-  useEffect(() => {
-    const fetchProduct = async () => {
-      setIsLoading(true);
-      
-      try {
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        if (!gearId) return;
-        
-        const fetchedProduct = getProductById(gearId);
-        
-        // Make sure we're only showing gear products
-        if (fetchedProduct && ["Helmet", "Jacket", "Gloves", "Boots", "Gear", "Accessory"].includes(fetchedProduct.category)) {
-          setProduct(fetchedProduct);
-          setSelectedImage(0);
-        } else {
-          navigate("/riding-gear", { replace: true });
-        }
-      } catch (error) {
-        console.error("Error fetching gear product:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    fetchProduct();
-  }, [id, navigate]);
-  
-  const handleQuantityDecrease = () => {
-    setQuantity(prev => (prev > 1 ? prev - 1 : 1));
-  };
-  
-  const handleQuantityIncrease = () => {
-    setQuantity(prev => (prev < (product?.stock || 1) ? prev + 1 : prev));
-  };
-  
+  const {
+    data,
+    error,
+    isLoading,
+  } = useGetGearByIdQuery(gearId as string);
+  // const [createOrder, { isLoading: isCreatingOrder }] = useCreateOrderMutation();
+  const product = data?.data;
+  const dispatch = useDispatch();
+
   const handleAddToCart = () => {
-    if (product) {
-      addToCart(product, quantity);
-    }
+    dispatch(
+      addToCart({
+        product: product?._id as string,
+        name: product?.name as string,
+        price: product?.price as number,
+        quantity,
+        imageUrl: product?.images[0] as string,
+      }),
+    );
+
+    navigate('/');
   };
-  
-  const discount = product?.originalPrice
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+   const discount = product?.originalPrice
+    ? Math.round(((product?.originalPrice - product?.price) / product?.originalPrice) * 100)
     : 0;
-  
   if (isLoading) {
     return (
       
@@ -231,7 +212,7 @@ const GearDetailsPage = () => {
                 </label>
                 <div className="flex items-center mt-1">
                   <button 
-                    onClick={handleQuantityDecrease} 
+                    // onClick={handleQuantityDecrease} 
                     disabled={quantity <= 1}
                     className="p-2 border rounded-l-md disabled:opacity-50"
                   >
@@ -245,7 +226,7 @@ const GearDetailsPage = () => {
                     className="p-2 w-12 text-center border-y"
                   />
                   <button 
-                    onClick={handleQuantityIncrease} 
+                    // onClick={handleQuantityIncrease} 
                     disabled={quantity >= product.stock}
                     className="p-2 border rounded-r-md disabled:opacity-50"
                   >
@@ -268,7 +249,7 @@ const GearDetailsPage = () => {
                   <Button 
                     variant="secondary" 
                     size="lg" 
-                    onClick={() => product.stock > 0 && addToCart(product, quantity)}
+                    // onClick={() => product.stock > 0 && addToCart(product, quantity)}
                     disabled={product.stock <= 0}
                     className="w-full"
                   >

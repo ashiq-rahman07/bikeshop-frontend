@@ -6,18 +6,26 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FilterOptions } from "@/types";
-import {  getPriceRange } from "@/data/products";
-import { GearFilterOptions } from "../pages/DemoGearpage";
-// import { useGetAllGearsQuery } from "@/redux/features/gears/gearsApi";
+// import {  getPriceRange } from "@/data/products";
 
+// import { useGetAllGearsQuery } from "@/redux/features/gears/gearsApi";
+export interface GearFilterOptions {
+  search: string;
+  priceRange: [number, number];
+  brands: string[];
+  categories: string[];
+  isStock: boolean;
+  
+}
 interface ProductFilterProps {
   onFilterChange: (filters: GearFilterOptions) => void;
   initialFilters: GearFilterOptions;
+  getPriceRange:()=>[number,number]
 }
 
 
 
-const GearFilter = ({ onFilterChange, initialFilters }: ProductFilterProps) => {
+const GearFilter = ({ onFilterChange, initialFilters,getPriceRange }: ProductFilterProps) => {
    
   const [filters, setFilters] = useState<GearFilterOptions>(initialFilters);
   const [priceRange, setPriceRange] = useState<[number, number]>(getPriceRange());
@@ -31,6 +39,7 @@ const GearFilter = ({ onFilterChange, initialFilters }: ProductFilterProps) => {
   
   // Handle price range change
   const handlePriceChange = (value: number[]) => {
+    setPriceRange([value[0], value[1]]);
     setFilters(prev => ({ ...prev, priceRange: [value[0], value[1]] }));
   };
   
@@ -58,7 +67,7 @@ const GearFilter = ({ onFilterChange, initialFilters }: ProductFilterProps) => {
   
   // Handle in-stock filter change
   const handleInStockChange = (checked: boolean) => {
-    setFilters(prev => ({ ...prev, inStock: checked }));
+    setFilters(prev => ({ ...prev, isStock: checked }));
   };
   
   // Apply filters

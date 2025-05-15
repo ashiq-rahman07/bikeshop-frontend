@@ -1,6 +1,7 @@
+import { TBike } from "@/types/product.type";
 import { Product } from "../types";
 
-export const products: Product[] = [
+export const products:  Product[] = [
   {
     id: "1",
     name: "Velocity Striker 750",
@@ -42,7 +43,7 @@ export const products: Product[] = [
     ],
     rating: 4.8,
     reviewCount: 24,
-    isFeatured: true
+     isStock: true
   },
   {
     id: "2",
@@ -84,7 +85,7 @@ export const products: Product[] = [
     ],
     rating: 4.9,
     reviewCount: 36,
-    isFeatured: true
+     isStock: true
   },
   {
     id: "3",
@@ -127,7 +128,7 @@ export const products: Product[] = [
     ],
     rating: 4.6,
     reviewCount: 52,
-    isFeatured: false
+     isStock: false
   },
   {
     id: "4",
@@ -169,7 +170,7 @@ export const products: Product[] = [
     ],
     rating: 4.7,
     reviewCount: 19,
-    isFeatured: true
+     isStock: true
   },
   {
     id: "5",
@@ -213,7 +214,7 @@ export const products: Product[] = [
     ],
     rating: 4.5,
     reviewCount: 12,
-    isFeatured: true
+     isStock: true
   },
   {
     id: "6",
@@ -255,7 +256,7 @@ export const products: Product[] = [
     ],
     rating: 4.6,
     reviewCount: 29,
-    isFeatured: true
+     isStock: true
   },
   {
     id: "7",
@@ -297,7 +298,7 @@ export const products: Product[] = [
     ],
     rating: 4.7,
     reviewCount: 32,
-    isFeatured: false
+     isStock: false
   },
   {
     id: "8",

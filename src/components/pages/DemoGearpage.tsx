@@ -14,14 +14,7 @@ import ProductFilter from "../productsss/ProductFilter";
 import ProductCard from "../productsss/ProductCard";
 import GearFilter from "../productsss/GearFilter";
 
-export interface GearFilterOptions {
-  search: string;
-  priceRange: [number, number];
-  brands: string[];
-  categories: string[];
-  isStock: boolean;
-  sortBy?:string
-}
+
 
 const DemoGearPage = () => {
     const [filteredProducts, setFilteredProducts] = useState<TGear[]>([]);

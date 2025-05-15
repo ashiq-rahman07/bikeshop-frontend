@@ -8,9 +8,10 @@ import { TBike, TGear } from "@/types/product.type";
 
 interface ProductCardProps {
   product: TGear;
+  routes:string;
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product,routes }: ProductCardProps) => {
   console.log(product);
   // const { addToCart } = useCart();
   
@@ -25,7 +26,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
      <div className="product-card group">
       <div className="relative overflow-hidden">
-        <Link to={`/bikes/${product._id}`}>
+        <Link to={`/${routes}/${product._id}`}>
           <img 
             src={product.images[0]} 
             alt={product.name} 
@@ -42,7 +43,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <div className="p-4">
         <div className="flex justify-between items-start">
           <div>
-            <Link to={`/bikes/${product._id}`}>
+            <Link to={`/${routes}/${product._id}`}>
               <h3 className="text-lg font-semibold line-clamp-1">{product.name}</h3>
             </Link>
             <div className="text-sm text-gray-600">{product.brand} | {product.category}</div>
@@ -76,7 +77,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </div>
 
         <div className="mt-4 flex space-x-2">
-          <Link to={`/bikes/${product._id}`} className="flex-1">
+          <Link to={`/${routes}/${product._id}`} className="flex-1">
             <Button variant="outline" className="w-full">Details</Button>
           </Link>
           <Button 

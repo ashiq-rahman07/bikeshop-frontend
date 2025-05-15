@@ -7,128 +7,156 @@ import { Link, useSearchParams } from "react-router-dom";
 import GearHero from "../ridingGear/GearHero";
 import { TBike, TGear } from "@/types/product.type";
 import { FilterOptions } from "@/types";
-import { getPriceRange } from "@/data/products";
+// import { getPriceRange } from "@/data/products";
 import { useGetAllGearsQuery } from "@/redux/features/gears/gearsApi";
 import { Input } from "../ui/input";
-import ProductFilter from "../productsss/ProductFilter";
+// import ProductFilter from "../productsss/ProductFilter";
 import ProductCard from "../productsss/ProductCard";
 import GearFilter from "../productsss/GearFilter";
 
+// export interface GearFilterOptions {
+//   search: string;
+//   priceRange: [number, number];
+//   brands: string[];
+//   categories: string[];
+//   isStock: boolean;
+ 
+// }
 
 const AllGearPage = () => {
-      const { data: gearsData, isLoading } = useGetAllGearsQuery(undefined);
-  const gears = gearsData?.data || [];
-// console.log(gears);
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // const [filteredProducts, setFilteredProducts] = useState<TGear[]>([]);
-  // const [showFilters, setShowFilters] = useState(false);
-  // const [sortBy, setSortBy] = useState<string>("featured");
-
-  // const initPriceRange = getPriceRange(); // Update if gear pricing is different
-
-  // const initialFilters: FilterOptions = {
-  //   search: searchParams.get("search") || "",
-  //   priceRange: initPriceRange,
-  //   brands: searchParams.get("brand") ? [searchParams.get("brand") as string] : [],
-  //   categories: searchParams.get("category") ? [searchParams.get("category") as string] : [],
-  //   inStock: searchParams.get("isStock") === "true",
-  // };
-
-  // const [filters, setFilters] = useState<FilterOptions>(initialFilters);
-
-  // useEffect(() => {
-  //   if (gears.length) {
-  //     filterProducts(gears, filters);
-  //   }
-  // }, [gears, filters, sortBy]);
-
-//   const filterProducts = (productsToFilter: TGear[], currentFilters: FilterOptions) => {
-//     let result = [...productsToFilter];
-// console.log('RESULT',result)
-//     // Search filter
-//     if (currentFilters.search) {
-//       const searchText = currentFilters.search.toLowerCase();
-//       result = result.filter(product =>
-//         product.name.toLowerCase().includes(searchText) ||
-//         product.description.toLowerCase().includes(searchText)
-//       );
-//     }
-
-//     // Price range filter
-//     result = result.filter(
-//       product =>
-//         product.price >= currentFilters.priceRange[0] &&
-//         product.price <= currentFilters.priceRange[1]
-//     );
-
-//     // Brand filter
-//     if (currentFilters.brands.length > 0) {
-//       result = result.filter(product =>
-//         currentFilters.brands.includes(product.brand)
-//       );
-//     }
-
-//     // Category filter
-//     if (currentFilters.categories.length > 0) {
-//       result = result.filter(product =>
-//         currentFilters.categories.includes(product.category)
-//       );
-//     }
-
-//     // In-stock filter
-//     if (currentFilters.inStock) {
-//       result = result.filter(product => product.stock);
-//     }
-
-//     // Sorting
-//     // result = sortProducts(result, sortBy);
-
-//     setFilteredProducts(result);
-
-//     // Update URL search params
-//     const newSearchParams = new URLSearchParams();
-//     if (currentFilters.search) newSearchParams.set("search", currentFilters.search);
-//     if (currentFilters.brands.length === 1) newSearchParams.set("brand", currentFilters.brands[0]);
-//     if (currentFilters.categories.length === 1) newSearchParams.set("category", currentFilters.categories[0]);
-//     if (currentFilters.inStock) newSearchParams.set("inStock", "true");
-//     if (sortBy !== "featured") newSearchParams.set("sort", sortBy);
-
-//     setSearchParams(newSearchParams);
-//   };
-
-  // const handleFilterChange = (newFilters: FilterOptions) => {
-  //   setFilters(newFilters);
-  // };
-
-  // const handleSearchSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   const searchInput = document.getElementById("search-input") as HTMLInputElement;
-  //   const searchValue = searchInput.value;
-  //   setFilters({ ...filters, search: searchValue });
-  // };
-
-  // const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   setSortBy(e.target.value);
-  // };
-
-  // const sortProducts = (productsToSort: TGear[], sortOption: string): TGear[] => {
-  //   const sortedProducts = [...productsToSort];
-  //   switch (sortOption) {
-  //     case "price-asc":
-  //       return sortedProducts.sort((a, b) => a.price - b.price);
-  //     case "price-desc":
-  //       return sortedProducts.sort((a, b) => b.price - a.price);
-  //     case "name-asc":
-  //       return sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
-  //     case "name-desc":
-  //       return sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
-  //     default:
-  //       return sortedProducts;
-  //   }
-  // };
-
-  // const toggleFilters = () => setShowFilters(prev => !prev);
-
+     const { data:gearsData, isLoading } = useGetAllGearsQuery(undefined);
+       
+       
+       const gears = gearsData?.data || [];
+     
+     const [searchParams, setSearchParams] = useSearchParams();
+     const [filteredProducts, setFilteredProducts] = useState<TGear[]>([]);
+     const [showFilters, setShowFilters] = useState(false);
+     const [sortBy, setSortBy] = useState<string>("featured");
+     
+      const getPriceRange = (): [number, number] => {
+       let min = Infinity;
+       let max = 0;
+       
+      gears.forEach(product => {
+         if (Math.floor(product.price) < min) min = Math.floor(product.price) ;
+         if (Math.floor(product.price) > max) max = Math.floor(product.price) ;
+       });
+       
+       return [min, max];
+     };
+     // Initialize filter options
+     const initPriceRange = getPriceRange(); // [min, max] based on your app logic
+     
+     const initialFilters: FilterOptions = {
+       search: searchParams.get("search") || "",
+       priceRange: initPriceRange,
+       brands: searchParams.get("brand") ? [searchParams.get("brand") as string] : [],
+       categories: searchParams.get("category") ? [searchParams.get("category") as string] : [],
+       isStock: searchParams.get("isStock") === "true",
+     };
+     
+     const [filters, setFilters] = useState<FilterOptions>(initialFilters);
+     
+     // 🔁 Filter whenever bikes or filters change
+     useEffect(() => {
+       if (gears.length) {
+         filterProducts(gears, filters);
+       }
+     }, [gears, filters, sortBy]);
+     
+     
+     const filterProducts = (productsToFilter: TBike[], currentFilters: FilterOptions) => {
+       let result = [...productsToFilter];
+     
+       // Search filter
+       if (currentFilters.search) {
+         const searchText = currentFilters.search.toLowerCase();
+         result = result.filter(product =>
+           product.name.toLowerCase().includes(searchText) ||
+           product.description.toLowerCase().includes(searchText)
+         );
+       }
+     
+       // Price range filter
+       result = result.filter(
+         product =>
+           product.price >= currentFilters.priceRange[0] &&
+           product.price <= currentFilters.priceRange[1]
+       );
+     
+       // Brand filter
+       if (currentFilters.brands.length > 0) {
+         result = result.filter(product =>
+           currentFilters.brands.includes(product.brand)
+         );
+       }
+     
+       // Category filter
+       if (currentFilters.categories.length > 0) {
+         result = result.filter(product =>
+           currentFilters.categories.includes(product.category)
+         );
+       }
+     
+       // In-stock filter
+       if (currentFilters.isStock) {
+         result = result.filter(product => product.stock);
+       }
+     
+       // Sorting
+       result = sortProducts(result, sortBy);
+     
+       setFilteredProducts(result);
+     
+       // Update URL search params
+       const newSearchParams = new URLSearchParams();
+       if (currentFilters.search) newSearchParams.set("search", currentFilters.search);
+       if (currentFilters.brands.length === 1) newSearchParams.set("brand", currentFilters.brands[0]);
+       if (currentFilters.categories.length === 1) newSearchParams.set("category", currentFilters.categories[0]);
+       if (currentFilters.isStock) newSearchParams.set("isStock", "true");
+       if (sortBy !== "featured") newSearchParams.set("sort", sortBy);
+     
+       setSearchParams(newSearchParams);
+     };
+     
+     const handleFilterChange = (newFilters: FilterOptions) => {
+       setFilters(newFilters);
+     };
+     
+     const handleSearchSubmit = (e: React.FormEvent) => {
+       e.preventDefault();
+       const searchInput = document.getElementById("search-input") as HTMLInputElement;
+       const searchValue = searchInput.value;
+     
+       const newFilters = { ...filters, search: searchValue };
+       setFilters(newFilters);
+     };
+     
+     const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+       setSortBy(e.target.value);
+     };
+     
+     const sortProducts = (productsToSort: TBike[], sortOption: string):  TBike[] => {
+       const sortedProducts = [...productsToSort];
+     
+       switch (sortOption) {
+         case "price-asc":
+           return sortedProducts.sort((a, b) => a.price - b.price);
+         case "price-desc":
+           return sortedProducts.sort((a, b) => b.price - a.price);
+         case "name-asc":
+           return sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+         case "name-desc":
+           return sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+         // case "rating":
+         //   return sortedProducts.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
+         default:
+           return sortedProducts;
+       }
+     };
+     
+     const toggleFilters = () => setShowFilters(prev => !prev);
   return (
     <div>
       {/* Enhanced Hero Section */}
@@ -141,18 +169,16 @@ const AllGearPage = () => {
           <div>
             <h1 className="text-3xl font-bold">Motorcycles</h1>
             <p className="text-gray-600 mt-1">
-              {/* {filteredProducts.length} {filteredProducts.length === 1 ? "product" : "products"} available */}
+              {filteredProducts.length} {filteredProducts.length === 1 ? "product" : "products"} available
             </p>
           </div>
           
           <div className="w-full md:w-auto mt-4 md:mt-0 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-            <form className="flex"
-            // onSubmit={handleSearchSubmit}
-             >
+            <form onSubmit={handleSearchSubmit} className="flex">
               <Input
                 id="search-input"
                 placeholder="Search motorcycles..."
-                // defaultValue={filters.search}
+                defaultValue={filters.search}
                 className="rounded-r-none focus-visible:ring-0 focus-visible:ring-offset-0"
               />
               <Button type="submit" className="rounded-l-none">
@@ -162,8 +188,8 @@ const AllGearPage = () => {
             
             <div className="flex items-center space-x-4">
               <select
-                // value={sortBy}
-                // onChange={handleSortChange}
+                value={sortBy}
+                onChange={handleSortChange}
                 className="border rounded-md p-2"
               >
                 <option value="featured">Featured</option>
@@ -175,11 +201,11 @@ const AllGearPage = () => {
               </select>
               
               <Button
-                // variant={showFilters ? "default" : "outline"}
-                // onClick={toggleFilters}
+                variant={showFilters ? "default" : "outline"}
+                onClick={toggleFilters}
                 className="md:hidden"
               >
-                {/* {showFilters ? <X className="mr-2 h-4 w-4" /> : <Filter className="mr-2 h-4 w-4" />} */}
+                {showFilters ? <X className="mr-2 h-4 w-4" /> : <Filter className="mr-2 h-4 w-4" />}
                 Filters
               </Button>
             </div>
@@ -189,21 +215,23 @@ const AllGearPage = () => {
         <div className="flex flex-col md:flex-row gap-6">
           {/* Filters - Desktop */}
           <div className="hidden md:block w-64 flex-shrink-0">
-            {/* <GearFilter 
+            <GearFilter 
               onFilterChange={handleFilterChange}
               initialFilters={initialFilters}
-            /> */}
+              getPriceRange={getPriceRange}
+            />
           </div>
           
           {/* Filters - Mobile */}
-          {/* {showFilters && (
+          {showFilters && (
             <div className="md:hidden w-full mb-6">
               <GearFilter 
                 onFilterChange={handleFilterChange}
                 initialFilters={initialFilters}
+                getPriceRange={getPriceRange}
               />
             </div>
-          )} */}
+          )}
           
           {/* Products Grid */}
           <div className="flex-1">
@@ -213,10 +241,10 @@ const AllGearPage = () => {
                   <div key={index} className="bg-gray-100 animate-pulse rounded-lg h-72"></div>
                 ))}
               </div>
-            ) : gears.length > 0 ? (
+            ) : filteredProducts.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {gears.map((product) => (
-                  <ProductCard key={product._id} product={product} />
+                {filteredProducts.map((product) => (
+                  <ProductCard key={product._id} product={product} routes={'gears'} />
                 ))}
               </div>
             ) : (
@@ -227,19 +255,19 @@ const AllGearPage = () => {
                 <Button 
                   variant="outline" 
                   className="mt-4"
-                  // onClick={() => {
-                  //   const defaultFilters = {
-                  //     search: "",
-                  //     priceRange: initPriceRange,
-                  //     brands: [],
-                  //     categories: [],
-                  //     inStock: false,
-                  //   };
-                  //   setFilters(defaultFilters);
-                  //   filterProducts(gears, defaultFilters);
-                  //   setSortBy("featured");
-                  //   setSearchParams({});
-                  // }}
+                  onClick={() => {
+                    const defaultFilters = {
+                      search: "",
+                      priceRange: initPriceRange,
+                      brands: [],
+                      categories: [],
+                      isStock: false,
+                    };
+                    setFilters(defaultFilters);
+                    filterProducts(gears, defaultFilters);
+                    setSortBy("featured");
+                    setSearchParams({});
+                  }}
                 >
                   Clear all filters
                 </Button>

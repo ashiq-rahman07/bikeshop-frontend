@@ -68,7 +68,7 @@ const ProductFilter = ({ onFilterChange, initialFilters }: ProductFilterProps) =
       priceRange,
       brands: [],
       categories: [],
-      inStock: false,
+      isStock: false,
     };
     setFilters(resetFilters);
     onFilterChange(resetFilters);
@@ -148,7 +148,7 @@ const ProductFilter = ({ onFilterChange, initialFilters }: ProductFilterProps) =
         <div className="flex items-center space-x-2">
           <Checkbox 
             id="in-stock" 
-            checked={filters.inStock}
+            checked={filters.isStock}
             onCheckedChange={(checked) => handleInStockChange(checked === true)}
           />
           <Label htmlFor="in-stock" className="cursor-pointer">In Stock Only</Label>
