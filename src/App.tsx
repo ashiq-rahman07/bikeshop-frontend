@@ -47,6 +47,7 @@ import ProductDetailsPage from './components/pages/ProductDetailsPage';
 import GearDetailsPage from './components/pages/GearDetailsPage';
 import AllGearPage from './components/pages/AllGearPage';
 import DemoGearPage from './components/pages/DemoGearpage';
+import CartPage from './components/pages/CartPage';
 // import React, { useEffect, useState } from "react"
 
 function App() {
