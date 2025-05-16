@@ -48,6 +48,7 @@ import GearDetailsPage from './components/pages/GearDetailsPage';
 import AllGearPage from './components/pages/AllGearPage';
 import DemoGearPage from './components/pages/DemoGearpage';
 import CartPage from './components/pages/CartPage';
+import AddProductsForm from './components/form/AddbikeForm';
 // import React, { useEffect, useState } from "react"
 
 function App() {
@@ -139,7 +140,8 @@ function App() {
               } />
               <Route path="/admin/add-gears" element={
                 <ProtectRoute allowedRoles={["admin"]}>
-                  <AddGear />
+                  {/* <AddGear /> */}
+                  <AddProductsForm/>
                 </ProtectRoute>
               } />
               <Route path="/admin/customers-management" element={
