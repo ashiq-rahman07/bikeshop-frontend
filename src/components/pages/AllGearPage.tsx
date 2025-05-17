@@ -37,7 +37,7 @@ const AllGearPage = () => {
     
      // Initialize filter options
      const initPriceRange = priceRange; // [min, max] based on your app logic
-     console.log(initPriceRange)
+   
      const initialFilters: FilterOptions = {
        search: searchParams.get("search") || "",
        priceRange: initPriceRange,

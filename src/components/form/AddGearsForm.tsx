@@ -1,5 +1,3 @@
-
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -20,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
 
 
+
 import { Plus } from "lucide-react";
 
 
@@ -36,12 +35,36 @@ import { toast } from "sonner";
 import NMImageUploader from "./ui/NMImageUploader";
 import ImagePreviewer from "./ui/ImagePreviewer";
 import DashboardLayout from "../newDashboard/DashboardLayout";
+import { useAddProductMutation } from "@/redux/features/products/productsApi";
+import { useAddGearMutation } from "@/redux/features/gears/gearsApi";
+import { TResponse } from "@/types/global";
+import { IGear } from "@/types/gear";
+import { useNavigate } from "react-router-dom";
 
-export default function AddProductsForm() {
+export default function AddGearsForm() {
+  const navigate = useNavigate()
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
 
-
+const gearCategories = [
+  'Helmet',
+  'Gloves',
+  'Jacket',
+  'Boots',
+  'Protection',
+  'Accessories',
+  'Rain Gear',
+  'Electronics'
+]
+const gearBrand = [
+  'RideTalk',
+  'ThermoTech',
+  'AdventureGear',
+  'RideReady',
+  'RoadMaster',
+  'RaceTech',
+  'SafeRide'
+]
 
 
   const form = useForm({
@@ -52,10 +75,9 @@ export default function AddProductsForm() {
       category: "",
       brand: "",
       stock: "",
-      weight: "",
-      availableColors: [{ value: "" }],
-      keyFeatures: [{ value: "" }],
-      specification: [{ key: "", value: "" }],
+      model:"",
+      features: [{ value: "" }],
+      specifications: [{ key: "", value: "" }],
     },
   });
 
@@ -63,18 +85,13 @@ export default function AddProductsForm() {
     formState: { isSubmitting },
   } = form;
 
-  const { append: appendColor, fields: colorFields } = useFieldArray({
-    control: form.control,
-    name: "availableColors",
-  });
+ 
 
-  const addColor = () => {
-    appendColor({ value: "" });
-  };
 
+const [addGear, { isLoading }] = useAddGearMutation();
   const { append: appendFeatures, fields: featureFields } = useFieldArray({
     control: form.control,
-    name: "keyFeatures",
+    name: "features",
   });
 
   const addFeatures = () => {
@@ -83,7 +100,7 @@ export default function AddProductsForm() {
 
   const { append: appendSpec, fields: specFields } = useFieldArray({
     control: form.control,
-    name: "specification",
+    name: "specifications",
   });
 
   const addSpec = () => {
@@ -107,55 +124,54 @@ export default function AddProductsForm() {
 //   }, []);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const availableColors = data.availableColors.map(
-      (color: { value: string }) => color.value
-    );
+   
 
-    const keyFeatures = data.keyFeatures.map(
+    const features = data.features.map(
       (feature: { value: string }) => feature.value
     );
 
-    const specification: { [key: string]: string } = {};
-    data.specification.forEach(
+    const specifications: { [key: string]: string } = {};
+    data.specifications.forEach(
       (item: { key: string; value: string }) =>
-        (specification[item.key] = item.value)
+        (specifications[item.key] = item.value)
     );
 
     // console.log({ availableColors, keyFeatures, specification });
 
     const modifiedData = {
       ...data,
-      availableColors,
-      keyFeatures,
-      specification,
+    
+      features,
+      specifications,
       price: parseFloat(data.price),
       stock: parseInt(data.stock),
-      weight: parseFloat(data.stock),
+    
     };
-
+console.log(modifiedData)
     const formData = new FormData();
     formData.append("data", JSON.stringify(modifiedData));
 
     for (const file of imageFiles) {
       formData.append("images", file);
     }
-    // try {
-    //   const res = await addProduct(formData);
+    console.log(formData.getAll)
+    try {
+      const res = await addGear(formData) as TResponse<IGear>;
 
-    //   if (res.success) {
-    //     toast.success(res.message);
-    //     router.push("/user/shop/products");
-    //   } else {
-    //     toast.error(res.message);
-    //   }
-    // } catch (err: any) {
-    //   console.error(err);
-    // }
+      if (res?.success) {
+        toast.success(res.message);
+        navigate("/user/shop/products");
+      } else {
+        toast.error(res.message);
+      }
+    } catch (err: any) {
+      console.error(err);
+    }
   };
 
   return (
 <DashboardLayout>
-        <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-2xl p-5 ">
+        <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-6xl p-5 ">
       <div className="flex items-center space-x-4 mb-5 ">
         {/* <Logo /> */}
 
@@ -166,13 +182,14 @@ export default function AddProductsForm() {
           <div className="flex justify-between items-center border-t border-b py-3 my-5">
             <p className="text-primary font-bold text-xl">Basic Information</p>
           </div>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Product Name</FormLabel>
+                  <FormLabel>Gear Name</FormLabel>
                   <FormControl>
                     <Input {...field} value={field.value || ""} />
                   </FormControl>
@@ -180,13 +197,13 @@ export default function AddProductsForm() {
                 </FormItem>
               )}
             />
-
+         
             <FormField
               control={form.control}
-              name="price"
+              name="model"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Price</FormLabel>
+                  <FormLabel>Gear Model</FormLabel>
                   <FormControl>
                     <Input {...field} value={field.value || ""} />
                   </FormControl>
@@ -194,6 +211,7 @@ export default function AddProductsForm() {
                 </FormItem>
               )}
             />
+           
 
             <FormField
               control={form.control}
@@ -211,7 +229,7 @@ export default function AddProductsForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {['road','mountain','electrik'].map((category,idx) => (
+                      {gearCategories.map((category,idx) => (
                         <SelectItem key={idx} value={category}>
                           {category}
                         </SelectItem>
@@ -223,6 +241,8 @@ export default function AddProductsForm() {
                 </FormItem>
               )}
             />
+
+           
             <FormField
               control={form.control}
               name="brand"
@@ -239,7 +259,7 @@ export default function AddProductsForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {['hero','pulser','honda'].map((brand,idx) => (
+                      {gearBrand.map((brand,idx) => (
                         <SelectItem key={idx} value={brand}>
                           {brand}
                         </SelectItem>
@@ -247,6 +267,19 @@ export default function AddProductsForm() {
                     </SelectContent>
                   </Select>
 
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Price</FormLabel>
+                  <FormControl>
+                    <Input {...field} value={field.value || ""} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -264,98 +297,11 @@ export default function AddProductsForm() {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="weight"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Weight</FormLabel>
-                  <FormControl>
-                    <Input {...field} value={field.value || ""} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+         
           </div>
-
-          <div className="my-5">
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      className="h-36 resize-none"
-                      {...field}
-                      value={field.value || ""}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
           <div>
             <div className="flex justify-between items-center border-t border-b py-3 my-5">
-              <p className="text-primary font-bold text-xl">Images</p>
-            </div>
-            <div className="flex gap-4 ">
-              <NMImageUploader
-                setImageFiles={setImageFiles}
-                setImagePreview={setImagePreview}
-                label="Upload Image"
-                className="w-fit mt-0"
-              />
-              <ImagePreviewer
-                className="flex flex-wrap gap-4"
-                setImageFiles={setImageFiles}
-                imagePreview={imagePreview}
-                setImagePreview={setImagePreview}
-              />
-            </div>
-          </div>
-
-          <div>
-            <div className="flex justify-between items-center border-t border-b py-3 my-5">
-              <p className="text-primary font-bold text-xl">Available Colors</p>
-              <Button
-                variant="outline"
-                className="size-10"
-                onClick={addColor}
-                type="button"
-              >
-                <Plus className="text-primary" />
-              </Button>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {colorFields.map((colorField, index) => (
-                <div key={colorField.id}>
-                  <FormField
-                    control={form.control}
-                    name={`availableColors.${index}.value`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Color {index + 1}</FormLabel>
-                        <FormControl>
-                          <Input {...field} value={field.value || ""} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <div className="flex justify-between items-center border-t border-b py-3 my-5">
-              <p className="text-primary font-bold text-xl">Key Features</p>
+              <p className="text-primary font-bold text-xl">Gear Features</p>
               <Button
                 onClick={addFeatures}
                 variant="outline"
@@ -371,7 +317,7 @@ export default function AddProductsForm() {
                 <div key={featureField.id}>
                   <FormField
                     control={form.control}
-                    name={`keyFeatures.${index}.value`}
+                    name={`features.${index}.value`}
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Key Feature {index + 1}</FormLabel>
@@ -407,7 +353,7 @@ export default function AddProductsForm() {
               >
                 <FormField
                   control={form.control}
-                  name={`specification.${index}.key`}
+                  name={`specifications.${index}.key`}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Feature name {index + 1}</FormLabel>
@@ -420,7 +366,7 @@ export default function AddProductsForm() {
                 />
                 <FormField
                   control={form.control}
-                  name={`specification.${index}.value`}
+                  name={`specifications.${index}.value`}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Feature Description {index + 1}</FormLabel>
@@ -434,7 +380,44 @@ export default function AddProductsForm() {
               </div>
             ))}
           </div>
-
+          <div>
+            <div className="flex justify-between items-center border-t border-b py-3 my-5">
+              <p className="text-primary font-bold text-xl">Images</p>
+            </div>
+            <div className="flex gap-4 ">
+              <NMImageUploader
+                setImageFiles={setImageFiles}
+                setImagePreview={setImagePreview}
+                label="Upload Image"
+                className="w-fit mt-0"
+              />
+              <ImagePreviewer
+                className="flex flex-wrap gap-4"
+                setImageFiles={setImageFiles}
+                imagePreview={imagePreview}
+                setImagePreview={setImagePreview}
+              />
+            </div>
+          </div>
+          <div className="my-5">
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className="h-36 resize-none"
+                      {...field}
+                      value={field.value || ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <Button type="submit" className="mt-5 w-full" disabled={isSubmitting}>
             {isSubmitting ? "Adding Product....." : "Add Product"}
           </Button>

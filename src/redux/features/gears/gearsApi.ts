@@ -1,3 +1,5 @@
+import { IGear } from './../../../types/gear';
+
 import { AddBikePayload } from '../../../types/alltypes';
 import { TQueryParam, TResponseRedux } from '../../../types/global';
 import { TBike } from '../../../types/product.type';
@@ -21,7 +23,7 @@ const gearsApi = baseApi.injectEndpoints({
           params: params,
         };
       },
-      transformResponse: (response: TResponseRedux<TBike[]>) => {
+      transformResponse: (response: TResponseRedux<IGear[]>) => {
         return {
           data: response.data,
           meta: response.meta,
@@ -42,11 +44,11 @@ const gearsApi = baseApi.injectEndpoints({
         };
       },
     }),
-    addGear: builder.mutation<TBike, AddBikePayload>({
-      query: (bikeData) => ({
+    addGear: builder.mutation({
+      query: (gearData) => ({
         url: '/gear/create-gear',
         method: 'POST',
-        body: bikeData,
+        body: gearData,
       }),
     }),
     updateGear: builder.mutation<

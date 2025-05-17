@@ -19,6 +19,7 @@ export type AddBikePayload = {
   quantity: number;
 };
 
+
 // Define the type for the registration response
 export type TRegisterResponse = {
   message: string;
