@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 import { Button } from "@/components/ui/button";
@@ -8,11 +8,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Bike, Search, Plus, Edit, Trash } from "lucide-react";
 import { toast } from "sonner";
 import DashboardLayout from "@/components/newDashboard/DashboardLayout";
-import { useGetAllProductsQuery } from "@/redux/features/products/productsApi";
+import { useDeleteBikeMutation, useGetAllProductsQuery } from "@/redux/features/products/productsApi";
+import { TResponse } from "@/types/global";
 
-const AdminBikes = () => {
-    const { data:bikesData, isLoading } = useGetAllProductsQuery(undefined);
-    
+const BikesManagement = () => {
+  const navigate = useNavigate()
+    const { data:bikesData, isLoading,refetch } = useGetAllProductsQuery(undefined);
+    const [deleteBike] = useDeleteBikeMutation();
     
     const allBikes = bikesData?.data || [];
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,9 +26,23 @@ const AdminBikes = () => {
      product.model.toLowerCase().includes(searchTerm.toLowerCase()))
   );
   
-  const handleDelete = (id: string) => {
-    // In a real app, you would call an API to delete the bike
-    toast.success(`Bike with ID ${id} would be deleted in a real app`);
+  const handleDelete = async(bikeId: string) => {
+  try {
+      const confirm = window.confirm(
+        'Are you sure? This will delete  this bike all details and admin data also.'
+      );
+      if (!confirm) return;
+      const {data} = await deleteBike(bikeId);
+      console.log(data)
+      if (data.success as boolean) {
+        toast.success('Bike are Deleted Successfully');
+        refetch()
+      
+      }
+    } catch (error) {
+      toast.error('Can Not Deleted This Bike')
+      console.log(error);
+    }
   };
   
   return (
@@ -127,4 +143,4 @@ const AdminBikes = () => {
   );
 };
 
-export default AdminBikes;
+export default BikesManagement;

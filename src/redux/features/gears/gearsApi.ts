@@ -1,6 +1,6 @@
 import { IGear } from './../../../types/gear';
 
-import { AddBikePayload } from '../../../types/alltypes';
+
 import { TQueryParam, TResponseRedux } from '../../../types/global';
 import { TBike } from '../../../types/product.type';
 import { baseApi } from '../../api/baseApi';
@@ -61,9 +61,9 @@ const gearsApi = baseApi.injectEndpoints({
         body: bikeData,
       }),
     }),
-    deleteGear: builder.mutation<void, string>({
-      query: (bikeId) => ({
-        url: `/gear/${bikeId}`,
+    deleteGear: builder.mutation({
+      query: (gearId) => ({
+        url: `/gear/${gearId}`,
         method: 'DELETE',
       }),
     }),

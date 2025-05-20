@@ -36,34 +36,37 @@ import NMImageUploader from "./ui/NMImageUploader";
 import ImagePreviewer from "./ui/ImagePreviewer";
 import DashboardLayout from "../newDashboard/DashboardLayout";
 import { useAddProductMutation } from "@/redux/features/products/productsApi";
-import { useAddGearMutation } from "@/redux/features/gears/gearsApi";
+
 import { TResponse } from "@/types/global";
 import { IGear } from "@/types/gear";
 import { useNavigate } from "react-router-dom";
 
-export default function AddGearsForm() {
+export default function AddBikeForm() {
   const navigate = useNavigate()
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
 
-const gearCategories = [
-  'Helmet',
-  'Gloves',
-  'Jacket',
-  'Boots',
-  'Protection',
-  'Accessories',
-  'Rain Gear',
-  'Electronics'
+const bikeCategories = [
+   'Sport',
+  'Cruiser',
+  'Scooter',
+  'Off-road',
+  'Electric',
+  'Classic',
+  'Naked',
 ]
-const gearBrand = [
-  'RideTalk',
-  'ThermoTech',
-  'AdventureGear',
-  'RideReady',
-  'RoadMaster',
-  'RaceTech',
-  'SafeRide'
+const bikeBrand = [
+ 'Velocity',
+  'Cruiser King',
+  'UrbanScoot',
+  'DirtDevil',
+  'ElectroMoto',
+  'ClassicMotors',
+  'MotoMax',
+  'Yamaha',
+  'Honda',
+  'Suzuki',
+  'Hero',
 ]
 
 
@@ -88,7 +91,7 @@ const gearBrand = [
  
 
 
-const [addGear, { isLoading }] = useAddGearMutation();
+const [addProduct, { isLoading }] = useAddProductMutation();
   const { append: appendFeatures, fields: featureFields } = useFieldArray({
     control: form.control,
     name: "features",
@@ -147,7 +150,7 @@ const [addGear, { isLoading }] = useAddGearMutation();
       stock: parseInt(data.stock),
     
     };
-console.log(modifiedData)
+
     const formData = new FormData();
     formData.append("data", JSON.stringify(modifiedData));
 
@@ -156,13 +159,13 @@ console.log(modifiedData)
     }
    
     try {
-      const res = await addGear(formData) as TResponse<IGear>;
-
-      if (res?.success) {
-        toast.success(res.message);
-        navigate("/admin/gears-management");
+      const {data} = await addProduct(formData);
+      console.log(data)
+      if (data.success as boolean) {
+        toast.success("Bike Add Successfully");
+        navigate("/admin/bikes-management");
       } else {
-        toast.error(res.message);
+        toast.error("Can Not Add Bike");
       }
     } catch (err: any) {
       console.error(err);
@@ -175,7 +178,7 @@ console.log(modifiedData)
       <div className="flex items-center space-x-4 mb-5 ">
         {/* <Logo /> */}
 
-        <h1 className="text-xl font-bold">Add Gear</h1>
+        <h1 className="text-xl font-bold">Add Bike</h1>
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -229,7 +232,7 @@ console.log(modifiedData)
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {gearCategories.map((category,idx) => (
+                      {bikeCategories.map((category,idx) => (
                         <SelectItem key={idx} value={category}>
                           {category}
                         </SelectItem>
@@ -259,7 +262,7 @@ console.log(modifiedData)
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {gearBrand.map((brand,idx) => (
+                      {bikeBrand.map((brand,idx) => (
                         <SelectItem key={idx} value={brand}>
                           {brand}
                         </SelectItem>
@@ -419,7 +422,7 @@ console.log(modifiedData)
             />
           </div>
           <Button type="submit" className="mt-5 w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Adding Product....." : "Add Product"}
+            {isSubmitting ? "Adding Bike....." : "Add Bike"}
           </Button>
         </form>
       </Form>

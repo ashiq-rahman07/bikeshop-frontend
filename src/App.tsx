@@ -3,30 +3,24 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import MainLayout from './components/layout/MainLayout';
 import Home from './components/home/Home';
-import ProductsPage from './components/products/ProductsPage';
-import About from './components/about/About';
-import DashboardLayout from './components/layout/DashboardLayout';
-import Dashboard from './components/dashboard/Dashboard';
+
+
+
 import React from 'react';
-import Cart from './components/cartpage/Cart';
 
-import SignUp from './components/register/SignUp';
-import SignIn from './components/register/SignIn';
-import OrderManagement from './components/dashboard/admin/orderManagement/OrderManagement';
 
-import UserProfile from './components/dashboard/user profile/UserProfile';
+
+
 import VerifyOrder from './components/order/VerifyOrder';
 import Order from './components/order/Order';
 import ProtectedRoute from './components/layout/ProtectedRoute';
-import ProductDetails from './components/products/ProductDetails';
-import MyOrder from './components/dashboard/customer/MyOrder';
-import ProductManagement from './components/dashboard/admin/productManagemant/ProductManagement';
-import AddProdact from './components/dashboard/admin/productManagemant/AddProdact';
+
+
 
 import CustomerManagementPage from './components/dashboard/admin/customerManagement/CustomerManagementPage';
-import UpdateProdact from './components/dashboard/admin/productManagemant/UpdateProduct';
-import ProductDetailPage from './components/products/ProductDetailPage';
-import Register from './components/register/Register';
+// import UpdateProdact from './components/dashboard/admin/productManagemant/UpdateProduct';
+// import ProductDetailPage from './components/products/ProductDetailPage';
+
 import DemoRegister from './components/register/DemoRegister';
 import DemoLogin from './components/register/DemoLogin';
 import AboutPage from './components/about/AboutPage';
@@ -38,18 +32,20 @@ import ProtectRoute from './components/route/ProtectRoute';
 import CustomerDashboard from './components/customer/CustomerDashboard';
 import CustomerOrders from './components/dashboard/customer/CustomerOrders';
 import Checkout from './components/pages/CheckOutPage';
-import AdminBikes from './components/dashboard/admin/AdminBikes';
-import AddBike from './components/dashboard/admin/AddBike';
-import AddGear from './components/dashboard/admin/AddGear';
-import AdminGear from './components/dashboard/admin/AdminGear';
+import AdminBikes from './components/dashboard/admin/BikesManagement';
+
+import AdminGear from './components/dashboard/admin/GearManagement';
 import AllBikesPage from './components/pages/AllBikesPage';
 import ProductDetailsPage from './components/pages/ProductDetailsPage';
 import GearDetailsPage from './components/pages/GearDetailsPage';
 import AllGearPage from './components/pages/AllGearPage';
-import DemoGearPage from './components/pages/DemoGearpage';
+
 import CartPage from './components/pages/CartPage';
-import AddProductsForm from './components/form/AddGearsForm';
+
 import AddGearsForm from './components/form/AddGearsForm';
+import AddBikeForm from './components/form/AddBikeForm';
+import BikesManagement from './components/dashboard/admin/BikesManagement';
+import GearManagement from './components/dashboard/admin/GearManagement';
 // import React, { useEffect, useState } from "react"
 
 function App() {
@@ -125,23 +121,24 @@ function App() {
               } />
               <Route path="/admin/bikes-management" element={
                 <ProtectRoute allowedRoles={["admin"]}>
-                  <AdminBikes />
+                  <BikesManagement />
                  
                 </ProtectRoute>
               } />
               <Route path="/admin/add-bike" element={
                 <ProtectRoute allowedRoles={["admin"]}>
-                  <AddBike />
+    
+                  <AddBikeForm/>
                 </ProtectRoute>
               } />
               <Route path="/admin/gears-management" element={
                 <ProtectRoute allowedRoles={["admin"]}>
-                  <AdminGear />
+                  <GearManagement />
                 </ProtectRoute>
               } />
               <Route path="/admin/add-gears" element={
                 <ProtectRoute allowedRoles={["admin"]}>
-                  {/* <AddGear /> */}
+               
                   <AddGearsForm/>
                 </ProtectRoute>
               } />

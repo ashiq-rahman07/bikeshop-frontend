@@ -42,9 +42,9 @@ const productsApi = baseApi.injectEndpoints({
         };
       },
     }),
-    addProduct: builder.mutation<TBike, AddBikePayload>({
+    addProduct: builder.mutation({
       query: (bikeData) => ({
-        url: '/bike/create-product',
+        url: '/bike/create-bike',
         method: 'POST',
         body: bikeData,
       }),
@@ -59,7 +59,7 @@ const productsApi = baseApi.injectEndpoints({
         body: bikeData,
       }),
     }),
-    deleteProduct: builder.mutation<void, string>({
+    deleteBike: builder.mutation({
       query: (bikeId) => ({
         url: `/bike/${bikeId}`,
         method: 'DELETE',
@@ -71,7 +71,7 @@ const productsApi = baseApi.injectEndpoints({
 export const {
   useGetAllProductsQuery,
   useGetProductByIdQuery,
-  useDeleteProductMutation,
+  useDeleteBikeMutation,
   useUpdateProductMutation,
   useAddProductMutation,
 } = productsApi;

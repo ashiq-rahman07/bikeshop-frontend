@@ -10,10 +10,11 @@ import { Search, Plus, Edit, Trash, ShoppingBag } from "lucide-react";
 import { toast } from "sonner";
 import DashboardLayout from "@/components/newDashboard/DashboardLayout";
 
-import { useGetAllGearsQuery } from "@/redux/features/gears/gearsApi";
+import { useDeleteGearMutation, useGetAllGearsQuery } from "@/redux/features/gears/gearsApi";
 
-const AdminGear = () => {
-    const { data:gearsData, isLoading } = useGetAllGearsQuery(undefined);
+const GearManagement = () => {
+    const { data:gearsData, isLoading,refetch } = useGetAllGearsQuery(undefined);
+    const [deleteGear] = useDeleteGearMutation();
          
        
          const gears = gearsData?.data || [];
@@ -26,9 +27,23 @@ const AdminGear = () => {
      product.category.toLowerCase().includes(searchTerm.toLowerCase()))
   );
   
-  const handleDelete = (id: string) => {
-    // In a real app, you would call an API to delete the gear
-    toast.success(`Gear item with ID ${id} would be deleted in a real app`);
+  const handleDelete = async(gearId: string) => {
+    try {
+      const confirm = window.confirm(
+        'Are you sure? This will delete  this Gear all details and admin data also.'
+      );
+      if (!confirm) return;
+      const {data} = await deleteGear(gearId);
+      
+      if (data.status as boolean) {
+        toast.success('Gear are Deleted Successfully');
+        refetch()
+      
+      }
+    } catch (error) {
+      toast.error('Can Not Deleted This Gear')
+      console.log(error);
+    }
   };
   
   return (
@@ -129,4 +144,4 @@ const AdminGear = () => {
   );
 };
 
-export default AdminGear;
+export default GearManagement;
