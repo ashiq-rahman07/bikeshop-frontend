@@ -419,7 +419,7 @@ console.log(modifiedData)
             />
           </div>
           <Button type="submit" className="mt-5 w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Adding Product....." : "Add Product"}
+            {isSubmitting ? "Adding Gears....." : "Add Gear"}
           </Button>
         </form>
       </Form>
