@@ -35,7 +35,7 @@ import { toast } from "sonner";
 import NMImageUploader from "./ui/NMImageUploader";
 import ImagePreviewer from "./ui/ImagePreviewer";
 import DashboardLayout from "../newDashboard/DashboardLayout";
-import { useAddProductMutation } from "@/redux/features/products/productsApi";
+import { useAddProductMutation, useGetAllProductsQuery } from "@/redux/features/products/productsApi";
 
 import { TResponse } from "@/types/global";
 import { IGear } from "@/types/gear";
@@ -45,6 +45,8 @@ export default function AddBikeForm() {
   const navigate = useNavigate()
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
+  const { data } = useGetAllProductsQuery(undefined);
+  const bikeData = data?.data
 
 const bikeCategories = [
    'Sport',
@@ -72,7 +74,7 @@ const bikeBrand = [
 
   const form = useForm({
     defaultValues: {
-      name: "",
+      name: bikesData.,
       description: "",
       price: "",
       category: "",

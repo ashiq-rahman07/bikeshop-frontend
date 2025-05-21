@@ -156,13 +156,14 @@ console.log(modifiedData)
     }
    
     try {
-      const res = await addGear(formData) as TResponse<IGear>;
+      const{ data} = await addGear(formData);
 
-      if (res?.success) {
-        toast.success(res.message);
+      console.log(data)
+      if (data.success as boolean) {
+        toast.success("Gear Add Successfully");
         navigate("/admin/gears-management");
       } else {
-        toast.error(res.message);
+        toast.error("Can Not Add Gear");
       }
     } catch (err: any) {
       console.error(err);

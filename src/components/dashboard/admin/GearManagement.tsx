@@ -58,7 +58,7 @@ const GearManagement = () => {
             <p className="text-gray-500">Manage your riding gear inventory</p>
           </div>
           <Button asChild className="mt-4 md:mt-0">
-            <Link to="/admin/gear/add">
+            <Link to="/admin/add-gears">
               <Plus className="mr-2 h-4 w-4" /> Add New Gear
             </Link>
           </Button>
