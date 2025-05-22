@@ -114,9 +114,12 @@ const GearManagement = () => {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
-                        <Button size="sm" variant="ghost">
+                        <Link to={`/admin/update-gear/${item?._id}`}>
+                           <Button size="sm" variant="ghost">
                           <Edit className="h-4 w-4" />
                         </Button>
+                        </Link>
+                       
                         <Button 
                           size="sm" 
                           variant="ghost" 

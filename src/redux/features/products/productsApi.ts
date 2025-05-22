@@ -1,3 +1,4 @@
+import { IBike } from './../../../../../bikeshop-server/src/app/modules/bikes/bike.interface';
 import { AddBikePayload } from '../../../types/alltypes';
 import { TQueryParam, TResponseRedux } from '../../../types/global';
 import { TBike } from '../../../types/product.type';
@@ -50,8 +51,8 @@ const productsApi = baseApi.injectEndpoints({
       }),
     }),
     updateProduct: builder.mutation<
-      TBike,
-      { bikeId: string; bikeData: Partial<TBike> }
+      IBike,
+      { bikeId: string; bikeData: Partial<IBike> }
     >({
       query: ({ bikeId, bikeData }) => ({
         url: `/bike/${bikeId}`,

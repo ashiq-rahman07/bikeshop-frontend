@@ -12,6 +12,7 @@ import {
   FieldValues,
   SubmitHandler,
   useFieldArray,
+//   reset,
   useForm,
 } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
@@ -35,13 +36,66 @@ import { toast } from "sonner";
 import NMImageUploader from "./ui/NMImageUploader";
 import ImagePreviewer from "./ui/ImagePreviewer";
 import DashboardLayout from "../newDashboard/DashboardLayout";
-import { useAddProductMutation } from "@/redux/features/products/productsApi";
-import { useAddGearMutation } from "@/redux/features/gears/gearsApi";
+import { useAddProductMutation, useGetAllProductsQuery, useGetProductByIdQuery } from "@/redux/features/products/productsApi";
+
 import { TResponse } from "@/types/global";
 import { IGear } from "@/types/gear";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { features } from "process";
+import { useGetGearByIdQuery } from "@/redux/features/gears/gearsApi";
 
-export default function AddGearsForm() {
+export default function UpdateGearForm() {
+    const { gearId } = useParams<{ gearId: string }>();
+
+      const {
+        data,
+        error,
+        isLoading: singleProductLoading,
+      } = useGetGearByIdQuery(gearId as string);
+      const gear = data?.data;
+
+
+//  const form = useForm({
+//     defaultValues: {
+//       name: bike?.name || "",
+//       description: bike?.description || "",
+//       price: bike?.price || 0,
+//       category: bike?.category || "",
+//       brand: bike?.brand || "",
+//       stock: bike?.stock || "",
+//       model:bike?.model || "",
+    
+//       features: bike?.features?.map((f) => ({ value: f })) || [{ value: "" }],
+   
+//       specifications: bike?.specifications || [{ key: "", value: "" }],
+//     },
+//   });
+const form = useForm()
+  const {
+    formState: { isSubmitting },
+    reset
+  } = form;
+
+      useEffect(() => {
+  if (gear) {
+    const specs = gear.specifications as { [key: string]: string } | undefined;
+    form.reset({
+      name: gear.name || "",
+      description: gear.description || "",
+      price: gear.price || 0,
+      category: gear.category || "",
+      brand: gear.brand || "",
+      stock: gear.stock || "",
+      model: gear.model || "",
+      features: gear.features?.map((f: string) => ({ value: f })) || [{ value: "" }],
+      specifications:
+        specs && Object.keys(specs).length > 0
+          ? Object.entries(specs).map(([key, value]) => ({ key, value }))
+          : [{ key: "", value: "" }],
+    });
+  }
+}, [gear, form]);
+
   const navigate = useNavigate()
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
@@ -66,29 +120,17 @@ const gearBrand = [
   'SafeRide'
 ]
 
+// if(singleProductLoading){
+//     return <div>Loding...</div>
+// }
 
-  const form = useForm({
-    defaultValues: {
-      name: "",
-      description: "",
-      price: "",
-      category: "",
-      brand: "",
-      stock: "",
-      model:"",
-      features: [{ value: "" }],
-      specifications: [{ key: "", value: "" }],
-    },
-  });
-
-  const {
-    formState: { isSubmitting },
-  } = form;
+ 
 
  
 
 
-const [addGear, { isLoading }] = useAddGearMutation();
+const [addProduct, { isLoading }] = useAddProductMutation();
+
   const { append: appendFeatures, fields: featureFields } = useFieldArray({
     control: form.control,
     name: "features",
@@ -107,21 +149,7 @@ const [addGear, { isLoading }] = useAddGearMutation();
     appendSpec({ key: "", value: "" });
   };
 
-  // console.log(specFields);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       const [categoriesData, brandsData] = await Promise.all([
-//         getAllCategories(),
-//         getAllBrands(),
-//       ]);
-
-//       setCategories(categoriesData?.data);
-//       setBrands(brandsData?.data);
-//     };
-
-//     fetchData();
-//   }, []);
+ 
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
    
@@ -136,7 +164,7 @@ const [addGear, { isLoading }] = useAddGearMutation();
         (specifications[item.key] = item.value)
     );
 
-    // console.log({ availableColors, keyFeatures, specification });
+
 
     const modifiedData = {
       ...data,
@@ -147,7 +175,7 @@ const [addGear, { isLoading }] = useAddGearMutation();
       stock: parseInt(data.stock),
     
     };
-console.log(modifiedData)
+
     const formData = new FormData();
     formData.append("data", JSON.stringify(modifiedData));
 
@@ -156,14 +184,13 @@ console.log(modifiedData)
     }
    
     try {
-      const{ data} = await addGear(formData);
-
+      const {data} = await addProduct(formData);
       console.log(data)
       if (data.success as boolean) {
-        toast.success("Gear Add Successfully");
-        navigate("/admin/gears-management");
+        toast.success("Bike Add Successfully");
+        navigate("/admin/bikes-management");
       } else {
-        toast.error("Can Not Add Gear");
+        toast.error("Can Not Add Bike");
       }
     } catch (err: any) {
       console.error(err);
@@ -420,7 +447,7 @@ console.log(modifiedData)
             />
           </div>
           <Button type="submit" className="mt-5 w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Adding Gears....." : "Add Gear"}
+            {isSubmitting ? "UpdatingGear....." : "Update Gear"}
           </Button>
         </form>
       </Form>

@@ -34,7 +34,7 @@ const BikesManagement = () => {
       if (!confirm) return;
       const {data} = await deleteBike(bikeId);
       console.log(data)
-      if (data.success as boolean) {
+      if (data.status as boolean) {
         toast.success('Bike are Deleted Successfully');
         refetch()
       
@@ -113,9 +113,12 @@ const BikesManagement = () => {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
-                        <Button size="sm" variant="ghost">
+                        <Link to={`/admin/update-bike/${bike?._id}`}>
+                          <Button size="sm" variant="ghost">
                           <Edit className="h-4 w-4" />
                         </Button>
+                        </Link>
+                        
                         <Button 
                           size="sm" 
                           variant="ghost" 

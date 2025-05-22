@@ -42,10 +42,13 @@ import AllGearPage from './components/pages/AllGearPage';
 
 import CartPage from './components/pages/CartPage';
 
-import AddGearsForm from './components/form/AddGearsForm';
+
 import AddBikeForm from './components/form/AddBikeForm';
 import BikesManagement from './components/dashboard/admin/BikesManagement';
 import GearManagement from './components/dashboard/admin/GearManagement';
+import UpdateBikeForm from './components/form/UpdateBikeForm';
+import AddGearsForm from './components/form/AddGearsForm';
+import UpdateGearForm from './components/form/UpdateGearForm';
 // import React, { useEffect, useState } from "react"
 
 function App() {
@@ -131,6 +134,12 @@ function App() {
                   <AddBikeForm/>
                 </ProtectRoute>
               } />
+              <Route path="/admin/update-bike/:bikeId" element={
+                <ProtectRoute allowedRoles={["admin"]}>
+    
+                  <UpdateBikeForm/>
+                </ProtectRoute>
+              } />
               <Route path="/admin/gears-management" element={
                 <ProtectRoute allowedRoles={["admin"]}>
                   <GearManagement />
@@ -140,6 +149,12 @@ function App() {
                 <ProtectRoute allowedRoles={["admin"]}>
                
                   <AddGearsForm/>
+                </ProtectRoute>
+              } />
+              <Route path="/admin/update-gear/:gearId" element={
+                <ProtectRoute allowedRoles={["admin"]}>
+               
+                  <UpdateGearForm/>
                 </ProtectRoute>
               } />
               <Route path="/admin/customers-management" element={

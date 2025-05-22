@@ -12,6 +12,7 @@ import {
   FieldValues,
   SubmitHandler,
   useFieldArray,
+//   reset,
   useForm,
 } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
@@ -35,16 +36,73 @@ import { toast } from "sonner";
 import NMImageUploader from "./ui/NMImageUploader";
 import ImagePreviewer from "./ui/ImagePreviewer";
 import DashboardLayout from "../newDashboard/DashboardLayout";
-import { useAddProductMutation, useGetAllProductsQuery } from "@/redux/features/products/productsApi";
+import { useAddProductMutation, useGetAllProductsQuery, useGetProductByIdQuery, useUpdateProductMutation } from "@/redux/features/products/productsApi";
 
 import { TResponse } from "@/types/global";
 import { IGear } from "@/types/gear";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { features } from "process";
 
-export default function AddBikeForm() {
+export default function UpdateBikeForm() {
+    const { bikeId } = useParams<{ bikeId: string }>();
+
+      const {
+        data,
+        error,
+        isLoading: singleProductLoading,
+      } = useGetProductByIdQuery(bikeId as string);
+      const bike = data?.data;
+
+
+//  const form = useForm({
+//     defaultValues: {
+//       name: bike?.name || "",
+//       description: bike?.description || "",
+//       price: bike?.price || 0,
+//       category: bike?.category || "",
+//       brand: bike?.brand || "",
+//       stock: bike?.stock || "",
+//       model:bike?.model || "",
+    
+//       features: bike?.features?.map((f) => ({ value: f })) || [{ value: "" }],
+   
+//       specifications: bike?.specifications || [{ key: "", value: "" }],
+//     },
+//   });
+const form = useForm()
+  const {
+    formState: { isSubmitting },
+    reset
+  } = form;
+
+      useEffect(() => {
+  if (bike) {
+    const specs = bike.specifications as { [key: string]: string } | undefined;
+    form.reset({
+      name: bike.name || "",
+      description: bike.description || "",
+      price: bike.price || 0,
+      category: bike.category || "",
+      brand: bike.brand || "",
+      stock: bike.stock || "",
+      model: bike.model || "",
+      features: bike.features?.map((f: string) => ({ value: f })) || [{ value: "" }],
+      specifications:
+        specs && Object.keys(specs).length > 0
+          ? Object.entries(specs).map(([key, value]) => ({ key, value }))
+          : [{ key: "", value: "" }],
+    });
+  }
+  if (bike?.images?.length) {
+    setImagePreview(bike.images); // 👈 preload existing images
+  }
+}, [bike, form]);
+
   const navigate = useNavigate()
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
+  const [imagePreview, setImagePreview] = useState<string[] | []>([]);
 
+const bikeCategories = [
    'Sport',
   'Cruiser',
   'Scooter',
@@ -67,29 +125,17 @@ const bikeBrand = [
   'Hero',
 ]
 
+// if(singleProductLoading){
+//     return <div>Loding...</div>
+// }
 
-  const form = useForm({
-    defaultValues: {
-      name: bikesData.,
-      description: "",
-      price: "",
-      category: "",
-      brand: "",
-      stock: "",
-      model:"",
-      features: [{ value: "" }],
-      specifications: [{ key: "", value: "" }],
-    },
-  });
-
-  const {
-    formState: { isSubmitting },
-  } = form;
+ 
 
  
 
 
-const [addProduct, { isLoading }] = useAddProductMutation();
+const [ updateProduct, { isLoading }] = useUpdateProductMutation();
+
   const { append: appendFeatures, fields: featureFields } = useFieldArray({
     control: form.control,
     name: "features",
@@ -108,21 +154,7 @@ const [addProduct, { isLoading }] = useAddProductMutation();
     appendSpec({ key: "", value: "" });
   };
 
-  // console.log(specFields);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       const [categoriesData, brandsData] = await Promise.all([
-//         getAllCategories(),
-//         getAllBrands(),
-//       ]);
-
-//       setCategories(categoriesData?.data);
-//       setBrands(brandsData?.data);
-//     };
-
-//     fetchData();
-//   }, []);
+ 
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
    
@@ -137,7 +169,7 @@ const [addProduct, { isLoading }] = useAddProductMutation();
         (specifications[item.key] = item.value)
     );
 
-    // console.log({ availableColors, keyFeatures, specification });
+
 
     const modifiedData = {
       ...data,
@@ -155,9 +187,10 @@ const [addProduct, { isLoading }] = useAddProductMutation();
     for (const file of imageFiles) {
       formData.append("images", file);
     }
+    console.log(modifiedData)
    
     try {
-      const {data} = await addProduct(formData);
+      const {data} = await updateProduct(formData);
       console.log(data)
       if (data.success as boolean) {
         toast.success("Bike Add Successfully");
