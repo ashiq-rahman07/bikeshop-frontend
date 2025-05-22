@@ -44,11 +44,7 @@ import { useNavigate } from "react-router-dom";
 export default function AddBikeForm() {
   const navigate = useNavigate()
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
-  const [imagePreview, setImagePreview] = useState<string[] | []>([]);
-  const { data } = useGetAllProductsQuery(undefined);
-  const bikeData = data?.data
 
-const bikeCategories = [
    'Sport',
   'Cruiser',
   'Scooter',
