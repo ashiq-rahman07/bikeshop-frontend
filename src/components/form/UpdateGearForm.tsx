@@ -42,7 +42,7 @@ import { TResponse } from "@/types/global";
 import { IGear } from "@/types/gear";
 import { useNavigate, useParams } from "react-router-dom";
 import { features } from "process";
-import { useGetGearByIdQuery } from "@/redux/features/gears/gearsApi";
+import { useGetGearByIdQuery, useUpdateGearMutation } from "@/redux/features/gears/gearsApi";
 
 export default function UpdateGearForm() {
     const { gearId } = useParams<{ gearId: string }>();
@@ -51,6 +51,7 @@ export default function UpdateGearForm() {
         data,
         error,
         isLoading: singleProductLoading,
+        refetch
       } = useGetGearByIdQuery(gearId as string);
       const gear = data?.data;
 
@@ -94,6 +95,9 @@ const form = useForm()
           : [{ key: "", value: "" }],
     });
   }
+   if (gear?.images?.length) {
+    setImagePreview(gear.images); // 👈 preload existing images
+  }
 }, [gear, form]);
 
   const navigate = useNavigate()
@@ -129,7 +133,7 @@ const gearBrand = [
  
 
 
-const [addProduct, { isLoading }] = useAddProductMutation();
+const [updateGear, { isLoading }] = useUpdateGearMutation();
 
   const { append: appendFeatures, fields: featureFields } = useFieldArray({
     control: form.control,
@@ -176,6 +180,7 @@ const [addProduct, { isLoading }] = useAddProductMutation();
     
     };
 
+
     const formData = new FormData();
     formData.append("data", JSON.stringify(modifiedData));
 
@@ -184,13 +189,14 @@ const [addProduct, { isLoading }] = useAddProductMutation();
     }
    
     try {
-      const {data} = await addProduct(formData);
-      console.log(data)
-      if (data.success as boolean) {
-        toast.success("Bike Add Successfully");
-        navigate("/admin/bikes-management");
+      const {data} = await updateGear({gearId,formData});
+      
+      if (data.status as boolean) {
+        refetch()
+        toast.success("Bike Updated Successfully");
+        // navigate("/admin/gears-management");
       } else {
-        toast.error("Can Not Add Bike");
+        toast.error("Can Not Update Gear");
       }
     } catch (err: any) {
       console.error(err);

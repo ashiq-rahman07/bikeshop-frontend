@@ -190,10 +190,10 @@ const [ updateProduct, { isLoading }] = useUpdateProductMutation();
     console.log(modifiedData)
    
     try {
-      const {data} = await updateProduct(formData);
-      console.log(data)
-      if (data.success as boolean) {
-        toast.success("Bike Add Successfully");
+      const {data} = await updateProduct({bikeId,formData});
+      console.log('updated console',data)
+      if (data.status as boolean) {
+        toast.success("Bike Updated Successfully");
         navigate("/admin/bikes-management");
       } else {
         toast.error("Can Not Add Bike");

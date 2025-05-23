@@ -50,14 +50,11 @@ const productsApi = baseApi.injectEndpoints({
         body: bikeData,
       }),
     }),
-    updateProduct: builder.mutation<
-      IBike,
-      { bikeId: string; bikeData: Partial<IBike> }
-    >({
-      query: ({ bikeId, bikeData }) => ({
+    updateProduct: builder.mutation({
+      query: ({ bikeId, formData }) => ({
         url: `/bike/${bikeId}`,
         method: 'PATCH',
-        body: bikeData,
+        body: formData,
       }),
     }),
     deleteBike: builder.mutation({

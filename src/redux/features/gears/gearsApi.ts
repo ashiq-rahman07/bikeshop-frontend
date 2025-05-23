@@ -51,14 +51,11 @@ const gearsApi = baseApi.injectEndpoints({
         body: gearData,
       }),
     }),
-    updateGear: builder.mutation<
-      TBike,
-      { bikeId: string; bikeData: Partial<TBike> }
-    >({
-      query: ({ bikeId, bikeData }) => ({
-        url: `/gear/${bikeId}`,
+    updateGear: builder.mutation({
+      query: ({ gearId, formData }) => ({
+        url: `/gear/${gearId}`,
         method: 'PATCH',
-        body: bikeData,
+        body: formData,
       }),
     }),
     deleteGear: builder.mutation({
