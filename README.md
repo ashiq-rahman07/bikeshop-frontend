@@ -1,72 +1,114 @@
 # 🚴‍♂️ Bike Shop Admin Dashboard
 
-![Bike Shop Admin Dashboard](https://via.placeholder.com/800x400.png?text=Bike+Shop+Admin+Dashboard) <!-- Add a screenshot or GIF of your project -->
+![Bike Shop](./public/gearpage.png)
 
-A modern and responsive **Admin Dashboard** for managing a bike shop. Built with **React**, **Redux Toolkit (RTK Query)**, **Tailwind CSS**, and **TypeScript**, this application allows admins to manage customers, orders, and products efficiently.
-
----
-
-## **Live Demo**
-
-👉 [Live Demo](https://classic-rider.netlify.app) <!-- Replace with your live URL -->
+A modern, responsive, and feature-rich **Bike Shop Admin Dashboard** built with **React**, **Redux Toolkit**, **Tailwind CSS**, and **TypeScript**. This dashboard empowers admins to manage products, orders, and customers with ease and style.
 
 ---
 
-## **Features**
+## 🚀 Live Demo
 
-### **Admin Features**
-- **Customer Management**:
-  - View, activate, deactivate, and delete customers.
-  - Search and filter customers.
-- **Order Management**:
-  - View and update order status (Pending, Processing, Shipped, Delivered, Cancelled).
-  - Delete orders.
-- **Product Management**:
-  - Add, edit, and delete products.
-  - Manage product inventory.
-- **Dashboard Overview**:
-  - View key metrics (total sales, orders, customers, etc.).
-  - Quick access to important actions.
-
-### **Customer Features**
-- **Order History**:
-  - View past orders and their status.
-- **Profile Management**:
-  - Update personal information.
-  - Change password.
+👉 [Live Demo](https://classic-rider.netlify.app)
 
 ---
 
-## **Technology Stack**
+## ✨ Features
 
-### **Frontend**
-- **React**: A JavaScript library for building user interfaces.
-- **Redux Toolkit (RTK Query)**: State management and API handling.
-- **Tailwind CSS**: Utility-first CSS framework for styling.
-- **TypeScript**: Adds static typing to JavaScript for better code quality.
+### 🛠️ Admin Features
+- **Customer Management**: View, activate, deactivate, and delete customers. Search and filter with ease.
+- **Order Management**: Track, update, and manage order statuses (Pending, Processing, Shipped, Delivered, Cancelled).
+- **Product Management**: Add, edit, and delete products. Manage inventory and categories.
+- **Dashboard Overview**: Visualize key metrics (sales, orders, customers) with beautiful charts and quick actions.
 
-### **Backend**
-- **Node.js**: JavaScript runtime for backend development.
-- **Express.js**: Web framework for building RESTful APIs.
-- **MongoDB**: NoSQL database for storing application data.
-- **Mongoose**: MongoDB object modeling for Node.js.
-
-### **Other Tools**
-- **React Router**: For client-side routing.
-- **react-hook-from**: For making HTTP requests.
-- **Vite**: Fast build tool for modern web development.
+### 🛒 Customer Features
+- **Order History**: View past orders and their statuses.
+- **Profile Management**: Update personal info and change password.
 
 ---
 
-## **Setup Instructions**
+## 🖥️ Screenshots
 
-### **Prerequisites**
-- Node.js (v16 or higher)
-- MongoDB (for local development)
+| Dashboard Overview | Product Management | Order Management |
+|-------------------|-------------------|-----------------|
+| ![Dashboard](./src/assets/hero/bike1.png) | ![Products](./src/assets/hero/bike2.png) | ![Orders](./src/assets/hero/bike3.png) |
 
-### **Steps to Run the Project**
+---
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/your-username/bike-shop-admin-dashboard.git
-   cd bike-shop-admin-dashboard
+## 🧑‍💻 Technology Stack
+
+- **Frontend**: React, Redux Toolkit (RTK Query), Tailwind CSS, TypeScript
+- **Backend**: Node.js, Express.js, MongoDB, Mongoose
+- **Other Tools**: React Router, Vite, Sonner (toast notifications)
+
+---
+
+## ⚡ Quick Start
+
+### Prerequisites
+- Node.js (v16+)
+- MongoDB (for backend)
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/your-username/bike-shop-admin-dashboard.git
+cd bike-shop-admin-dashboard
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Start the Development Server
+```bash
+npm run dev
+```
+
+The app will be running at [http://localhost:5173](http://localhost:5173)
+
+---
+
+## 📁 Project Structure
+
+```
+bnikeshop-frontend/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── context/
+│   ├── data/
+│   ├── hooks/
+│   ├── images/
+│   ├── redux/
+│   ├── types/
+│   └── utils/
+├── package.json
+└── ...
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/your-username/bike-shop-admin-dashboard/issues).
+
+---
+
+## 📄 License
+
+This project is [MIT](LICENSE) licensed.
+
+---
+
+## 🙏 Acknowledgements
+
+- [React](https://react.dev/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Vite](https://vitejs.dev/)
+- [Sonner](https://sonner.emilkowal.ski/)
+
+---
+
+> _Built with ❤️ by the Bike Shop Team_

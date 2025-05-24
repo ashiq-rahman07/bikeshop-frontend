@@ -42,11 +42,15 @@ const ProductDetailsPage = () => {
   const handleAddToCart = () => {
     dispatch(
       addToCart({
-        product: product?._id as string,
-        name: product?.name as string,
-        price: product?.price as number,
-        quantity,
-        imageUrl: product?.images[0] as string,
+        product: product._id,
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+        productStock:product.stock,
+        imageUrl: product.images[0] as string,
+        routes:"bikes",
+        brand:product.brand,
+        category:product.category,
       }),
     );
 
