@@ -56,6 +56,25 @@ const DemoLogin = () => {
             }
  
   };
+  const adminLoginHandle = async() => {
+     try {
+              const res = await signInUser({email:"admin7@gmail.com",password:"admin12345"}).unwrap();
+             
+                   const token = res.data.token;
+             
+                   const user = verifyToken(token);
+             
+                   dispatch(setUser({ user, token: token }));
+                  toast.success('Login Successfully')
+
+                    form.reset();
+                    navigate(`/`);
+            } catch (err:any) {
+              console.log(err)
+              toast.error('Login Failed for', err.message)
+            }
+ 
+  };
 
   return (
     <div className= "flex items-start justify-center  px-4 sm:px-6 lg:px-8 bg-[hsl(240,3.7%,15.9%)] relative overflow-hidden min-h-screen pt-10" >
@@ -167,6 +186,14 @@ const DemoLogin = () => {
                     className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 w-full text-white"
                   >
                     Sign In
+                  </Button>
+                  <Button 
+                    type="submit" 
+                    variant="outline"
+                    className="bg-transparent hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 w-full text-primary"
+                    onClick={adminLoginHandle}
+                  >
+                    Admin Login
                   </Button>
                 </form>
               </Form>
