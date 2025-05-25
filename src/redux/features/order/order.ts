@@ -2,19 +2,31 @@ import { IOrder } from '../../../types/order/orderType';
 import { baseApi } from '../../api/baseApi';
 
 // Define interfaces for your data structures
+export interface IOrderCart {
+    productId: string;
+    productName: string;
+    productImg: string;
+    price: number;
+    quantity: number;
+    productType: string;
+}
+
 interface OrderInfo {
   
-  products: Cart[];
+  products: IOrderCart[];
+  totalPrice: number;
+  shippingAddress: {
+    name: string;
+    address: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+  };
+   orderDate?: Date; // Optional, will default to current time
 
 }
 
-interface Cart {
-  product: string;
-  name: string;
-  price: number;
-  imageUrl: string;
-  quantity: number;
-}
 
 interface IOrderResponse {
   status: boolean;
@@ -30,7 +42,7 @@ interface CreateResponse {
 
 const orderApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    createOrder: builder.mutation<CreateResponse, OrderInfo>({
+    createOrder: builder.mutation({
       query: (orderInfo) => ({
         url: '/orders/create-order',
         method: 'POST',

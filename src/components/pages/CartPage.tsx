@@ -13,20 +13,46 @@ import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser, useCurrentToken } from "@/redux/features/user/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { removeAllCart, removeFromCart, updateQuantity } from "@/redux/features/cart/cartSlice";
-import { useCreateOrderMutation } from "@/redux/features/order/order";
+import { ICartItem, removeAllCart, removeFromCart, updateQuantity } from "@/redux/features/cart/cartSlice";
+import { IOrderCart, useCreateOrderMutation } from "@/redux/features/order/order";
 import { toast } from "sonner";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 const CartPage = () => {
+  const [orderData,setOrderData] = useState<IOrderCart[]>(null);
    const token = useAppSelector(useCurrentToken);
-  
+    const dispatch = useDispatch();
+   const navigate = useNavigate();
    const user  = useAppSelector(selectCurrentUser);
    const cartItems = useSelector((state: RootState) => state.cart.items);
- 
-   const dispatch = useDispatch();
-   const navigate = useNavigate();
+//  console.log(cartItems)
+useEffect(() => {
+   if (cartItems.length === 0) {
+     setOrderData([]);
+   } else {
+     const orderData = cartItems.map((item: ICartItem) => ({
+       productId: item.productId,
+       productName: item.productName,
+       productImg: item.productImg,
+       quantity: item.quantity,
+       productType: item.productType,
+       price: item.price,
+     }));
+     setOrderData(orderData);
+   }
+ },[cartItems])
+
+
+//  const products: IOrderCart[] = cartItems.map((item: ICartItem) => ({
+//      productId: item.productId,
+//      productName: item.productName,
+//      productImg: item.productImg,
+//      quantity: item.quantity,
+//      productType: item.productType,
+//      price: item.price,
+   
+//    }));
  
    const handleRemoveFromCart = (product: string) => {
      dispatch(removeFromCart(product));
@@ -44,13 +70,15 @@ const CartPage = () => {
    const [createOrder, { isLoading, isSuccess, data, isError, error }] =
      useCreateOrderMutation();
  
+
+console.log(orderData)
    const handlePlaceOrder = async () => {
      try {
        if (!token) {
          navigate('/signin');
        }
  
-       await createOrder({ products: cartItems });
+       await createOrder({ products: orderData });
      } catch (error: any) {
        toast.error(error.message);
      }
@@ -79,7 +107,7 @@ const CartPage = () => {
   return (
     
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
+        <h1 className="text-3xl font-bold mb-8">Your Cart</h1>
         
         {cartItems.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 bg-gray-50 rounded-lg">
@@ -94,19 +122,19 @@ const CartPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Cart Items */}
             <div className="md:col-span-2">
-              {cartItems.map((item) => (
-                <div key={item.product} className="flex items-center py-6 border-b">
+              {cartItems.map((item:ICartItem) => (
+                <div key={item.productId} className="flex items-center py-6 border-b">
                   <div className="flex-shrink-0 w-24 h-24">
                     <img 
-                       src={item.imageUrl}
-                    alt={item.name} 
+                       src={item.productImg}
+                    alt={item.productName} 
                       className="w-full h-full object-cover rounded-md"
                     />
                   </div>
                   
                   <div className="flex-grow ml-4">
-                    <Link to={`/${item?.routes}/${item?.product}`} className="text-lg font-medium hover:text-primary">
-                      {item.name}
+                    <Link to={`/${item?.routes}/${item?.productId}`} className="text-lg font-medium hover:text-primary">
+                      {item.productName}
                     </Link>
                     <div className="text-sm text-gray-600">
                       {item.brand} | {item.category}
@@ -122,7 +150,7 @@ const CartPage = () => {
                       value={item.quantity}
                      onChange={(e) =>
                         handleQuantityChange(
-                          item.product,
+                          item.productId,
                           parseInt(e.target.value),
                         )
                       }
@@ -136,7 +164,7 @@ const CartPage = () => {
                     </select>
                     
                     <button 
-                      onClick={() => handleRemoveFromCart(item.product)}
+                      onClick={() => handleRemoveFromCart(item.productId)}
                       className="ml-4 text-gray-500 hover:text-red-500"
                     >
                       <Trash2 className="h-5 w-5" />

@@ -14,13 +14,27 @@ export interface IProduct {
 }
 // export type TStatus = 'Pending' | 'Paid' | 'Shipped' | 'Completed' | 'Cancelled';
 export interface IOrder {
-  transaction: ITransaction;
-  _id: string;
+  _id:string;
   user: string;
-  products: IProduct[];
+  products: {
+    productId: string;
+    productImg: string;
+    quantity: number;
+    productType: 'gear' | 'bike';
+  }[];
   totalPrice: number;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-  id: string;
+  status: 'Pending' | 'Paid' | 'Shipped' | 'Completed' | 'Cancelled';
+  shippingAddress: {
+    fullName: string;
+    streetAddress: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    country: string;
+    phone: string;
+  };
+  orderDate: Date; // ISO date string
+  estimatedDeliveryDate?: Date; // ISO date string
+  transaction: ITransaction
 }
+

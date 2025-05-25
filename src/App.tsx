@@ -31,7 +31,7 @@ import FinancingPage from './components/pages/FinancingPage';
 import ProtectRoute from './components/route/ProtectRoute';
 import CustomerDashboard from './components/customer/CustomerDashboard';
 import CustomerOrders from './components/dashboard/customer/CustomerOrders';
-import Checkout from './components/pages/CheckOutPage';
+
 import AdminBikes from './components/dashboard/admin/BikesManagement';
 
 import AdminGear from './components/dashboard/admin/GearManagement';
@@ -49,6 +49,9 @@ import GearManagement from './components/dashboard/admin/GearManagement';
 import UpdateBikeForm from './components/form/UpdateBikeForm';
 import AddGearsForm from './components/form/AddGearsForm';
 import UpdateGearForm from './components/form/UpdateGearForm';
+import CheckOut from './components/pages/CheckOut';
+import PaymentSuccess from './components/pages/PaymentSuccess';
+import OrdersManagement from './components/dashboard/admin/OrdersManagement';
 // import React, { useEffect, useState } from "react"
 
 function App() {
@@ -92,7 +95,12 @@ function App() {
 
               <Route path="/checkout" element={
                 <ProtectRoute>
-                  <Checkout />
+                  <CheckOut/>
+                </ProtectRoute>
+              } />
+              <Route path="/payment" element={
+                <ProtectRoute>
+                  <PaymentSuccess/>
                 </ProtectRoute>
               } />
               <Route path="/dashboard" element={
@@ -119,7 +127,7 @@ function App() {
               } />
               <Route path="/admin/orders-management" element={
                 <ProtectRoute allowedRoles={["admin"]}>
-                  <AdminOrders />
+                  <OrdersManagement />
                 </ProtectRoute>
               } />
               <Route path="/admin/bikes-management" element={

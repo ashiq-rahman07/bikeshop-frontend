@@ -42,6 +42,7 @@ const initialFilters: FilterOptions = {
 
 const [filters, setFilters] = useState<FilterOptions>(initialFilters);
 
+
 // 🔁 Filter whenever bikes or filters change
 useEffect(() => {
   if (bikes.length) {

@@ -28,9 +28,9 @@ export type TGear = {
   specifications: Record<string, string>;
   stock: number;
   images: string[];
-  rating: number;
-  reviewCount: number;
-  isStock: boolean;
+  rating?: number;
+  reviewCount?: number;
+  isStock?: boolean;
 };
 
 

@@ -31,14 +31,16 @@ import { orders } from "@/data/orders";
 import { users } from "@/data/users";
 import { Order } from "@/types";
 import { Download, FileText } from "lucide-react";
-import DashboardLayout from "../newDashboard/DashboardLayout";
-import OrderStatusBadge from "../newDashboard/OrderStatusBadge";
+
 import { useGetOrdersQuery } from "@/redux/features/order/order";
 import { IOrder } from "@/types/order/orderType";
+import OrderStatusBadge from "@/components/newDashboard/OrderStatusBadge";
+import DashboardLayout from "@/components/newDashboard/DashboardLayout";
 
 const ITEMS_PER_PAGE = 5;
 
-const AdminOrders = () => {
+const OrdersManagement = () => {
+    const{data,isLoading} =useGetOrdersQuery()
   const [allOrders, setAllOrders] = useState<IOrder[]>([]);
   const [filteredOrders, setFilteredOrders] = useState<IOrder[]>([]);
   const [paginatedOrders, setPaginatedOrders] = useState<IOrder[]>([]);
@@ -48,7 +50,7 @@ const AdminOrders = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-   const { data,isLoading } = useGetOrdersQuery()
+ 
 const ordarDtata = data?.data || [];
   
   useEffect(() => {
@@ -77,7 +79,7 @@ const ordarDtata = data?.data || [];
       const lowerCaseSearch = searchTerm.toLowerCase();
       result = result.filter(
         order =>
-          order.id.toLowerCase().includes(lowerCaseSearch) ||
+          order._id.toLowerCase().includes(lowerCaseSearch) ||
           order.shippingAddress.fullName.toLowerCase().includes(lowerCaseSearch)
       );
     }
@@ -100,14 +102,21 @@ const ordarDtata = data?.data || [];
       await new Promise(resolve => setTimeout(resolve, 500));
       
       // Update order status in local state
+      const statusMap: Record<string, IOrder["status"]> = {
+        pending: "Pending",
+        paid: "Paid",
+        shipped: "Shipped",
+        completed: "Completed",
+        cancelled: "Cancelled",
+      };
       const updatedOrders = allOrders.map(order =>
-        order.id === orderId
-          ? { ...order, status: newStatus as "pending" | "processing" | "shipped" | "delivered" }
+        order._id === orderId
+          ? { ...order, status: statusMap[newStatus] ?? order.status }
           : order
       );
       
       setAllOrders(updatedOrders);
-      toast.success(`Order status updated to ${newStatus}`);
+      toast.success(`Order status updated to ${statusMap[newStatus] ?? newStatus}`);
     } catch (error) {
       toast.error("Failed to update order status");
     }
@@ -195,21 +204,32 @@ const ordarDtata = data?.data || [];
                 </TableHeader>
                 <TableBody>
                   {paginatedOrders.map((order) => (
-                    <TableRow key={order.id} className="hover:bg-gray-50/50">
-                      <TableCell className="font-medium">{order.id}</TableCell>
+                    <TableRow key={order._id} className="hover:bg-gray-50/50">
+                      <TableCell className="font-medium">{order._id}</TableCell>
                       <TableCell>
                         {order.shippingAddress.fullName}
-                        <div className="text-xs text-gray-500">{getUserEmail(order.userId)}</div>
+                        <div className="text-xs text-gray-500">{getUserEmail(order.user)}</div>
                       </TableCell>
                       <TableCell>{new Date(order.orderDate).toLocaleDateString()}</TableCell>
                       <TableCell>
-                        <OrderStatusBadge status={order.status} />
+                        <OrderStatusBadge status={
+                          (() => {
+                            switch (order.status) {
+                              case "Pending": return "pending";
+                              case "Paid": return "processing";
+                              case "Shipped": return "shipped";
+                              case "Completed": return "delivered";
+                              case "Cancelled": return "pending"; // or another appropriate mapping
+                              default: return "pending";
+                            }
+                          })()
+                        } />
                       </TableCell>
-                      <TableCell className="text-right">${order.totalAmount.toLocaleString()}</TableCell>
+                      <TableCell className="text-right">${order.totalPrice.toLocaleString()}</TableCell>
                       <TableCell>
                         <Select
                           defaultValue={order.status}
-                          onValueChange={(value) => handleStatusChange(order.id, value)}
+                          onValueChange={(value) => handleStatusChange(order._id, value)}
                         >
                           <SelectTrigger className="w-[130px]">
                             <SelectValue placeholder="Change status" />
@@ -273,4 +293,4 @@ const ordarDtata = data?.data || [];
   );
 };
 
-export default AdminOrders;
+export default OrdersManagement;

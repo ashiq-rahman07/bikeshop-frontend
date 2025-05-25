@@ -101,17 +101,17 @@ const CartSlide = () => {
                 <div className="space-y-4">
                   {cartItems.map((item) => (
                     <div
-                      key={item.product}
+                      key={item.productId}
                       className="flex items-center justify-between"
                     >
                       <img
-                        src={item.imageUrl}
-                        alt={item.name}
+                        src={item.productImg}
+                        alt={item.productName}
                         className="w-12 h-12 object-cover rounded"
                       />
                       <div className="flex-grow ml-4">
                         <h4 className="font-poppins font-semibold">
-                          {item.name}
+                          {item.productName}
                         </h4>
                         <p className="text-gray-600">${item.price}</p>
                       </div>
@@ -121,14 +121,14 @@ const CartSlide = () => {
                           value={item.quantity}
                           onChange={(e) =>
                             handleQuantityChange(
-                              item.product,
+                              item.productId,
                               parseInt(e.target.value),
                             )
                           }
                           className="w-12 p-1 border border-gray-300 dark:text-gray-900 rounded text-center"
                         />
                         <button
-                          onClick={() => handleRemoveFromCart(item.product)}
+                          onClick={() => handleRemoveFromCart(item.productId)}
                           className="text-red-600 hover:text-red-800"
                         >
                           🗑️

@@ -1,21 +1,35 @@
-
 import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Check, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useVerifyOrderQuery } from "@/redux/features/order/order";
+import { toast } from "sonner";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
-  const { clearCart, cartItems } = useCart();
+
+ const [searchParams] = useSearchParams();
+  const orderId = searchParams.get('order_id');
+  console.log(orderId)
   
-  // Check if there was an actual order and clear the cart
-  useEffect(() => {
-    // This would typically verify the order with your backend
-    // Here we're just clearing the cart after successful payment
-    clearCart();
-  }, [clearCart]);
+  // Use the RTK Query hook to verify payment
+  const { refetch: verifyOrder } = useVerifyOrderQuery(orderId, { skip: !orderId });
+
+  const handleverifyPayment = async () => {
+    if (!orderId) {
+      console.error("Order ID is missing in the URL");
+      return;
+    }
+    try {
+      await verifyOrder();
+      toast.success('payment verify succfully') // Refetch the verification endpoint
+      // navigate(`/dashboard/orders/${orderId}`);
+    } catch (err) {
+      console.error("Payment verification failed", err);
+    }
+  };
 
   return (
    
@@ -36,13 +50,16 @@ const PaymentSuccess = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row justify-center gap-4 mt-6">
+            <Button size="lg" onClick={handleverifyPayment}>
+              Verify Payment
+            </Button>
             <Link to="/dashboard/orders">
-              <Button variant="outline" size="lg">
+              <Button onClick={handleverifyPayment} variant="outline" size="lg">
                 View My Orders
               </Button>
             </Link>
             <Link to="/products">
-              <Button size="lg">
+              <Button variant="outline" className="bg-transparenttr" size="lg">
                 <ShoppingBag className="mr-2 h-5 w-5" />
                 Continue Shopping
               </Button>

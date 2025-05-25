@@ -26,6 +26,7 @@ const DashboardSidebar = ({ isMobileMenuOpen, toggleMobileMenu }: SidebarProps) 
   const { user, logout, isAdmin } = useAuth();
   const location = useLocation();
   
+  
   // Define menu items based on user role
   const menuItems = isAdmin
     ? [

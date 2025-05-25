@@ -15,26 +15,27 @@ interface ProductCardProps {
   type:'gear' | 'bike'
 }
 
-const ProductCard = ({ product,routes }: ProductCardProps) => {
+const ProductCard = ({ product,routes,type }: ProductCardProps) => {
  const dispatch = useDispatch();
 
   const handleAddToCart = () => {
     dispatch(
       addToCart({
-        product: product._id,
-        name: product.name,
-        price: product.price,
+        productId: product._id,
+        productName: product.name,
+        productImg: product.images[0],
         quantity: 1,
-        productStock:product.stock,
-        imageUrl: product.images[0] as string,
-        routes:routes,
+        productType: type,
+        price: product.price,
         brand:product.brand,
         category:product.category,
-       
-      }),
+        productStock: product.stock,
+        routes: routes || '',
+   }),
     );
     toast.success("Added this product..")
   };
+
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;

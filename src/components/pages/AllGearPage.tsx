@@ -13,6 +13,7 @@ import { Input } from "../ui/input";
 // import ProductFilter from "../productsss/ProductFilter";
 import ProductCard from "../productsss/ProductCard";
 import GearFilter from "../productsss/GearFilter";
+import { IGear } from "@/types/gear";
 
 // export interface GearFilterOptions {
 //   search: string;
@@ -53,22 +54,26 @@ const AllGearPage = () => {
        if (gears.length) {
          filterProducts(gears, filters);
        }
+       // Fix: Only update price range if gears exist
+       if (gears.length) {
          const getPriceRange = (): [number, number] => {
-       let min = Infinity;
-       let max = 0;
-       
-      gears.forEach(product => {
-         if (product.price < min) min = Math.floor(product.price) ;
-         if (product.price > max) max = Math.floor(product.price) ;
-       });
-       return [min, max];
-     };
-     setPriceRange(getPriceRange ())
-     }, [gears, filters, sortBy,setPriceRange]);
+           let min = Infinity;
+           let max = 0;
+           gears.forEach(product => {
+             if (product.price < min) min = Math.floor(product.price);
+             if (product.price > max) max = Math.floor(product.price);
+           });
+           // If no valid prices, fallback to [0, 1000]
+           if (!isFinite(min) || !isFinite(max) || min === Infinity || max === 0) return [0, 1000];
+           return [min, max];
+         };
+         setPriceRange(getPriceRange());
+       }
+     }, [gears, filters, sortBy]);
      
      
-     const filterProducts = (productsToFilter: TBike[], currentFilters: FilterOptions) => {
-       let result = [...productsToFilter];
+    const filterProducts = (productsToFilter: TGear[], currentFilters: FilterOptions) => {
+      let result = [...productsToFilter];
      
        // Search filter
        if (currentFilters.search) {
@@ -138,8 +143,8 @@ const AllGearPage = () => {
        setSortBy(e.target.value);
      };
      
-     const sortProducts = (productsToSort: TBike[], sortOption: string):  TBike[] => {
-       const sortedProducts = [...productsToSort];
+    const sortProducts = (productsToSort: TGear[], sortOption: string): TGear[] => {
+      const sortedProducts = [...productsToSort];
      
        switch (sortOption) {
          case "price-asc":
@@ -246,7 +251,7 @@ const AllGearPage = () => {
             ) : filteredProducts.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProducts.map((product) => (
-                  <ProductCard key={product._id} product={product} routes={'gears'} type='gear' />
+                  <ProductCard key={product._id} product={{ ...product, rating: product.rating ?? 0, reviewCount: product.reviewCount ?? 0, isStock: product.isStock ?? true }} routes={'gears'} type='gear' />
                 ))}
               </div>
             ) : (
@@ -266,7 +271,7 @@ const AllGearPage = () => {
                       isStock: false,
                     };
                     setFilters(defaultFilters);
-                    filterProducts(gears, defaultFilters);
+                    filterProducts(gears.map(g => ({ ...g, rating: g.rating ?? 0, reviewCount: g.reviewCount ?? 0, isStock: g.isStock ?? true })), defaultFilters);
                     setSortBy("featured");
                     setSearchParams({});
                   }}
