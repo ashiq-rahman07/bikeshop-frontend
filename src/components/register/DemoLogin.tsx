@@ -187,7 +187,10 @@ const DemoLogin = () => {
                   >
                     Sign In
                   </Button>
-                  <Button 
+                 
+                </form>
+              </Form>
+               <Button 
                     type="submit" 
                     variant="outline"
                     className="bg-transparent hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 w-full text-primary"
@@ -195,8 +198,7 @@ const DemoLogin = () => {
                   >
                     Admin Login
                   </Button>
-                </form>
-              </Form>
+                  <p className="text-center text-sm text-yellow-600 ">As a Admin login for testing and review this project</p>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
              
