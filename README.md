@@ -1,6 +1,6 @@
 # 🚴‍♂️ Bike Shop Admin Dashboard
 
-![Bike Shop](./public/gearpage.png)
+![Bike Shop](./public/bikadmin.png)
 
 A modern, responsive, and feature-rich **Bike Shop Admin Dashboard** built with **React**, **Redux Toolkit**, **Tailwind CSS**, and **TypeScript**. This dashboard empowers admins to manage products, orders, and customers with ease and style.
 
@@ -8,7 +8,7 @@ A modern, responsive, and feature-rich **Bike Shop Admin Dashboard** built with 
 
 ## 🚀 Live Demo
 
-👉 [Live Demo](https://classic-rider.netlify.app)
+👉 [Live Demo](https://bikeshop-frontend.vercel.app)
 
 ---
 
